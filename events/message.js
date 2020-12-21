@@ -1,7 +1,7 @@
 require('dotenv').config()
 const DiscordJS = require('discord.js')
 module.exports = (client, message) => {
-    if (!message.content.startsWith(process.env.prefix) || message.author.bot) return;
+    if (!message.content.toLowerCase().startsWith(process.env.prefix) || message.author.bot) return;
 
 	const args = message.content.slice(process.env.prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
