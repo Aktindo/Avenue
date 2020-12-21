@@ -1,9 +1,13 @@
 require('dotenv').config()
 const DiscordJS = require('discord.js')
+const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 module.exports = (client, message) => {
-    if (!message.content.toLowerCase().startsWith(process.env.prefix) || message.author.bot) return;
+    const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(process.env.prefix)})\\s*`);
+    if (!prefixRegex.test(message.content)) return;
 
-	const args = message.content.slice(process.env.prefix.length).trim().split(/ +/);
+    const [, matchedPrefix] = message.content.match(prefixRegex);
+
+	const args = message.content.slice(matchedPrefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
 
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
@@ -13,7 +17,7 @@ module.exports = (client, message) => {
     let { botOwners } = require('../config/config.json')
 
     if (command.botOwnerOnly && !botOwners.includes(message.author.id)) {
-        return message.channel.send('You do not have enough permissions to use this command.')
+        return message.channel.send('Only the bot owner can run this command.')
     }
 
     if (command.guildOnly && message.channel.type === 'dm') {

@@ -3,6 +3,8 @@ const { colors } = require('../../data/colors.json')
 module.exports = {
     name: "ping",
     description: "A command to test the latency of the bot.",
+    category: "system",
+    cooldowns: 5,
     aliases: ["p"],
     execute(client, message, args) {
         message.channel.send('Testing ping...').then(m => {
