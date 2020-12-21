@@ -10,10 +10,20 @@ module.exports = (client, message) => {
 
     if (!command) return
 
-    let botOwners = ['683879319558291539']
+    let { botOwners } = require('../config/config.json')
 
     if (command.botOwnerOnly && !botOwners.includes(message.author.id)) {
         return message.channel.send('You do not have enough permissions to use this command.')
+    }
+
+    if (command.guildOnly && message.channel.type === 'dm') {
+        return message.reply('I can\'t execute that command inside DMs!');
+    }
+
+    if (command.permissions) {
+        if (!message.member.hasPermission(command.permissions)) {
+            return message.channel.send('You do not have enough permissions to run that command.')
+        }
     }
     
     if (command.args && !args.length) {
@@ -24,10 +34,6 @@ module.exports = (client, message) => {
         }
 
         return message.channel.send(reply)
-    }
-
-    if (command.guildOnly && message.channel.type === 'dm') {
-        return message.reply('I can\'t execute that command inside DMs!');
     }
 
     const cooldowns = new DiscordJS.Collection()
