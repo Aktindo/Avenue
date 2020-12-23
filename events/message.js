@@ -1,7 +1,8 @@
 require('dotenv').config()
 const DiscordJS = require('discord.js')
 const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-module.exports = (client, message) => {
+const guildRoleModel = require('../models/guild-roles-model')
+module.exports = async (client, message) => {
     const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(process.env.prefix)})\\s*`);
     if (!prefixRegex.test(message.content)) return;
 
@@ -20,14 +21,43 @@ module.exports = (client, message) => {
         return message.channel.send('Only the bot owner can run this command.')
     }
 
-    if (command.guildOnly && message.channel.type === 'dm') {
-        return message.reply('I can\'t execute that command inside DMs!');
+    const roleData = await guildRoleModel.findOne({
+        guildId: message.guild.id,
+    })
+
+    if (roleData) {
+        if (roleData.helperRole) {
+            if (command.requiredRoles == 'helper') {
+                if (!message.member.roles.cache.has(roleData.helperRole)) {
+                    return message.channel.send('You do not have the required roles/permissions to run that command.')
+                }
+            }
+        }
+        if (roleData.moderatorRole) {
+            if (command.requiredRoles == 'mod') {
+                if (!message.member.roles.cache.has(roleData.moderatorRole)) {
+                    return message.channel.send('You do not have the required roles/permissions to run that command.')
+                }
+            }
+        }
+        if (roleData.adminRole) {
+            if (command.requiredRoles == 'admin') {
+                if (!message.member.roles.cache.has(roleData.adminRole)) {
+                    return message.channel.send('You do not have enough roles/permissions to run that command.')
+                }
+            }
+        }
+    }
+    else {
+        if (command.requiredPermissions) {
+            if (!message.member.hasPermission(command.requiredPermissions)) {
+                return message.channel.send('You do not have enough roles/permissions to run that command.')
+            }
+        }
     }
 
-    if (command.permissions) {
-        if (!message.member.hasPermission(command.permissions)) {
-            return message.channel.send('You do not have enough permissions to run that command.')
-        }
+    if (command.guildOnly && message.channel.type === 'dm') {
+        return message.reply('I can\'t execute that command inside DMs!');
     }
     
     if (command.args && !args.length) {

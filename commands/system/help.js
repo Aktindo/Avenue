@@ -1,5 +1,4 @@
 const { MessageEmbed } = require("discord.js")
-const { guildOnly } = require("./eval")
 require('dotenv').config()
 module.exports = {
     name: "help",
@@ -11,16 +10,18 @@ module.exports = {
     execute(client, message, args) {
         let commandName = args.join("-")
         if (!commandName) {
-            let funCommands = client.commands.filter(cmd => cmd.category == "fun").map(c => `\`${c.name}\``).join(", ")
+            let moderationCommands = client.commands.filter(cmd => cmd.category == "moderation").map(c => `\`${c.name}\``).join(", ")
+            let settingCommands = client.commands.filter(cmd => cmd.category == "settings").map(c => `\`${c.name}\``).join(", ")
             let systemCommands = client.commands.filter(cmd => cmd.category == "system").map(c => `\`${c.name}\``).join(", ")
-            console.log(systemCommands)
 
             const embed = new MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL())
             .setTitle('Help Menu')
             .setDescription(`These are all the commands I currently have. Use \`${process.env.prefix}help [command_name]\` to view more information on a specific command.`)
+            .addField('Moderation', moderationCommands, false)
+            .addField('Settings', settingCommands, false)
             .addField('System', systemCommands, false)
-            .setColor('GREEN')
+            .setColor('AQUA')
 
             message.channel.send(embed)
         }
@@ -36,6 +37,7 @@ module.exports = {
                 if (command.cooldowns) data.push(`**Cooldown:**\n User - \`${command.cooldowns}s\``)
                 if (command.aliases) data.push(`**Aliases:** \`${command.aliases.join(', ')}\``)
                 if (command.usage) data.push(`**Usage:**\n\`${process.env.prefix}${command.name} ${command.usage}\``)
+                if (command.variables) data.push(`**Variables:**\n\`${command.variables.join(', ')}\``)
                 switch (command.guildOnly) {
                     case true:
                         guildOnlyValue = "Yes"
@@ -48,8 +50,8 @@ module.exports = {
                 .setAuthor(message.author.username, message.author.displayAvatarURL())
                 .setTitle(`Command Name: ${command.name}`)
                 .setDescription(data)
-                .addField('Keys', '`<>` - Required \n `[]` - Optional')
-                .setColor('GREEN')
+                .addField('Keys', '`<>` - Required\n`[]` - Optional')
+                .setColor('AQUA')
                 message.channel.send(embed)
             }
         }
