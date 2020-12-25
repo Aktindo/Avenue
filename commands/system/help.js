@@ -10,6 +10,7 @@ module.exports = {
     execute(client, message, args) {
         let commandName = args.join("-")
         if (!commandName) {
+            let infoCommands = client.commands.filter(cmd => cmd.category == "information").map(c => `\`${c.name}\``).join(", ")
             let moderationCommands = client.commands.filter(cmd => cmd.category == "moderation").map(c => `\`${c.name}\``).join(", ")
             let settingCommands = client.commands.filter(cmd => cmd.category == "settings").map(c => `\`${c.name}\``).join(", ")
             let systemCommands = client.commands.filter(cmd => cmd.category == "system").map(c => `\`${c.name}\``).join(", ")
@@ -18,6 +19,7 @@ module.exports = {
             .setAuthor(message.author.username, message.author.displayAvatarURL())
             .setTitle('Help Menu')
             .setDescription(`These are all the commands I currently have. Use \`${process.env.prefix}help [command_name]\` to view more information on a specific command.`)
+            .addField('Information', infoCommands, false)
             .addField('Moderation', moderationCommands, false)
             .addField('Settings', settingCommands, false)
             .addField('System', systemCommands, false)

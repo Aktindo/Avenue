@@ -2,7 +2,22 @@ require('dotenv').config()
 const DiscordJS = require('discord.js')
 const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const guildRoleModel = require('../models/guild-roles-model')
+const messageCountModel = require('../models/user-messagecount-model')
 module.exports = async (client, message) => {
+    if (message.author.bot) return
+    if (!message.guild) return
+    await messageCountModel.findOneAndUpdate({
+        guildId: message.guild.id,
+        userId: message.author.id,
+    }, {
+        guildId: message.guild.id,
+        userId: message.author.id,
+        $inc: {
+            messageCount: 1
+        }
+    }, {
+        upsert: true
+    })
     const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(process.env.prefix)})\\s*`);
     if (!prefixRegex.test(message.content)) return;
 
@@ -54,10 +69,6 @@ module.exports = async (client, message) => {
                 return message.channel.send('You do not have enough roles/permissions to run that command.')
             }
         }
-    }
-
-    if (command.guildOnly && message.channel.type === 'dm') {
-        return message.reply('I can\'t execute that command inside DMs!');
     }
     
     if (command.args && !args.length) {
