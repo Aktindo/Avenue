@@ -52,7 +52,7 @@ module.exports = {
                 .setAuthor(message.author.username, message.author.displayAvatarURL())
                 .setTitle(`Command Name: ${command.name}`)
                 .setDescription(data)
-                .addField('Keys', '`<>` - Required\n`[]` - Optional')
+                .addField('Keys', '`<>` - Required\n`[]` - Optional\n`|` - Or')
                 .setColor('AQUA')
                 message.channel.send(embed)
             }
