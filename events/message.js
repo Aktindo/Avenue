@@ -1,33 +1,99 @@
 require('dotenv').config()
 const DiscordJS = require('discord.js')
-module.exports = (client, message) => {
-    if (!message.content.startsWith(process.env.prefix) || message.author.bot) return;
+const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const guildRoleModel = require('../models/guild-roles-model')
+const messageCountModel = require('../models/user-messagecount-model')
+module.exports = async (client, message) => {
+    if (message.author.bot) return
+    if (!message.guild) return
+    await messageCountModel.findOneAndUpdate({
+        guildId: message.guild.id,
+        userId: message.author.id,
+    }, {
+        guildId: message.guild.id,
+        userId: message.author.id,
+        $inc: {
+            messageCount: 1
+        }
+    }, {
+        upsert: true
+    })
+    const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(process.env.prefix)})\\s*`);
+    if (!prefixRegex.test(message.content.toLowerCase())) return;
 
-	const args = message.content.slice(process.env.prefix.length).trim().split(/ +/);
+    const [, matchedPrefix] = message.content.toLowerCase().match(prefixRegex);
+
+	const args = message.content.slice(matchedPrefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
 
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
     if (!command) return
 
-    let botOwners = ['683879319558291539']
+    let { botOwners } = require('../config/config.json')
 
     if (command.botOwnerOnly && !botOwners.includes(message.author.id)) {
-        return message.channel.send('You do not have enough permissions to use this command.')
+        return message.channel.send(
+            new MessageEmbed()
+            .setAuthor(message.author.username)
+            .setDescription('<:redTick:792047662202617876> Only the bot owner can run this command!')
+            .setColor('RED')
+        )
     }
-    
-    if (command.args && !args.length) {
-        let reply = `Incorrect syntax! Please provide some more arguments, <@${message.author.id}>`
-        
-        if (command.usage) {
-            reply += `\nThe proper usage would be - \`${process.env.prefix}${command.name} ${command.usage}\``
+
+    const roleData = await guildRoleModel.findOne({
+        guildId: message.guild.id,
+    })
+
+    if (roleData) {
+        if (roleData.helperRole) {
+            if (command.requiredRoles == 'helper') {
+                if (!message.member.roles.cache.has(roleData.helperRole)) {
+                    return message.channel.send(
+                        new MessageEmbed()
+                        .setAuthor(message.author.username)
+                        .setDescription('<:redTick:792047662202617876> You do not have thr required roles/permissions to run that command.')
+                        .setColor('RED')
+                    )
+                }
+            }
         }
-
-        return message.channel.send(reply)
+        if (roleData.moderatorRole) {
+            if (command.requiredRoles == 'mod') {
+                if (!message.member.roles.cache.has(roleData.moderatorRole)) {
+                    return message.channel.send(
+                        new MessageEmbed()
+                        .setAuthor(message.author.username)
+                        .setDescription('<:redTick:792047662202617876> You do not have thr required roles/permissions to run that command.')
+                        .setColor('RED')
+                    )
+                }
+            }
+        }
+        if (roleData.adminRole) {
+            if (command.requiredRoles == 'admin') {
+                if (!message.member.roles.cache.has(roleData.adminRole)) {
+                    return message.channel.send(
+                        new MessageEmbed()
+                        .setAuthor(message.author.username)
+                        .setDescription('<:redTick:792047662202617876> You do not have thr required roles/permissions to run that command.')
+                        .setColor('RED')
+                    )
+                }
+            }
+        }
     }
-
-    if (command.guildOnly && message.channel.type === 'dm') {
-        return message.reply('I can\'t execute that command inside DMs!');
+    else {
+        if (command.requiredPermissions) {
+            if (!message.member.hasPermission(command.requiredPermissions)) {
+                return message.channel.send(
+                    new MessageEmbed()
+                    .setAuthor(message.author.username)
+                    .setDescription('<:redTick:792047662202617876> You do not have thr required roles/permissions to run that command.')
+                    .setColor('RED')
+                )
+            }
+        }
     }
 
     const cooldowns = new DiscordJS.Collection()
@@ -46,7 +112,12 @@ module.exports = (client, message) => {
         
             if (now < expirationTime) {
                 const timeLeft = (expirationTime - now) / 1000;
-                return message.reply(`Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`);
+                return message.reply(
+                    new MessageEmbed()
+                    .setAuthor(message.author.username)
+                    .setDescription(`<:redTick:792047662202617876> The command \`${command.name}\` is on cooldown.\nYou can use it again in \`${timeLeft}s\`!`)
+                    .setColor('RED')
+                );
             }
         }
     }
@@ -58,6 +129,6 @@ module.exports = (client, message) => {
 		command.execute(client, message, args)
 	} catch (error) {
 		console.error(error);
-		message.reply('There was an error trying to execute that command!');
+		message.reply('There was an error trying to execute that command!\nYou should not receive an error like this.\nPlease join the support server!');
 	}
 }
