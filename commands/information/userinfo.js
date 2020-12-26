@@ -7,6 +7,7 @@ module.exports = {
     aliases: ["ui", 'whois', 'whoami'],
     category: "information",
     cooldowns: 5,
+    guildOnly: true,
     async execute(client, message, args) {
         const moment = require("moment");
         let member = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.member

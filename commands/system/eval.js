@@ -5,7 +5,6 @@ module.exports = {
     description: "Evaluates a javascript code given!",
     category: "system",
     cooldowns: 5,
-    args: true,
     usage: "<code>",
     botOwnerOnly: true,
     guildOnly: true,

@@ -8,8 +8,19 @@ module.exports = {
     usage: "[user]",
     requiredRoles: 'helper',
     requiredPermissions: ['MANAGE_MESSAGES'],
+    guildOnly: true,
     async execute(client, message, args) {
-        let user = message.mentions.members.first() || message.member
+        let user = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.member
+        if (user.user.bot) return message.channel.send(
+            new MessageEmbed()
+            .setAuthor(message.author.username)
+            .setDescription('<:redTick:792047662202617876> You cannot fetch logs for bots!')
+            .setColor('RED')
+        )
+        const loading = new MessageEmbed()
+        .setDescription(`Fetching logs for ${user}... Please wait!`)
+        .setColor('BLURPLE')
+        const loadingMsg = await message.channel.send(loading)
         const warningLogs = await warningModel.find({
             guildId: message.guild.id,
             userId: user.id
@@ -24,6 +35,6 @@ module.exports = {
         .addField('Last 3 Warnings', warnData, false)
         .setFooter(`In ${message.guild.name}`, message.guild.iconURL())
         .setColor('AQUA')
-        message.channel.send(embed)
+        loadingMsg.edit(embed)
     }
 }

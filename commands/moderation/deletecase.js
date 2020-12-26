@@ -1,30 +1,48 @@
 const { MessageEmbed } = require('discord.js')
-const warningModel = require('../../models/warning-system-model')
 module.exports = {
     name: "deletecase",
     description: "Deletes an existing case of a user.",
     aliases: ["delcase"],
     category: "moderation",
     cooldowns: 5,
-    usage: "<user> <case_number> [reason]",
+    usage: "<case_number>",
     requiredRoles: 'helper',
     requiredPermissions: ['MANAGE_MESSAGES'],
+    guildOnly: true,
     async execute(client, message, args) {
-        let user = message.mentions.members.first()
-        if (!user) return message.channel.send('Please mention a user.')
-        let _caseNumber = args[1]
-        if (isNaN(_caseNumber)) return message.channel.send('Cannot parse a non-integer.')
-        if (_caseNumber < 0) return message.channel.send('Case number cannot be a negative integer.')
+        const warningModel = require('../../models/warning-system-model')
+        let _caseNumber = args[0]
+        if (isNaN(_caseNumber)) return message.channel.send(
+            new MessageEmbed()
+            .setAuthor(message.author.username)
+            .setDescription('<:redTick:792047662202617876> Please provide a valid case number!')
+            .setColor('RED')
+        )
+        if (_caseNumber < 0) return message.channel.send(
+            new MessageEmbed()
+            .setAuthor(message.author.username)
+            .setDescription('<:redTick:792047662202617876> Please provide a valid case number!')
+            .setColor('RED')
+        )
         let caseNumber = parseInt(_caseNumber)
-        warningModel.deleteOne({
+        const res = await warningModel.findOneAndRemove({
             guildId: message.guild.id,
-            userId: user.id,
-            caseNumber,
-        },(err, res) => {
-            if (err) throw err
-            if (!res) return message.channel.send('No logs found with that case number!')
-            console.log(res)
-            message.channel.send('Successfully deleted the case!')
+            caseNumber: caseNumber,
         })
+        if (!res) return message.channel.send(
+            new MessageEmbed()
+            .setAuthor(message.author.username)
+            .setDescription('<:redTick:792047662202617876> No case found with that case number!')
+            .setColor('RED')
+        )
+        else {
+            message.channel.send(
+                new MessageEmbed()
+                .setAuthor(message.author.username)
+                .setDescription('<:greenTick:792047523803299850> Successfully deleted that case!')
+                .setColor('GREEN')
+            )
+        }
+        
     }
 }

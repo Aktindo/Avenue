@@ -1,5 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 const guildCasesModel = require('../../models/guild-cases-model')
+const guildRoleModel = require('../../models/guild-roles-model')
 const warningModel = require('../../models/warning-system-model')
 module.exports = {
     name: "warn",
@@ -11,10 +12,51 @@ module.exports = {
     usage: "<user> [reason]",
     guildOnly: true,
     async execute(client, message, args) {
+        const roleData = await guildRoleModel.findOne({
+            guildId: message.guild.id
+        })
         const target = message.mentions.members.first() || message.guild.members.cache.get(args[0])
-        if (!target) return message.channel.send('Please provide a user.')
+        if (!target) return message.channel.send(
+            new MessageEmbed()
+            .setAuthor(message.author.username)
+            .setDescription('<:redTick:792047662202617876> Invalid Syntax! Please mention a user.')
+            .setColor('RED')
+        )
 
-        if (target.id === message.author.id) return message.channel.send('You cannot warn yourself...')
+        if (target.id === message.author.id) return message.channel.send(
+            new MessageEmbed()
+            .setAuthor(message.author.username)
+            .setDescription('<:redTick:792047662202617876> You cannot warn yourself!')
+            .setColor('RED')
+        )
+
+        if (target.user.bot) return message.channel.send(
+            new MessageEmbed()
+            .setAuthor(message.author.username)
+            .setDescription('<:redTick:792047662202617876> You cannot warn bots!')
+            .setColor('RED')
+        )
+
+        if (roleData) {
+            if (target.roles.cache.has(roleData.helperRole) || target.roles.cache.has(roleData.moderatorRole) || target.roles.cache.has(roleData.adminRole)) {
+                return message.channel.send(
+                    new MessageEmbed()
+                    .setAuthor(message.author.username)
+                    .setDescription('<:redTick:792047662202617876> That user is a mod/admin.')
+                    .setColor('RED')
+                )
+            }
+        }
+        else {
+            if (target.hasPermission('MANAGE_MESSAGES')) {
+                return message.channel.send(
+                    new MessageEmbed()
+                    .setAuthor(message.author.username)
+                    .setDescription('<:redTick:792047662202617876> That user is a mod/admin.')
+                    .setColor('RED')
+                )
+            }
+        }
         
         let reason = args.slice(1).join(' ')
         if (!reason) reason = "Not specified"
@@ -53,11 +95,19 @@ module.exports = {
             .addField('Reason', reason, false)
             .setColor('YELLOW')
             .setFooter(`Sent from ${message.guild.name}`, message.guild.iconURL())
-        ).catch(e => message.channel.send(`Warning logged for ${target.user.username}... I could not DM them.`))
+        ).catch(e => message.channel.send(
+            message.channel.send(
+                new MessageEmbed()
+                .setAuthor(message.author.username)
+                .setDescription(`<:greenTick:792047523803299850> Warning logged for ${target}... I could not DM them!`)
+                .setColor('GREEN')
+            )
+        ))
         loadingMessage.edit(
             new MessageEmbed()
             .setTitle(`Case Number #${cases.totalCases} | Warn`)
             .setDescription(`Successfully warned ${target}`)
+            .setColor('YELLOW')
         )
     }
 }

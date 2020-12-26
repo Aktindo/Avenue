@@ -5,29 +5,46 @@ module.exports = {
     description: "Edits an existing case of a user.",
     category: "moderation",
     cooldowns: 5,
-    usage: "<user> <case_number> [reason]",
+    usage: "<case_number> [reason]",
     requiredRoles: 'helper',
     requiredPermissions: ['MANAGE_MESSAGES'],
+    guildOnly: true,
     async execute(client, message, args) {
-        let user = message.mentions.members.first()
-        if (!user) return message.channel.send('Please mention a user.')
-        let _caseNumber = args[1]
-        if (isNaN(_caseNumber)) return message.channel.send('Cannot parse a non-integer.')
-        if (_caseNumber < 0) return message.channel.send('Case number cannot be a negative integer.')
+        let _caseNumber = args[0]
+        if (isNaN(_caseNumber)) return message.channel.send(
+            new MessageEmbed()
+            .setAuthor(message.author.username)
+            .setDescription('<:redTick:792047662202617876> Please provide a valid case number!')
+            .setColor('RED')
+        )
+        if (_caseNumber < 0) return message.channel.send(
+            new MessageEmbed()
+            .setAuthor(message.author.username)
+            .setDescription('<:redTick:792047662202617876> Please provide a valid case number!')
+            .setColor('RED')
+        )
         let caseNumber = parseInt(_caseNumber)
-        let newReason = args.slice(2).join(' ')
+        let newReason = args.slice(1).join(' ')
         if (!newReason) newReason = "Not specified"
-        warningModel.findOneAndUpdate({
+        await warningModel.findOneAndUpdate({
             guildId: message.guild.id,
-            userId: user.id,
             caseNumber,
         }, {
             reason: newReason,
         }, (err, res) => {
             if (err) throw err
-            if (!res) return message.channel.send('No logs found with that case number!')
-            console.log(res)
-            message.channel.send('Successfully updated the case!')
+            if (!res) return message.channel.send(
+                new MessageEmbed()
+                .setAuthor(message.author.username)
+                .setDescription('<:redTick:792047662202617876> No case found with that case number!')
+                .setColor('RED')
+            )
+            message.channel.send(
+                new MessageEmbed()
+                .setAuthor(message.author.username)
+                .setDescription('<:greenTick:792047523803299850> Successfully updated that case!')
+                .setColor('GREEN')
+            )
         })
     }
 }
