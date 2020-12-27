@@ -1,5 +1,7 @@
 const { MessageEmbed } = require('discord.js')
+const reportSystemModel = require('../../models/report-system-model')
 const warningModel = require('../../models/warning-system-model')
+const moment = require('moment')
 module.exports = {
     name: "logs",
     description: "Views all the logs for a user.",
@@ -18,21 +20,35 @@ module.exports = {
             .setColor('RED')
         )
         const loading = new MessageEmbed()
+        .setAuthor(message.author.username)
         .setDescription(`Fetching logs for ${user}... Please wait!`)
-        .setColor('BLURPLE')
         const loadingMsg = await message.channel.send(loading)
         const warningLogs = await warningModel.find({
             guildId: message.guild.id,
             userId: user.id
-        }).limit(3)
+        })
+        .limit(3)
         let warnData = ''
         warningLogs.map(async i => {
-            warnData += `**Case Number - ${i.caseNumber}**\nModerator - <@${i.moderatorId}>\nReason - ${i.reason}\nDate - ${new Date(i.timestamp).toLocaleDateString()}\n\n`
+            warnData += `**Case Number - ${i.caseNumber}**\nModerator - <@${i.moderatorId}>\nReason - ${i.reason}\nTime - ${moment(i.timestamp).calendar()}\n\n`
         })
         if (!warnData) warnData += 'No previous warnings for the user!'
+        const reportLogs = await reportSystemModel.find({
+            guildId: message.guild.id,
+            userId: user.id
+        })
+        .limit(3)
+        let reportData = ''
+        reportLogs.map(async i => {
+            reportData += `**Case Number - ${i.caseNumber}**\nReporter - <@${i.reporterId}>\nReason - ${i.reason}\nDate - ${moment(i.timestamp).calendar()}\n\n`
+        })
+        if (!reportData) {
+            reportData += "No previous reports for the user!"
+        }
         const embed = new MessageEmbed()
         .setAuthor(`All logs for ${user.user.username}`, user.user.displayAvatarURL())
         .addField('Last 3 Warnings', warnData, false)
+        .addField('Last 3 Reports', reportData, false)
         .setFooter(`In ${message.guild.name}`, message.guild.iconURL())
         .setColor('AQUA')
         loadingMsg.edit(embed)

@@ -32,6 +32,10 @@ module.exports = async (client, message) => {
 
     let { botOwners } = require('../config/config.json')
 
+    const roleData = await guildRoleModel.findOne({
+        guildId: message.guild.id,
+    })
+
     if (command.botOwnerOnly && !botOwners.includes(message.author.id)) {
         return message.channel.send(
             new MessageEmbed()
@@ -40,10 +44,6 @@ module.exports = async (client, message) => {
             .setColor('RED')
         )
     }
-
-    const roleData = await guildRoleModel.findOne({
-        guildId: message.guild.id,
-    })
 
     if (roleData) {
         if (roleData.helperRole) {
