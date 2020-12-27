@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const guildRoleModel = mongoose.Schema({
     guildId: String,
+    mutedRole: String,
     helperRole: String,
     moderatorRole: String,
     adminRole: String,
