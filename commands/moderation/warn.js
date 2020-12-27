@@ -10,7 +10,6 @@ module.exports = {
     requiredPermissions: ["MANAGE_MESSAGES"],
     requiredRoles: "helper",
     usage: "<user> [reason]",
-    guildOnly: true,
     async execute(client, message, args) {
         const roleData = await guildRoleModel.findOne({
             guildId: message.guild.id
