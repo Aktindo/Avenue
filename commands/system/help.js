@@ -31,23 +31,19 @@ module.exports = {
             const command = client.commands.get(commandName) || client.commands.find(c => c.aliases && c.aliases.includes(commandName));
             let data = []
             if (!command) {
-                return message.channel.send('I could not find that command.')
+                return message.channel.send(
+                    new MessageEmbed()
+                    .setAuthor(message.author.username)
+                    .setDescription('<:redTick:792047662202617876> I could not find that command!')
+                    .setColor('RED')
+                )
             }
             else {
-                let guildOnlyValue
                 if (command.description) data.push(`**Description:** ${command.description}`)
-                if (command.cooldowns) data.push(`**Cooldown:**\n User - \`${command.cooldowns}s\``)
+                if (command.cooldowns) data.push(`**Cooldown:**\n User - ${command.cooldowns}s`)
                 if (command.aliases) data.push(`**Aliases:** \`${command.aliases.join(', ')}\``)
                 if (command.usage) data.push(`**Usage:**\n\`${process.env.prefix}${command.name} ${command.usage}\``)
                 if (command.variables) data.push(`**Variables:**\n\`${command.variables.join(', ')}\``)
-                switch (command.guildOnly) {
-                    case true:
-                        guildOnlyValue = "Yes"
-                        break;
-                    default:
-                        guildOnlyValue = "No"
-                }
-                data.push(`**Guild Only:** ${guildOnlyValue}`)
                 const embed = new MessageEmbed()
                 .setAuthor(message.author.username, message.author.displayAvatarURL())
                 .setTitle(`Command Name: ${command.name}`)

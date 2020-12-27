@@ -27,7 +27,7 @@ module.exports = {
         const channelData = await guildChannelModel.findOne({
             guildId: message.guild.id
         })
-        if (!channelData.reportChannel) {
+        if (!channelData) {
             return message.channel.send(
                 new MessageEmbed()
                 .setAuthor(message.author.username)
