@@ -8,6 +8,7 @@ module.exports = {
     usage: "<code>",
     botOwnerOnly: true,
     guildOnly: true,
+    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     execute(client, message, args) {
         try {
             const code = args.join(" ");

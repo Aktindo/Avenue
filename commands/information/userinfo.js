@@ -7,6 +7,7 @@ module.exports = {
     aliases: ["ui", 'whois', 'whoami'],
     category: "information",
     cooldowns: 5,
+    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     guildOnly: true,
     async execute(client, message, args) {
         const moment = require("moment");

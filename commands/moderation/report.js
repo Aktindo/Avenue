@@ -9,6 +9,7 @@ module.exports = {
     category: "moderation",
     cooldowns: 5,
     aliases: ["reportuser"],
+    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     async execute(client, message, args) {
         const user = message.mentions.members.first() || message.guild.members.cache.get(args[0])
         if (!user) return message.channel.send(
@@ -42,6 +43,23 @@ module.exports = {
             .setDescription('<:redTick:792047662202617876> There was an error sending your report - The channel that is setup for `reports` for this server does not exist anymore. Please contact a server mod/admin.')
             .setColor('RED')
         )
+        const reportChannelPermissions = channel.permissionsFor(client.user)
+        if (!reportChannelPermissions.has("SEND_MESSAGES")) {
+            return message.channel.send(            
+                new MessageEmbed()
+                .setAuthor(message.author.username)
+                .setDescription('<:redTick:792047662202617876> I do not have the permission to send messages in the report channel. Please contact a server mod/admin.')
+                .setColor('RED')
+            )
+        }
+        if (!reportChannelPermissions.has("ATTACH_FILES")) {
+            return message.channel.send(
+                new MessageEmbed()
+                .setAuthor(message.author.username)
+                .setDescription('<:redTick:792047662202617876> I do not have the permission to send embeds in the report channel. Please contact a server mod/admin.')
+                .setColor('RED')
+            )
+        }
         const loadingMsg = await message.channel.send(
             new MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL())

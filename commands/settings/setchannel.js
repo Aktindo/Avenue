@@ -8,7 +8,7 @@ module.exports = {
     aliases: ["set-channel"],
     usage: "<Reports> <#channel|ID>",
     requiredPermissions: ['ADMINISTRATOR'],
-    requiredRoles: "admin",
+    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     async execute(client, message, args) {
         if (!args[0]) {
             return message.channel.send(

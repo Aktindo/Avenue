@@ -7,6 +7,7 @@ module.exports = {
     category: "system",
     cooldowns: 5,
     aliases: ["p"],
+    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     async execute(client, message, args) {
         message.channel.send('Testing ping...').then(async m => {
             let randomColor = colors[Math.floor(Math.random() * colors.length)]

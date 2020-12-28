@@ -5,6 +5,7 @@ module.exports = {
     aliases: ["av", "pfp"],
     category: "information",
     cooldowns: 5,
+    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     async execute(client, message, args) {
         const member = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.member
         const embed = new MessageEmbed()

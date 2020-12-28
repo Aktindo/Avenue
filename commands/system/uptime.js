@@ -5,6 +5,7 @@ module.exports = {
     aliases: ["up"],
     category: "system",
     cooldowns: 5,
+    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     async execute(client, message, args) {
         const moment = require("moment");
         require("moment-duration-format");

@@ -8,8 +8,8 @@ module.exports = {
     category: "moderation",
     cooldowns: 5,
     usage: "[user]",
-    requiredRoles: 'helper',
     requiredPermissions: ['MANAGE_MESSAGES'],
+    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     guildOnly: true,
     async execute(client, message, args) {
         let user = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.member

@@ -7,8 +7,8 @@ module.exports = {
     description: "Warns a user.",
     category: "moderation",
     cooldowns: 5,
-    requiredPermissions: ["MANAGE_MESSAGES"],
-    requiredRoles: "helper",
+    requiredPermissions: ['MANAGE_MESSAGES'],
+    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     usage: "<user> [reason]",
     async execute(client, message, args) {
         const roleData = await guildRoleModel.findOne({
