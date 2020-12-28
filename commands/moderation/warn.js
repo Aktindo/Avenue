@@ -36,25 +36,13 @@ module.exports = {
             .setColor('RED')
         )
 
-        if (roleData) {
-            if (target.roles.cache.has(roleData.helperRole) || target.roles.cache.has(roleData.moderatorRole) || target.roles.cache.has(roleData.adminRole)) {
-                return message.channel.send(
-                    new MessageEmbed()
-                    .setAuthor(message.author.username)
-                    .setDescription('<:redTick:792047662202617876> That user is a mod/admin.')
-                    .setColor('RED')
-                )
-            }
-        }
-        else {
-            if (target.hasPermission('MANAGE_MESSAGES')) {
-                return message.channel.send(
-                    new MessageEmbed()
-                    .setAuthor(message.author.username)
-                    .setDescription('<:redTick:792047662202617876> That user is a mod/admin.')
-                    .setColor('RED')
-                )
-            }
+        if (target.hasPermission('MANAGE_MESSAGES')) {
+            return message.channel.send(
+                new MessageEmbed()
+                .setAuthor(message.author.username)
+                .setDescription('<:redTick:792047662202617876> That user is a mod/admin.')
+                .setColor('RED')
+            )
         }
         
         let reason = args.slice(1).join(' ')

@@ -30,7 +30,7 @@ module.exports = {
             guildId: message.guild.id,
             caseNumber: caseNumber,
         })
-        const reportResult = reportSystemModel.findOneAndRemove({
+        const reportResult = await reportSystemModel.findOneAndRemove({
             guildId: message.guild.id,
             caseNumber: caseNumber,
         })
