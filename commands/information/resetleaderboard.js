@@ -7,8 +7,8 @@ module.exports = {
     category: "information",
     cooldowns: 5,
     guildOnly: true,
-    requiredRoles: "admin",
-    requiredPermissions: ['MANAGE_GUILD'],
+    requiredPermissions: ['ADMINISTRATOR'],
+    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     async execute(client, message, args) {
         const results  = await messageCountModel.find({
             guildId: message.guild.id

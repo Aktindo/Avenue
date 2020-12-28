@@ -5,6 +5,7 @@ module.exports = {
     category: "system",
     cooldowns: 5,
     aliases: ["inv"],
+    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     async execute(client, message, args) {
         return message.channel.send(
             new MessageEmbed()

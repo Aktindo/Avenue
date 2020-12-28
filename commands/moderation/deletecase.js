@@ -6,8 +6,8 @@ module.exports = {
     category: "moderation",
     cooldowns: 5,
     usage: "<case_number>",
-    requiredRoles: 'helper',
     requiredPermissions: ['MANAGE_MESSAGES'],
+    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     guildOnly: true,
     async execute(client, message, args) {
         const warningModel = require('../../models/warning-system-model')

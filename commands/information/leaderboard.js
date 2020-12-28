@@ -7,6 +7,7 @@ module.exports = {
     category: "information",
     cooldowns: 5,
     usage: "[limit]",
+    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     guildOnly: true,
     async execute(client, message, args) {
         let limit = args[0]

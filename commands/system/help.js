@@ -7,6 +7,7 @@ module.exports = {
     aliases: ["h", "info"],
     cooldowns: 5,
     usage: "[command_name]",
+    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     execute(client, message, args) {
         let commandName = args.join("-")
         if (!commandName) {

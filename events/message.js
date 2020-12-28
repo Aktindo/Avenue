@@ -3,6 +3,7 @@ const DiscordJS = require('discord.js')
 const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const guildRoleModel = require('../models/guild-roles-model')
 const messageCountModel = require('../models/user-messagecount-model')
+const {MessageEmbed} = require('discord.js')
 module.exports = async (client, message) => {
     if (message.author.bot) return
     if (!message.guild) return
@@ -32,10 +33,6 @@ module.exports = async (client, message) => {
 
     let { botOwners } = require('../config/config.json')
 
-    const roleData = await guildRoleModel.findOne({
-        guildId: message.guild.id,
-    })
-
     if (command.botOwnerOnly && !botOwners.includes(message.author.id)) {
         return message.channel.send(
             new MessageEmbed()
@@ -45,54 +42,25 @@ module.exports = async (client, message) => {
         )
     }
 
-    if (roleData) {
-        if (roleData.helperRole) {
-            if (command.requiredRoles == 'helper') {
-                if (!message.member.roles.cache.has(roleData.helperRole)) {
-                    return message.channel.send(
-                        new MessageEmbed()
-                        .setAuthor(message.author.username)
-                        .setDescription('<:redTick:792047662202617876> You do not have thr required roles/permissions to run that command.')
-                        .setColor('RED')
-                    )
-                }
-            }
-        }
-        if (roleData.moderatorRole) {
-            if (command.requiredRoles == 'mod') {
-                if (!message.member.roles.cache.has(roleData.moderatorRole)) {
-                    return message.channel.send(
-                        new MessageEmbed()
-                        .setAuthor(message.author.username)
-                        .setDescription('<:redTick:792047662202617876> You do not have thr required roles/permissions to run that command.')
-                        .setColor('RED')
-                    )
-                }
-            }
-        }
-        if (roleData.adminRole) {
-            if (command.requiredRoles == 'admin') {
-                if (!message.member.roles.cache.has(roleData.adminRole)) {
-                    return message.channel.send(
-                        new MessageEmbed()
-                        .setAuthor(message.author.username)
-                        .setDescription('<:redTick:792047662202617876> You do not have thr required roles/permissions to run that command.')
-                        .setColor('RED')
-                    )
-                }
-            }
+    if (command.botPermissions) {
+        if (!message.guild.me.hasPermission(command.botPermissions)) {
+            return message.channel.send(
+                new MessageEmbed()
+                .setAuthor(message.author.username)
+                .setDescription(`<:redTick:792047662202617876> I do not have the required permissions - \`${command.botPermissions.join(', ')}\` to run that command in this server!`)
+                .setColor('RED')
+            )
         }
     }
-    else {
-        if (command.requiredPermissions) {
-            if (!message.member.hasPermission(command.requiredPermissions)) {
-                return message.channel.send(
-                    new MessageEmbed()
-                    .setAuthor(message.author.username)
-                    .setDescription('<:redTick:792047662202617876> You do not have thr required roles/permissions to run that command.')
-                    .setColor('RED')
-                )
-            }
+
+    if (command.requiredPermissions) {
+        if (!message.member.hasPermission(command.requiredPermissions)) {
+            return message.channel.send(
+                new MessageEmbed()
+                .setAuthor(message.author.username)
+                .setDescription('<:redTick:792047662202617876> You do not have the required roles/permissions to run that command.')
+                .setColor('RED')
+            )
         }
     }
 

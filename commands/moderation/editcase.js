@@ -8,8 +8,8 @@ module.exports = {
     category: "moderation",
     cooldowns: 5,
     usage: "<case_number> [reason]",
-    requiredRoles: 'helper',
     requiredPermissions: ['MANAGE_MESSAGES'],
+    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     guildOnly: true,
     async execute(client, message, args) {
         let _caseNumber = args[0]
