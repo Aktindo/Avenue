@@ -1,4 +1,5 @@
 const DiscordJS = require('discord.js')
+const guildMessages = require('../../models/user-messagecount-model')
 module.exports = {
     name: "eval",
     aliases: ["run", "r"],

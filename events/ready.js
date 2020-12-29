@@ -1,6 +1,8 @@
 const mongo = require('../util/mongo')
+const chalk = require('chalk')
+const moment = require('moment')
 module.exports = async client => {
-    console.log('Logged in as ' + client.user.tag + '!')
+    console.log(`${chalk.green(`[${moment(Date.now()).format()}]`)} Logged in as - ${client.user.username}!`)
     client.user.setPresence({
         status: "online",
         activity: {
@@ -28,5 +30,5 @@ module.exports = async client => {
             });
         }
     });
-    await mongo().then(console.log('Connected to database!')).catch(e => console.error('Error while connecting to the database: ' + e))
+    await mongo().then(console.log(`${chalk.green(`[${moment(Date.now()).format()}]`)} Connected to database!`)).catch(e => console.error(`${chalk.red(`[${moment(Date.now()).format()}]`)} Error while connecting to database - ${e}`))
 }
