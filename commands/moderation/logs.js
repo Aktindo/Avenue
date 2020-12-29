@@ -1,6 +1,7 @@
 const { MessageEmbed } = require('discord.js')
 const reportSystemModel = require('../../models/report-system-model')
 const warningModel = require('../../models/warning-system-model')
+const banSystemModel = require('../../models/ban-system-model')
 const moment = require('moment')
 module.exports = {
     name: "logs",
@@ -33,6 +34,15 @@ module.exports = {
             warnData += `**Case Number - ${i.caseNumber}**\nModerator - <@${i.moderatorId}>\nReason - ${i.reason}\nTime - ${moment(i.timestamp).calendar()}\n\n`
         })
         if (!warnData) warnData += 'No previous warnings for the user!'
+        const banLogs = await banSystemModel.find({
+            guildId: message.guild.id,
+            userId: user.id
+        }).limit(3)
+        let banData = ''
+        banLogs.map(async i => {
+            banData += `**Case Number - ${i.caseNumber}**\nModerator - <@${i.moderatorId}>\nReason - ${i.reason}\nTime - ${moment(i.timestamp).calendar()}\n\n`
+        })
+        if (!banData) banData += 'No previous bans for the user!'
         const reportLogs = await reportSystemModel.find({
             guildId: message.guild.id,
             userId: user.id
@@ -49,6 +59,7 @@ module.exports = {
         .setAuthor(`All logs for ${user.user.username}`, user.user.displayAvatarURL())
         .addField('Last 3 Warnings', warnData, false)
         .addField('Last 3 Reports', reportData, false)
+        .addField('Last 3 Bans', banData, false)
         .setFooter(`In ${message.guild.name}`, message.guild.iconURL())
         .setColor('AQUA')
         loadingMsg.edit(embed)
