@@ -15,6 +15,7 @@ module.exports = {
             let moderationCommands = client.commands.filter(cmd => cmd.category == "moderation").map(c => `\`${c.name}\``).join(", ")
             let settingCommands = client.commands.filter(cmd => cmd.category == "settings").map(c => `\`${c.name}\``).join(", ")
             let systemCommands = client.commands.filter(cmd => cmd.category == "system").map(c => `\`${c.name}\``).join(", ")
+            let miscCommands = client.commands.filter(cmd => cmd.category == "misc").map(c => `\`${c.name}\``).join(", ")
 
             const embed = new MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL())
@@ -23,6 +24,7 @@ module.exports = {
             .addField('Information', infoCommands, false)
             .addField('Moderation', moderationCommands, false)
             .addField('Settings', settingCommands, false)
+            .addField('Miscellaneous', miscCommands, false)
             .addField('System', systemCommands, false)
             .setColor('AQUA')
 
