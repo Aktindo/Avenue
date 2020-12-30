@@ -98,5 +98,5 @@ module.exports = async (client, message) => {
 	} catch (error) {
 		console.error(error);
 		message.reply('There was an error trying to execute that command!\nYou should not receive an error like this.\nPlease join the support server!');
-	}
+    }
 }

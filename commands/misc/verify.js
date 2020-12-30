@@ -28,6 +28,13 @@ module.exports = {
         if (!text) return
         if (message.channel.id != verificationChannel.id) return
         if (!message.member.roles.cache.has(role.id)) {
+            if (!message.member.manageable) {
+                return message.channel.send(
+                    new MessageEmbed()
+                    .setAuthor(message.author.username, message.author.displayAvatarURL())
+                    .setDescription('There was an unexpected error while executing that command.\nMy role is below the role specified that is why I cannot assign that role.\nPlease contact a mod/admin')
+                )
+            }
             await message.member.roles.add(role)
             const msg = await message.channel.send(
                 new MessageEmbed()

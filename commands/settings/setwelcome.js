@@ -51,8 +51,8 @@ module.exports = {
             let channel
             if (channelData) {
                 channel = message.guild.channels.cache.get(channelData.welcomeChannel)
-                if (!channel) channel = "No channel set"
             }
+            if (!channel) channel = "No channel set"
             let welcomeText
             if (welcomeData) {
                 welcomeText = welcomeData.text
