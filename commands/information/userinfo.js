@@ -35,6 +35,9 @@ module.exports = {
         else {
             messageCount = messageCountRes.messageCount
         }
+        let memberRoles
+        if (member.roles.cache.size > 15) memberRoles = "Too many roles to display"
+        else memberRoles = member.roles.cache.map(r => r).join(', ')
         const userinfo = new MessageEmbed()
         .setAuthor(member.user.username, member.user.displayAvatarURL({dynamic: true}))
         .setThumbnail(member.user.displayAvatarURL({dynamic: true}))
@@ -42,7 +45,7 @@ module.exports = {
         .addField('Joined', `${moment(member.joinedAt).format('LLLL')}\n(${moment(member.joinedAt).startOf('minutes').fromNow()})`, true)
         .addField('Status', `${userStatus()}`, false)
         .addField('Total Messages', messageCount, true)
-        .addField(`Roles[${member.roles.cache.size}]`, member.roles.cache.map(r => r).join(', '), false)
+        .addField(`Roles[${member.roles.cache.size}]`, memberRoles, false)
         .setColor('AQUA')
         message.channel.send(userinfo)
     }
