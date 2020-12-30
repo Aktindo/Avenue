@@ -14,7 +14,7 @@ module.exports = {
             const embed = new MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL())
             .setTitle('Bot Information')
-            .addField('Users', `Currently serving **${client.users.cache.size}** gamers`, true)
+            .addField('Users', `Currently serving **${client.users.cache.filter(u => !u.bot).size}** gamers`, true)
             .addField('Channels', `Monitoring **${client.channels.cache.size}** channels`, true)
             .addField('Servers', `In **${client.guilds.cache.size}** server(s)`, true)
             .addField('Support', 'Here is a permanent link to join the [**support server**](https://discord.gg/xSQMdPEvHt)', false)
