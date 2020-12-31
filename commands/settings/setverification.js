@@ -26,6 +26,7 @@ module.exports = {
                 .setDescription(`<:redTick:792047662202617876> No role found with that mention or ID.`)
                 .setColor('RED')
             )
+            
             await guildVerificationSystemModel.findOneAndUpdate({
                 guildId: message.guild.id
             }, {

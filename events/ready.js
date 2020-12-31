@@ -1,6 +1,7 @@
 const mongo = require('../util/mongo')
 const chalk = require('chalk')
 const moment = require('moment')
+const fs = require('fs')
 module.exports = async client => {
     console.log(`${chalk.green(`[${moment(Date.now()).format()}]`)} Logged in as - ${client.user.username}!`)
     client.user.setPresence({
@@ -30,5 +31,16 @@ module.exports = async client => {
             });
         }
     });
+    fs.readdir("./features/", (err, files) => {
+        if (err) return console.error(err);
+        files.forEach(file => {
+          if (!file.endsWith(".js")) return;
+          const feature = require(`../features/${file}`);
+          let featureName = file.split(".")[0];
+          console.log(`${chalk.green(`[${moment(Date.now()).format()}]`)} Enabling feature - ${featureName}`)
+          feature(client)
+          delete require.cache[require.resolve(`../features/${file}`)];
+        });
+      });
     await mongo().then(console.log(`${chalk.green(`[${moment(Date.now()).format()}]`)} Connected to database!`)).catch(e => console.error(`${chalk.red(`[${moment(Date.now()).format()}]`)} Error while connecting to database - ${e}`))
 }
