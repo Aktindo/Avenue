@@ -15,7 +15,7 @@ module.exports = {
             let moderationCommands = client.commands.filter(cmd => cmd.category == "moderation").map(c => `\`${c.name}\``).join(", ")
             let settingCommands = client.commands.filter(cmd => cmd.category == "settings").map(c => `\`${c.name}\``).join(", ")
             let systemCommands = client.commands.filter(cmd => cmd.category == "system").map(c => `\`${c.name}\``).join(", ")
-            let miscCommands = client.commands.filter(cmd => cmd.category == "misc").map(c => `\`${c.name}\``).join(", ")
+            let utilCommands = client.commands.filter(cmd => cmd.category == "util").map(c => `\`${c.name}\``).join(", ")
 
             const embed = new MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL())
@@ -24,9 +24,9 @@ module.exports = {
             .addField('Information', infoCommands, false)
             .addField('Moderation', moderationCommands, false)
             .addField('Settings', settingCommands, false)
-            .addField('Miscellaneous', miscCommands, false)
+            .addField('Utility', utilCommands, false)
             .addField('System', systemCommands, false)
-            .setColor('AQUA')
+            .setColor('BLURPLE')
 
             message.channel.send(embed)
         }
@@ -52,7 +52,7 @@ module.exports = {
                 .setTitle(`Command Name: ${command.name}`)
                 .setDescription(data)
                 .addField('Keys', '`<>` - Required\n`[]` - Optional\n`|` - Or')
-                .setColor('AQUA')
+                .setColor('BLURPLE')
                 message.channel.send(embed)
             }
         }

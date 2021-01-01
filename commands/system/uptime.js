@@ -15,7 +15,7 @@ module.exports = {
             .setAuthor(message.author.username, message.author.displayAvatarURL())
             .setTitle('Uptime')
             .setDescription(duration)
-            .setColor('AQUA')
+            .setColor('BLURPLE')
         )
     }
 }

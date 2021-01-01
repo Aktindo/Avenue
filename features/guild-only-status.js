@@ -8,22 +8,19 @@ const Discord = require('discord.js')
 const result = axios.get('https://kt6y7ldjbz7v.statuspage.io/api/v2/status.json')
 
 const resultObj = {
-    none: "✅ All Systems Operational",
+    none: "<:greenTick:792047523803299850> All Systems Operational",
     minor: "❗ Minor Outage/Degraded Perfomance",
     major: "⚠ Major Outage",
-    critical: "❌ Critical",
+    critical: "<:redTick:792047662202617876> Critical",
     maintenance: "🔍 Maintenance"
 }
 
 const fetchData = async () => {
-  importantData = new Discord.MessageEmbed()
-  .setTitle('Bot Status')
-  .setDescription(resultObj[(await result).data.status.indicator])
-  .setColor('AQUA')
+  importantData = `**Bot Status**\n${resultObj[(await result).data.status.indicator]}`
 }
 
 const getText = () => {
-  const res = importantData.setFooter(`Updating in ${counter} seconds...`)
+  const res = (`${importantData}\n\nUpdating in ${counter} seconds...`)
   return res
 }
 

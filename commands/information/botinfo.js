@@ -21,7 +21,7 @@ module.exports = {
             .addField('Invite', 'If you want to use me in your server(s), click [**here**](https://discord.com/oauth2/authorize?client_id=790198442668064789&scope=bot&permissions=2113273591)', false)
             .addField('Current ping', `Bot Evaluation Time - **${Math.round((m.createdAt - message.createdAt)/(client.ws.ping))}**ms \n Bot Latency - **${Math.round(m.createdAt - message.createdAt)}**ms \n API Latency - **${Math.round(client.ws.ping)}**ms`, false)
             .addField('Uptime', duration, false)
-            .setColor('AQUA')
+            .setColor('BLURPLE')
             await m.edit(embed)
             m.edit("\u200b")
         })
