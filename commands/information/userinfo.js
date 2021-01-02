@@ -1,6 +1,5 @@
 const { MessageEmbed } = require('discord.js')
 const messageCountModel = require('../../models/user-messagecount-model')
-const guildRoleModel = require('../../models/guild-roles-model')
 module.exports = {
     name: "userinfo",
     description: "Displays some information on the user!",
@@ -15,13 +14,13 @@ module.exports = {
         const userStatus = () => {
             switch (member.user.presence.status) {
                 case "online":
-                    return "<a:online:781384162195668994> Online";
+                    return "<:online:794157545244852244> Online";
                     case "idle":
-                        return "<a:idle:781384162527412234> Idle";
+                        return "<:idle:794157544397340702> Idle";
                         case "dnd":
-                            return "<a:dnd:781384163420536902> DND";
+                            return "<:dnd:794157544552923136> DND";
                             case "offline":
-                                return "<a:offline:781384295825670155> Offline";
+                                return "<:invisible:794157545383002152> Offline";
                                 default:
                                     return "This user's status is not cached in the bot's data";
             }
@@ -46,7 +45,7 @@ module.exports = {
         .addField('Status', `${userStatus()}`, false)
         .addField('Total Messages', messageCount, true)
         .addField(`Roles[${member.roles.cache.size}]`, memberRoles, false)
-        .setColor('AQUA')
+        .setColor('BLURPLE')
         message.channel.send(userinfo)
     }
 }

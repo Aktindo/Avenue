@@ -61,7 +61,7 @@ module.exports = {
         .addField('Last 3 Reports', reportData, false)
         .addField('Last 3 Bans', banData, false)
         .setFooter(`In ${message.guild.name}`, message.guild.iconURL())
-        .setColor('AQUA')
+        .setColor('BLURPLE')
         loadingMsg.edit(embed)
     }
 }

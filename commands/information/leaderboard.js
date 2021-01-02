@@ -66,7 +66,7 @@ module.exports = {
             .setAuthor(message.guild.name, message.guild.iconURL({dynamic: true}))
             .setTitle('Message Leaderboard')
             .setDescription(text)
-            .setColor('AQUA')
+            .setColor('BLURPLE')
         )
     }
 }

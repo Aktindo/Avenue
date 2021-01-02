@@ -2,7 +2,9 @@ const mongo = require('../util/mongo')
 const chalk = require('chalk')
 const moment = require('moment')
 const fs = require('fs')
+const config = require('../config/config.json')
 module.exports = async client => {
+    client.config = config
     console.log(`${chalk.green(`[${moment(Date.now()).format()}]`)} Logged in as - ${client.user.username}!`)
     client.user.setPresence({
         status: "online",

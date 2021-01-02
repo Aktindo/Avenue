@@ -4,7 +4,7 @@ const guildVerificationSystemModel = require("../../models/guild-verification-sy
 module.exports = {
     name: "verify",
     description: "Verifies you in a server(if one set)",
-    category: "misc",
+    category: "util",
     cooldowns: 5,
     aliases: ["accept"],
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
