@@ -1,0 +1,13 @@
+nav.navbar.navbar-expand-lg.navbar-light(style='background-color: #7289DA;')
+  a.navbar-brand(href='/') Avenue
+  button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar', aria-controls='navbar', aria-expanded='false', aria-label='Toggle navigation')
+    span.navbar-toggler-icon
+  #navbar.collapse.navbar-collapse
+    .navbar-nav
+      a.nav-link(href='/commands')
+        i.fas.fa-folder
+        span.pl-1 Commands
+    .navbar-nav.ml-auto
+      a.nav-link(href='/login') 
+        i.fas.fa-sign-in-alt
+        span.pl-1 Login

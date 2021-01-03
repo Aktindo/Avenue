@@ -20,7 +20,9 @@ fs.readdir("./events/", (err, files) => {
 	});
   });
 
-client.commands = new DiscordJS.Collection();
+const commands = new DiscordJS.Collection();
+
+client.commands = commands
 
 const commandFolders = fs.readdirSync('./commands/')
 let commandFoldersArr = []
@@ -40,4 +42,8 @@ commandFoldersArr.forEach(c => {
 	
 })
 
+require('./dashboard/server')
+
 client.login(process.env.token)
+
+module.exports.commands =  commands

@@ -1,0 +1,31 @@
+include includes/mixins
+
+doctype html
+html(lang="english")
+  head
+    include includes/header.pug
+    script(src="/js/commands.js", defer)
+    link(rel="stylesheet", href="/css/commands.css")
+  body
+    include includes/navbar.pug
+    .jumbotron.text-center.bg-transparent
+        .container
+            h1.display-3 Avenue - Commands
+            p.lead View all the commands for Avenue!
+            hr
+            section#commands
+            .d-flex.justify-content-center
+              #search.form-group.p-3
+                input.form-control(type="search")
+              button.btn
+                i.fas.fa-search
+            .row
+                .col-sm-3.categories
+                    each category in categories
+                      +category(category)
+                .col-sm-9
+                    each command in commands
+                      +command(command)
+
+
+    
