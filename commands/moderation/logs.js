@@ -3,6 +3,7 @@ const reportSystemModel = require('../../models/report-system-model')
 const warningModel = require('../../models/warning-system-model')
 const banSystemModel = require('../../models/ban-system-model')
 const moment = require('moment')
+const kickSystemModel = require('../../models/kick-system-model')
 module.exports = {
     name: "logs",
     description: "Views all the logs for a user.",
@@ -43,6 +44,15 @@ module.exports = {
             banData += `**Case Number - ${i.caseNumber}**\nModerator - <@${i.moderatorId}>\nReason - ${i.reason}\nTime - ${moment(i.timestamp).calendar()}\n\n`
         })
         if (!banData) banData += 'No previous bans for the user!'
+        const kickLogs = await kickSystemModel.find({
+            guildId: message.guild.id,
+            userId: user.id
+        }).limit(3)
+        let kickData = ''
+        kickLogs.map(async i => {
+            kickData += `**Case Number - ${i.caseNumber}**\nModerator - <@${i.moderatorId}>\nReason - ${i.reason}\nTime - ${moment(i.timestamp).calendar()}\n\n`
+        })
+        if (!kickData) kickData += 'No previous bans for the user!'
         const reportLogs = await reportSystemModel.find({
             guildId: message.guild.id,
             userId: user.id
@@ -60,6 +70,7 @@ module.exports = {
         .addField('Last 3 Warnings', warnData, false)
         .addField('Last 3 Reports', reportData, false)
         .addField('Last 3 Bans', banData, false)
+        .addField('Last 3 Kicks', kickData, false)
         .setFooter(`In ${message.guild.name}`, message.guild.iconURL())
         .setColor('BLURPLE')
         loadingMsg.edit(embed)

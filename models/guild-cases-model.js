@@ -6,6 +6,7 @@ const guildCasesModel = mongoose.Schema({
     warnCases: Number,
     reportCases: Number,
     banCases: Number,
+    kickCases: Number,
 })
 
 module.exports = mongoose.model('guild-cases-data', guildCasesModel)

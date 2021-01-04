@@ -1,7 +1,8 @@
 const { MessageEmbed } = require('discord.js')
 const warningModel = require('../../models/warning-system-model')
 const reportSystemModel = require('../../models/report-system-model')
-const report = require('./report')
+const banSystemModel = require('../../models/ban-system-model')
+const kickSystemModel = require('../../models/kick-system-model')
 module.exports = {
     name: "editcase",
     description: "Edits an existing case of a user.",
@@ -40,7 +41,19 @@ module.exports = {
         }, {
             reason: newReason
         })
-        if (!warningResult && !reportResult) {
+        const banResult = await banSystemModel.findOneAndUpdate({
+            guildId: message.guild.id,
+            caseNumber,
+        }, {
+            reason: newReason
+        })
+        const kickResult = await kickSystemModel.findOneAndUpdate({
+            guildId: message.guild.id,
+            caseNumber,
+        }, {
+            reason: newReason
+        })
+        if (!warningResult && !reportResult && !kickResult && !banResult) {
             message.channel.send(
                 new MessageEmbed()
                 .setAuthor(message.author.username)
@@ -48,7 +61,7 @@ module.exports = {
                 .setColor('RED')
             )
         }
-        else if (warningResult || reportResult) {
+        else if (warningResult || reportResult || kickResult || banResult) {
             message.channel.send(
                 new MessageEmbed()
                 .setAuthor(message.author.username)

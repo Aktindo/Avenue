@@ -5,7 +5,7 @@ const chalk = require('chalk')
 const moment = require('moment')
 
 const client = new DiscordJS.Client({
-    partials: ['GUILD_MEMBER', 'MESSAGE', 'REACTION', 'USER'],
+    partials: ['MESSAGE', 'REACTION'],
 })
 
 fs.readdir("./events/", (err, files) => {

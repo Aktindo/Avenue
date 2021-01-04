@@ -1,13 +1,13 @@
 const { MessageEmbed } = require('discord.js')
 const guildCasesModel = require('../../models/guild-cases-model')
-const banSystemModel = require('../../models/ban-system-model')
+const kickSystemModel = require('../../models/kick-system-model')
 module.exports = {
-    name: "ban",
-    description: "Bans a user(does not delete their messages)",
+    name: "kick",
+    description: "Kicks a user",
     category: "moderation",
     cooldowns: 5,
-    requiredPermissions: ['BAN_MEMBERS'],
-    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS", "BAN_MEMBERS"],
+    requiredPermissions: ['KICK_MEMBERS'],
+    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS", "KICK_MEMBERS"],
     usage: "<user> [reason]",
     async execute(client, message, args) {
         const target = message.mentions.members.first() || message.guild.members.cache.get(args[0])
@@ -20,17 +20,7 @@ module.exports = {
         let reason = args.slice(1).join(' ')
         if (!reason) reason = "Not specified"
 
-        const allBans = await message.guild.fetchBans()
-        if (allBans.get(target.id)) {
-            return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> That user is already banned!')
-                .setColor('RED')
-            )
-        }
-
-        if (target.hasPermission('BAN_MEMBERS')) {
+        if (target.hasPermission('KICK_MEMBERS')) {
             return message.channel.send(
                 new MessageEmbed()
                 .setAuthor(message.author.username)
@@ -42,7 +32,7 @@ module.exports = {
         const loadingMsg = await message.channel.send(
             new MessageEmbed()
             .setAuthor(message.author.username)
-            .setDescription(`Banning ${target}... Please wait!`)
+            .setDescription(`Kicking ${target}... Please wait!`)
         )
 
         const cases = await guildCasesModel.findOneAndUpdate({
@@ -51,27 +41,26 @@ module.exports = {
             guildId: message.guild.id,
             $inc: {
                 totalCases: 1,
-                banCases: 1,
+                kickCases: 1,
             }
         }, {
             upsert: true,
             new: true,
         })
 
-        await new banSystemModel({
+        await new kickSystemModel({
             guildId: message.guild.id,
             userId: target.id,
             caseNumber: cases.totalCases,
-            banCaseNumber: cases.banCases,
+            kickCaseNumber: cases.kickCases,
             moderatorId: message.author.id,
             timestamp: new Date().getTime(),
             reason,
         }).save()
-
         await target.user.send(
             new MessageEmbed()
             .setAuthor(target.user.username, target.user.displayAvatarURL())
-            .setTitle(`Case Number #${cases.totalCases} | Ban`)
+            .setTitle(`Case Number #${cases.totalCases} | Kick`)
             .setDescription(`You have been kicked in ${message.guild.name} for \`${reason}\``)
             .addField('Moderator', message.author)
             .addField('Channel', message.channel)
@@ -81,14 +70,14 @@ module.exports = {
         message.channel.send(
             new MessageEmbed()
             .setAuthor(message.author.username)
-            .setDescription(`<:greenTick:792047523803299850> The user has been banned and the ban has been logged for ${target}... Unfortunately, I could not DM them!`)
+            .setDescription(`<:greenTick:792047523803299850> The user has been kicked and the kick has been logged for ${target}... Unfortunately, I could not DM them!`)
             .setColor('GREEN')
         ))
-        await message.guild.members.ban(target.id, {reason: reason})
+        await target.kick(reason)
         loadingMsg.edit(
             new MessageEmbed()
-            .setTitle(`Case Number #${cases.totalCases} | Ban`)
-            .setDescription(`Successfully banned ${target}`)
+            .setTitle(`Case Number #${cases.totalCases} | Kick`)
+            .setDescription(`Successfully kicked ${target}`)
             .setColor('RED')
         )
 

@@ -66,7 +66,7 @@ module.exports = {
                 .setTitle('Server Welcome Settings')
                 .addField("Welcome Channel", channel, true)
                 .addField('Welcome Text', welcomeText, true)
-                .setColor('AQUA')
+                .setColor('BLURPLE')
             )
         }
         else {

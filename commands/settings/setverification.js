@@ -97,9 +97,6 @@ module.exports = {
             let channelData = await guildChannelsModel.findOne({
                 guildId: message.guild.id
             })
-
-
-
             let verificationChannel
             let role
             let messageChannel
@@ -128,7 +125,7 @@ module.exports = {
                 .addField('Message Channel', messageChannel, true)
                 .addField('Role', role, true)
                 .addField('Message', text, false)
-                .setColor('AQUA')
+                .setColor('BLURPLE')
             )
         }
         else {
