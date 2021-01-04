@@ -32,7 +32,6 @@ module.exports = {
         }
         else {
             const command = client.commands.get(commandName) || client.commands.find(c => c.aliases && c.aliases.includes(commandName));
-            let data = []
             if (!command) {
                 return message.channel.send(
                     new MessageEmbed()
@@ -42,19 +41,32 @@ module.exports = {
                 )
             }
             else {
-                if (command.description) data.push(`**Description:** ${command.description}`)
-                if (command.cooldowns) data.push(`**Cooldown:**\n User - ${command.cooldowns}s`)
-                if (command.aliases) data.push(`**Aliases:** \`${command.aliases.join(', ')}\``)
-                if (command.usage) data.push(`**Usage:**\n\`${process.env.prefix}${command.name} ${command.usage}\``)
-                if (command.variables) data.push(`**Variables:**\n\`${command.variables.join(', ')}\``)
-                const embed = new MessageEmbed()
-                .setAuthor(message.author.username, message.author.displayAvatarURL())
-                .setTitle(`Command Name: ${command.name}`)
-                .setDescription(data)
-                .addField('Keys', '`<>` - Required\n`[]` - Optional\n`|` - Or')
+                const helpEmbed = new MessageEmbed()
+                .setAuthor(client.user.username, client.user.displayAvatarURL())
                 .setColor('BLURPLE')
-                message.channel.send(embed)
+                .addField('Command', capitalizeFirstLetter(command.name), false) 
+                let commandUsage
+                if (command.usage) commandUsage = ` ${command.usage}`
+                else commandUsage = ""
+                if (command.description) helpEmbed.addField('Description', command.description, false)
+                if (command.aliases) helpEmbed.addField('Aliases', command.aliases.map(a => `\`${a}\``).join(', '), false)
+                if (command.cooldowns) helpEmbed.addField('Cooldowns', `User - ${command.cooldowns}s`)
+                helpEmbed.addField('Usage', `\`${process.env.prefix}${command.name}${commandUsage}\``)
+                if (command.requiredPermissions) {
+                    const permissions = command.requiredPermissions.map(p => capitalizeFirstLetter(p).split('_').join(' ')).join(', ')
+                    helpEmbed.addField('Permissions Required', permissions, false)
+                }
+                if (command.botPermissions) {
+                    const permissions = command.botPermissions.map(p => capitalizeFirstLetter(p).split('_').join(' ')).join(', ')
+                    helpEmbed.addField('Permissions Required by Bot', permissions, false)
+                }
+                helpEmbed.addField('Additional Note', 'Arguments that are wrapped with `<>` like `<query>` are required.\nArguments that are wrapped with `[]` like `[query]` are optional.\nA `|` after the argument means you can use either of the two arguments.')
+                message.channel.send(helpEmbed)
             }
         }
     }
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }

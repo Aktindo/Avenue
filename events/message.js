@@ -63,8 +63,7 @@ module.exports = async (client, message) => {
             )
         }
     }
-
-    const cooldowns = new DiscordJS.Collection()
+    const cooldowns = new DiscordJS.Collection();
 
     if (!cooldowns.has(command.name)) {
         cooldowns.set(command.name, new DiscordJS.Collection());
@@ -72,21 +71,19 @@ module.exports = async (client, message) => {
     
     const now = Date.now();
     const timestamps = cooldowns.get(command.name);
-    const cooldownAmount = (command.cooldown || 3) * 1000;
+    const cooldownAmount = (command.cooldowns || 3) * 1000;
     
     if (timestamps.has(message.author.id)) {
-        if (timestamps.has(message.author.id)) {
-            const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-        
-            if (now < expirationTime) {
-                const timeLeft = (expirationTime - now) / 1000;
-                return message.reply(
-                    new MessageEmbed()
-                    .setAuthor(message.author.username)
-                    .setDescription(`<:redTick:792047662202617876> The command \`${command.name}\` is on cooldown.\nYou can use it again in \`${timeLeft}s\`!`)
-                    .setColor('RED')
-                );
-            }
+        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+        if (now < expirationTime) {
+            const timeLeft = (expirationTime - now) / 1000;
+            return message.channel.send(
+                new MessageEmbed()
+                .setAuthor(message.author.username)
+                .setDescription(`<:redTick:792047662202617876> The command \`${command.name}\` is on cooldown.\nYou can use it again in \`${timeLeft.toFixed()}s\`!`)
+                .setColor('RED')
+            );
         }
     }
 
