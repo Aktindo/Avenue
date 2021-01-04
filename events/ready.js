@@ -3,6 +3,7 @@ const chalk = require('chalk')
 const moment = require('moment')
 const fs = require('fs')
 const config = require('../config/config.json')
+const { MessageEmbed } = require('discord.js')
 module.exports = async client => {
     client.config = config
     console.log(`${chalk.green(`[${moment(Date.now()).format()}]`)} Logged in as - ${client.user.username}!`)
@@ -45,4 +46,12 @@ module.exports = async client => {
         });
       });
     await mongo().then(console.log(`${chalk.green(`[${moment(Date.now()).format()}]`)} Connected to database!`)).catch(e => console.error(`${chalk.red(`[${moment(Date.now()).format()}]`)} Error while connecting to database - ${e}`))
+    const restartChannel = client.channels.cache.get("794088607575965708")
+    await restartChannel.send(
+        new MessageEmbed()
+        .setTitle('Restart Notification')
+        .setDescription(`There was a restart on **${moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a')}**.\nIt can be due to an error or ${client.users.cache.get("683879319558291539")} restarted me.`)
+        .setColor('BLURPLE')
+        .setTimestamp()
+    )
 }

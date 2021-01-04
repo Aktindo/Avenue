@@ -5,7 +5,7 @@ const chalk = require('chalk')
 const moment = require('moment')
 
 const client = new DiscordJS.Client({
-    partials: ['GUILD_MEMBER', 'MESSAGE', 'REACTION', 'USER'],
+    partials: ['MESSAGE', 'REACTION'],
 })
 
 fs.readdir("./events/", (err, files) => {
@@ -20,7 +20,9 @@ fs.readdir("./events/", (err, files) => {
 	});
   });
 
-client.commands = new DiscordJS.Collection();
+const commands = new DiscordJS.Collection();
+
+client.commands = commands
 
 const commandFolders = fs.readdirSync('./commands/')
 let commandFoldersArr = []
@@ -40,4 +42,8 @@ commandFoldersArr.forEach(c => {
 	
 })
 
+require('./dashboard/server')
+
 client.login(process.env.token)
+
+module.exports.commands =  commands

@@ -1,4 +1,6 @@
 const { MessageEmbed } = require('discord.js')
+const banSystemModel = require('../../models/ban-system-model')
+const kickSystemModel = require('../../models/kick-system-model')
 module.exports = {
     name: "deletecase",
     description: "Deletes an existing case of a user.",
@@ -34,13 +36,21 @@ module.exports = {
             guildId: message.guild.id,
             caseNumber: caseNumber,
         })
-        if (!warningResult && !reportResult) return message.channel.send(
+        const banResult = await banSystemModel.findOneAndRemove({
+            guildId: message.guild.id,
+            caseNumber: caseNumber,
+        })
+        const kickResult = await kickSystemModel.findOneAndRemove({
+            guildId: message.guild.id,
+            caseNumber: caseNumber,
+        })
+        if (!warningResult && !reportResult && banResult && kickResult) return message.channel.send(
             new MessageEmbed()
             .setAuthor(message.author.username)
             .setDescription('<:redTick:792047662202617876> No case found with that case number!')
             .setColor('RED')
         )
-        else if (warningResult || reportResult) {
+        else if (warningResult || reportResult || banResult || kickResult) {
             message.channel.send(
                 new MessageEmbed()
                 .setAuthor(message.author.username)
