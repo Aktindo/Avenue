@@ -7,7 +7,7 @@ const kickSystemModel = require('../../models/kick-system-model')
 module.exports = {
     name: "logs",
     description: "Views all the logs for a user.",
-    category: "moderation",
+    category: "Moderation",
     cooldowns: 5,
     usage: "[user]",
     requiredPermissions: ['MANAGE_MESSAGES'],

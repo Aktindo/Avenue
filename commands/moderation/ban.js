@@ -4,7 +4,7 @@ const banSystemModel = require('../../models/ban-system-model')
 module.exports = {
     name: "ban",
     description: "Bans a user(does not delete their messages)",
-    category: "moderation",
+    category: "Moderation",
     cooldowns: 5,
     requiredPermissions: ['BAN_MEMBERS'],
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS", "BAN_MEMBERS"],

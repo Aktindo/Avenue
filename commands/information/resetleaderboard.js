@@ -4,7 +4,7 @@ module.exports = {
     name: "resetleaderboard",
     description: "Resets a server leadrboard!",
     aliases: ["rlb"],
-    category: "information",
+    category: "Information",
     cooldowns: 5,
     guildOnly: true,
     requiredPermissions: ['ADMINISTRATOR'],

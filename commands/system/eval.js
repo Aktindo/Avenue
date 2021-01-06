@@ -4,7 +4,7 @@ module.exports = {
     name: "eval",
     aliases: ["run", "r"],
     description: "Evaluates a javascript code given!",
-    category: "system",
+    category: "System",
     cooldowns: 5,
     usage: "<code>",
     botOwnerOnly: true,
@@ -13,7 +13,9 @@ module.exports = {
     execute(client, message, args) {
         try {
             const code = args.join(" ");
-            if (!code) return message.channel.send('Please provide some code.')
+            if (!code) return message.channel.send(
+                client.embedError(message, "Please provide some code!")
+            )
             let evaled = eval(code);
       
             if (typeof evaled !== "string") {
@@ -31,7 +33,7 @@ module.exports = {
         } catch (err) {
             const embed = new DiscordJS.MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL())
-            .setTitle('Error')
+            .setTitle('Error while executing code')
             .setDescription(`\`\`\`xl\n${clean(err)}\`\`\``)
             .setColor('RED')
             message.channel.send(embed)

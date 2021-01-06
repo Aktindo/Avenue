@@ -4,7 +4,7 @@ const kickSystemModel = require('../../models/kick-system-model')
 module.exports = {
     name: "kick",
     description: "Kicks a user",
-    category: "moderation",
+    category: "Moderation",
     cooldowns: 5,
     requiredPermissions: ['KICK_MEMBERS'],
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS", "KICK_MEMBERS"],

@@ -3,7 +3,7 @@ require('dotenv').config()
 module.exports = {
     name: "help",
     description: "A command which displays all the commands of the bot.",
-    category: "system",
+    category: "System",
     aliases: ["h", "info"],
     cooldowns: 5,
     usage: "[command_name]",
@@ -11,11 +11,11 @@ module.exports = {
     execute(client, message, args) {
         let commandName = args.join("-")
         if (!commandName) {
-            let infoCommands = client.commands.filter(cmd => cmd.category == "information").map(c => `\`${c.name}\``).join(", ")
-            let moderationCommands = client.commands.filter(cmd => cmd.category == "moderation").map(c => `\`${c.name}\``).join(", ")
-            let settingCommands = client.commands.filter(cmd => cmd.category == "settings").map(c => `\`${c.name}\``).join(", ")
-            let systemCommands = client.commands.filter(cmd => cmd.category == "system").map(c => `\`${c.name}\``).join(", ")
-            let utilCommands = client.commands.filter(cmd => cmd.category == "util").map(c => `\`${c.name}\``).join(", ")
+            let infoCommands = client.commands.filter(cmd => cmd.category == "Information").map(c => `\`${c.name}\``).join(", ")
+            let moderationCommands = client.commands.filter(cmd => cmd.category == "Moderation").map(c => `\`${c.name}\``).join(", ")
+            let settingCommands = client.commands.filter(cmd => cmd.category == "Settings").map(c => `\`${c.name}\``).join(", ")
+            let systemCommands = client.commands.filter(cmd => cmd.category == "System").map(c => `\`${c.name}\``).join(", ")
+            let utilCommands = client.commands.filter(cmd => cmd.category == "Utility").map(c => `\`${c.name}\``).join(", ")
 
             const embed = new MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL())
@@ -60,7 +60,7 @@ module.exports = {
                     const permissions = command.botPermissions.map(p => capitalizeFirstLetter(p).split('_').join(' ')).join(', ')
                     helpEmbed.addField('Permissions Required by Bot', permissions, false)
                 }
-                helpEmbed.addField('Additional Note', 'Arguments that are wrapped with `<>` like `<query>` are required.\nArguments that are wrapped with `[]` like `[query]` are optional.\nA `|` after the argument means you can use either of the two arguments.')
+                helpEmbed.addField('Additional Note', 'Arguments that are wrapped with `<>` like `<query>` are required.\nArguments that are wrapped with `[]` like `[query]` are optional.\nAny argument enclosed in `{}` after an argument means you can include that variable in the argument to create dynamic stuff.\nA `|` after the argument means you can use either of the two arguments.')
                 message.channel.send(helpEmbed)
             }
         }

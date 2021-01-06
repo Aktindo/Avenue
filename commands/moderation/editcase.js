@@ -6,7 +6,7 @@ const kickSystemModel = require('../../models/kick-system-model')
 module.exports = {
     name: "editcase",
     description: "Edits an existing case of a user.",
-    category: "moderation",
+    category: "Moderation",
     cooldowns: 5,
     usage: "<case_number> [reason]",
     requiredPermissions: ['MANAGE_MESSAGES'],
