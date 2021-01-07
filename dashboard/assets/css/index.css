@@ -29,6 +29,7 @@ body {
 
 .container .moderation {
     background-color: #F39C12;
+    max-width: 45rem;
     position: relative;
     top: 0;
     transition: top ease 0.5s;
@@ -40,6 +41,7 @@ body {
 
 .container .information {
     background-color: #2ECC71;
+    max-width: 45rem;
     position: relative;
     top: 0;
     transition: top ease 0.5s;
@@ -51,6 +53,7 @@ body {
 
 .container .utility {
     background-color: #3498DB;
+    max-width: 45rem;
     position: relative;
     top: 0;
     transition: top ease 0.5s;

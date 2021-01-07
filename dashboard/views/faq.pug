@@ -1,0 +1,43 @@
+doctype html
+html(lang="english")
+  head
+    include includes/header.pug
+    link(rel='stylesheet', href='/css/faq.css')
+    link(rel='preconnect', href='https://fonts.gstatic.com')
+    link(href='https://fonts.googleapis.com/css2?family=Poppins&display=swap', rel='stylesheet')
+  body
+    include includes/navbar.pug
+    .jumbotron.text-center.bg-transparent
+        h1.display-3 FAQ
+        p.lead Have any questions? A lot of frequently asked questions are listed below! Hope it helps.
+        a.btn.btn-primary.btn-lg(class='mainBtn', href='#faqquestion', role='button') Take me there!
+    .container
+        .row
+            .col-md-12
+              #accordionExample.accordion
+                .card
+                  #headingOne.card-header
+                    h2.mb-0(id='faqquestion')
+                      button.btn.btn-link.btn-block.text-left(type='button', data-toggle='collapse', data-target='#collapseOne', aria-expanded='true', aria-controls='collapseOne')
+                        | Why is the bot offline?
+                  #collapseOne.collapse.show(aria-labelledby='headingOne', data-parent='#accordionExample')
+                    .card-body
+                      | Sometimes, we push updates to our VPS, so it can result in a brief downtime. However we keep you notified on https://avenuebot.statuspage.io
+                .card
+                  #headingTwo.card-header
+                    h2.mb-0
+                      button.btn.btn-link.btn-block.text-left.collapsed(type='button', data-toggle='collapse', data-target='#collapseTwo', aria-expanded='false', aria-controls='collapseTwo')
+                        | Why is the bot not working?
+                  #collapseTwo.collapse(aria-labelledby='headingTwo', data-parent='#accordionExample')
+                    .card-body
+                      | Make sure the prefix is correct. It is
+                      strong  a! 
+                      | by default. You can also mention it like @Avenue!
+                .card
+                  #headingThree.card-header
+                    h2.mb-0
+                      button.btn.btn-link.btn-block.text-left.collapsed(type='button', data-toggle='collapse', data-target='#collapseThree', aria-expanded='false', aria-controls='collapseThree')
+                        | Why cannot the bot give/take any roles or take any moderation action?
+                  #collapseThree.collapse(aria-labelledby='headingThree', data-parent='#accordionExample')
+                    .card-body
+                      | The most relevant answer is that you played with the bot's permissions. Please do not change the permissions it came with. If that is not working, make sure the Avenue role is above all the roles.
