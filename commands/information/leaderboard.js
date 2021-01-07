@@ -4,7 +4,7 @@ module.exports = {
     name: "leaderboard",
     description: "Shows the server's top members with the most messages!",
     aliases: ["messagelb", "lb"],
-    category: "information",
+    category: "Information",
     cooldowns: 5,
     usage: "[limit]",
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],

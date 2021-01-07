@@ -5,7 +5,7 @@ const warningModel = require('../../models/warning-system-model')
 module.exports = {
     name: "warn",
     description: "Warns a user.",
-    category: "moderation",
+    category: "Moderation",
     cooldowns: 5,
     requiredPermissions: ['MANAGE_MESSAGES'],
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],

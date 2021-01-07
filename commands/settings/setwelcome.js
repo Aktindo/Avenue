@@ -4,10 +4,10 @@ const guildWelcomeModel = require('../../models/guild-welcome-model')
 module.exports = {
     name: "setwelcome",
     description: "A command to set the welcome text and see server welcome settings",
-    category: "settings",
+    category: "Settings",
     cooldowns: 5,
     aliases: ["welcome"],
-    usage: "<text>|[--simjoin]|[--settings]",
+    usage: "<text{user|server|membercount}>|[--simjoin]|[--settings]",
     variables: ["{member}", "{server}", "{membercount}"],
     requiredPermissions: ['ADMINISTRATOR'],
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
@@ -19,33 +19,16 @@ module.exports = {
             guildId: message.guild.id
         })
         if (!args[0]) return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription(`<:redTick:792047662202617876> Invalid syntax! Please use \`[prefix]setwelcome ${this.usage}\``)
-            .setColor('RED')
+            client.embedError(message, `Invalid Syntax!\nPlease use \`[prefix]${this.name} ${this.usage}\``)
         )
         if (args[0].toLowerCase() === '--simjoin') {
-            let channel
-            if (channelData) {
-                channel = message.guild.channels.cache.get(channelData.welcomeChannel)
-                if (!channel) {
-                    return message.channel.send(
-                        new MessageEmbed()
-                        .setAuthor(message.author.username)
-                        .setDescription('<:redTick:792047662202617876> You cannot simulate the join right now because this server has no welcome channel set.')
-                        .setColor('RED')
-                    )
-                }
+            const channel = message.guild.channels.cache.get(channelData.welcomeChannel)
+            if (channel && welcomeData.text) {
+                client.emit('guildMemberAdd', message.member)
             }
-            if (!welcomeData) {
-                return message.channel.send(
-                    new MessageEmbed()
-                    .setAuthor(message.author.username)
-                    .setDescription('<:redTick:792047662202617876> You cannot simulate the join right now because this server has no welcome text set.')
-                    .setColor('RED')
-                )
-            }
-            client.emit('guildMemberAdd', message.member)
+            else return message.channel.send(
+                client.embedError(message, `You cannot simulate the welcome as there is no welcome channel/text set.\nPlease use \`[prefix]${this.name} --settings\` to view the server welcome settings.`)
+            )
         }
         else if (args[0].toLowerCase() === '--settings') {
             let channel
@@ -60,23 +43,24 @@ module.exports = {
             if (!welcomeData) {
                 welcomeText = 'No text set'
             }
-            message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.guild.name, message.guild.iconURL())
-                .setTitle('Server Welcome Settings')
-                .addField("Welcome Channel", channel, true)
-                .addField('Welcome Text', welcomeText, true)
-                .setColor('BLURPLE')
-            )
+            const embed = new MessageEmbed()
+            .setAuthor(message.guild.name, message.guild.iconURL())
+            .setTitle(`Welcome Settings`)
+            .addField('Channel', channel, true)
+            .addField('Text', welcomeText, true)
+            .setColor('BLURPLE')
+            message.channel.send(embed)
         }
         else {
             let text = args.join(' ')
             if (!text) return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> Please provide some text!')
-                .setColor('RED')
+                client.embedError(message, `Invalid Syntax!\nPlease use \`[prefix]${this.name} ${this.usage}\``)
             )
+            if (text.length > 1024) {
+                return message.channel.send(
+                    client.embedError(message, `The verification message cannot be longer than 1024 characters.\nYou provided (${text.length}/1024)`)
+                )
+            }
             await guildWelcomeModel.findOneAndUpdate({
                 guildId: message.guild.id
             }, {
@@ -86,10 +70,7 @@ module.exports = {
                 upsert: true
             })
             message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription(`<:greenTick:792047523803299850> Successfully set the \`welcome\` text!`)
-                .setColor('GREEN')
+                client.embedSuccess(message, `Successfully set the \`welcome\` text!`)
             )   
         }
     }

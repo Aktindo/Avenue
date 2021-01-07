@@ -5,26 +5,21 @@ const guildVerificationSystemModel = require("../../models/guild-verification-sy
 module.exports = {
     name: "setverification",
     description: "Set all the verification system you need in your server!",
-    category: "settings",
-    usage: "<role|messagechannel|message>|[--info|--settings] <<role|ID>|<channel|ID>|<message>>",
+    aliases: ["verification"],
+    category: "Settings",
+    usage: "<role|messagechannel|message{user|server|membercount}>|[--info|--settings] <<role|ID>|<channel|ID>|<message>>",
     cooldowns: 5,
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     requiredPermissions: ['ADMINISTRATOR'],
     variables: ["{member}", "{server}", "{membercount}"],
     async execute(client, message, args) {
         if (!args[0]) return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription(`<:redTick:792047662202617876> Incorrect Syntax! Please use \`[prefix]${this.name} ${this.usage}\``)
-            .setColor('RED')
+            client.embedError(message, `Invalid syntaxx!\nPlease use [prefix]${this.name} ${this.usage}`)
         )
         if (args[0].toLowerCase() == "role") {
             let role = message.mentions.roles.first() || message.guild.roles.cache.get(args[1])
             if (!role) return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription(`<:redTick:792047662202617876> No role found with that mention or ID.`)
-                .setColor('RED')
+                client.embedError(message, "No role found with that mention or ID.")
             )
             
             await guildVerificationSystemModel.findOneAndUpdate({
@@ -36,19 +31,13 @@ module.exports = {
                 upsert: true
             })
             message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription(`<:greenTick:792047523803299850> Successfully set ${role} as the \`verification\` role!`)
-                .setColor('GREEN')
+                client.embedSuccess(message, `Successfully set ${role} as the verification \`role\`.`)
             )
         }
         else if (args[0].toLowerCase() == 'messagechannel') {
             let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[1])
             if (!channel) return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription(`<:redTick:792047662202617876> No channel found with that mention or ID.`)
-                .setColor('RED')
+                client.embedError(message, "No channel found with that mention or ID.")
             )
             await guildVerificationSystemModel.findOneAndUpdate({
                 guildId: message.guild.id
@@ -59,14 +48,17 @@ module.exports = {
                 upsert: true
             })
             message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription(`<:greenTick:792047523803299850> Successfully set ${channel} as the \`message\` channel!`)
-                .setColor('GREEN')
+                client.embedSuccess(message, `Successfully set ${channel} as the verification \`messagechannel\`.`)
             )
         }
         else if (args[0].toLowerCase() == 'message') {
             let text = args.slice(1).join(" ")
+            if (!text) return message.channel.send(
+                client.embedError(message, "Please provide a verification message.")
+            )
+            if (text.length > 1024) return message.channel.send(
+                client.embedError(message, `The verification message cannot be longer than 1024 characters.\nYou provided (${text.length}/1024)`)
+            )
             await guildVerificationSystemModel.findOneAndUpdate({
                 guildId: message.guild.id
             }, {
@@ -76,18 +68,12 @@ module.exports = {
                 upsert: true
             })
             message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription(`<:greenTick:792047523803299850> Successfully set ${text} as the \`message\`!`)
-                .setColor('GREEN')
+                client.embedSuccess(message, `Successfully set the verification \`message\`.`)
             )
         }
         else if (args[0].toLowerCase() == '--info') {
             message.channel.send(
-                new MessageEmbed()
-                .setTitle('How to use the verification system?')
-                .setDescription(`Wondering how to set a verification system for your server?\nWell, you can set it using **Avenue**!\nFirst, set the verification channel using \`[prefix]setchannel\`\nThen, setup all the required types for the verification command - \`[prefix]help setverification\`\nYou can use the variables to make the message dynamic.\nAnd... That should be it! Whenever a user joins the server, they type \`[prefix]a!verify\` to verify themselves in the server.\n It will then add the role given to them and send the message in another channel!`)
-                .setColor('AQUA')
+                client.embedSuccess(message, 'Hey there, seems like you wanna setup a verification system.\nWe are currently working on the dashboard and will release it as soon as we finish!\nTo get help setting up the system, please join this [server](https://discord.gg/xSQMdPEvHt)\nThanks!')
             )
         }
         else if (args[0].toLowerCase() == '--settings') {
@@ -130,10 +116,7 @@ module.exports = {
         }
         else {
             message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription(`<:redTick:792047662202617876> Please use the correct syntax - "[prefix]${this.name} ${this.usage}"`)
-                .setColor('RED')
+                client.embedError(message, `Incorrect syntax!\nPlease use [prefix]${this.name} ${this.usage}`)
             )
         }
     }

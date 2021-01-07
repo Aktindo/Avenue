@@ -1,3 +1,71 @@
-.jumbotron {
+* {
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+body {
+    background-color: #23272A;
+}
+
+.firstJumbo {
     margin-top: 25vh; 
+}
+
+#inviteBtn {
+    background-color: #7289DA;
+    border: none;
+    transition: ease 0.6s;
+}
+
+#inviteBtn:hover {
+    box-shadow: 0 2px 25px 0 #7289DA;
+}
+
+.container h1 {
+    margin-top: 35vh;
+    margin-bottom: 10vh;
+    text-align: center;
+}
+
+.container .moderation {
+    background-color: #F39C12;
+    position: relative;
+    top: 0;
+    transition: top ease 0.5s;
+}
+
+.container .moderation:hover {
+    top: -10px;
+}
+
+.container .information {
+    background-color: #2ECC71;
+    position: relative;
+    top: 0;
+    transition: top ease 0.5s;
+}
+
+.container .information:hover {
+    top: -10px;
+}
+
+.container .utility {
+    background-color: #3498DB;
+    position: relative;
+    top: 0;
+    transition: top ease 0.5s;
+}
+
+.container .utility:hover {
+    top: -10px;
+}
+
+.commandBtn {
+    background-color: #7289DA !important;
+    border: none !important;
+    transition: ease 0.6s;
+}
+
+.commandBtn:hover {
+    box-shadow: 0 2px 25px 0 #7289DA;
 }

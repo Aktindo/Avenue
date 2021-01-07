@@ -3,7 +3,7 @@ module.exports = {
     name: "botinfo",
     description: "Displays some information on the bot!",
     aliases: ["bi"],
-    category: "information",
+    category: "Information",
     cooldowns: 5,
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     async execute(client, message, args) {

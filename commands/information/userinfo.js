@@ -4,7 +4,7 @@ module.exports = {
     name: "userinfo",
     description: "Displays some information on the user!",
     aliases: ["ui", 'whois', 'whoami'],
-    category: "information",
+    category: "Information",
     cooldowns: 5,
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     guildOnly: true,

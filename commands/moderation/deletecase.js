@@ -5,7 +5,7 @@ module.exports = {
     name: "deletecase",
     description: "Deletes an existing case of a user.",
     aliases: ["delcase"],
-    category: "moderation",
+    category: "Moderation",
     cooldowns: 5,
     usage: "<case_number>",
     requiredPermissions: ['MANAGE_MESSAGES'],

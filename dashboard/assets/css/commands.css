@@ -1,11 +1,38 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+body {
+    background-color: #23272A;
+}
+
 #search {
     max-width: 300px;
 }
-
 #search + button {
-    max-height: 64px;
+    height: 64px;
 }
 
 li {
     cursor: pointer;
+}
+
+.commands li {
+    background-color: #2C2F33; 
+    color: white;   
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #2C2F33 !important;
+}
+
+.list-group-item:hover {
+    background-color: #7289DA !important;
+    border-color: #7289DA !important;
+    transition: ease 0.3s;
+}
+
+.list-group-item.active {
+    background-color: #7289DA !important;
+    border-color: #7289DA !important;
 }

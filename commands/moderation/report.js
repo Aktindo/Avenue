@@ -6,7 +6,7 @@ const guildChannelModel = require('../../models/guild-channels-model')
 module.exports = {
     name: "report",
     description: "Reports a user to the authorities(if enabled)",
-    category: "moderation",
+    category: "Moderation",
     cooldowns: 5,
     aliases: ["reportuser"],
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],

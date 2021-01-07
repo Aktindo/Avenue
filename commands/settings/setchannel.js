@@ -3,7 +3,7 @@ const {MessageEmbed} = require('discord.js')
 module.exports = {
     name: "setchannel",
     description: "A command to set channels such as reports and stuff",
-    category: "settings",
+    category: "Settings",
     cooldowns: 5,
     aliases: ["set-channel"],
     usage: "<Reports|Welcome|Verification> <#channel|ID>",

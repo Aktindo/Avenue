@@ -3,7 +3,7 @@ module.exports = {
     name: "uptime",
     description: "Tells you the uptime of the bot.",
     aliases: ["up"],
-    category: "system",
+    category: "System",
     cooldowns: 5,
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     async execute(client, message, args) {
