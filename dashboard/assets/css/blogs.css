@@ -1,0 +1,24 @@
+* {
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+body {
+    background-color: #23272A;
+}
+
+.jumbotron {
+    margin-top: 25vh; 
+    margin-bottom: 35vh
+}
+
+.mainBtn {
+    background-color: #7289DA !important;
+    border: none !important;
+    transition: ease 0.6s;
+}
+
+.mainBtn:hover {
+    box-shadow: 0 2px 25px 0 #7289DA;
+}

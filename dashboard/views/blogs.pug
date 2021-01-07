@@ -1,0 +1,29 @@
+doctype html
+html(lang="english")
+  head
+    include includes/header.pug
+    link(rel='stylesheet', href='/css/blogs.css')
+    link(rel='preconnect', href='https://fonts.gstatic.com')
+    link(href='https://fonts.googleapis.com/css2?family=Poppins&display=swap', rel='stylesheet')
+  body
+    include includes/navbar.pug
+    .jumbotron.text-center.bg-transparent
+        h1.display-4 Latest Updates
+        p.lead
+            | You do not wanna miss on important updates... Get them here!
+        hr.my-4
+        a.btn.btn-primary.btn-lg(class='mainBtn', href='#devupdates', role='button') Take me there!
+    .container
+        h2(id="devupdates") From the developer
+        .row
+            .col-sm-9    
+                blockquote.twitter-tweet(data-theme='light')
+                    p(lang='in', dir='ltr') Hallo wumpus
+                    | &mdash; Aktindo (@aktindo) 
+                    a(href='https://twitter.com/aktindo/status/1345622897839144961?ref_src=twsrc%5Etfw') January 3, 2021
+                    script(async='', src='https://platform.twitter.com/widgets.js', charset='utf-8')    
+                blockquote.twitter-tweet
+                    p(lang='en', dir='ltr') Hah, nothing lol
+                    | &mdash; Aktindo (@aktindo) 
+                    a(href='https://twitter.com/aktindo/status/1344958127318286337?ref_src=twsrc%5Etfw') January 1, 2021
+                    script(async='', src='https://platform.twitter.com/widgets.js', charset='utf-8')    
