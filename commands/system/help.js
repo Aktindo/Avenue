@@ -60,7 +60,7 @@ module.exports = {
                     const permissions = command.botPermissions.map(p => capitalizeFirstLetter(p).split('_').join(' ')).join(', ')
                     helpEmbed.addField('Permissions Required by Bot', permissions, false)
                 }
-                helpEmbed.addField('Additional Note', 'Arguments that are wrapped with `<>` like `<query>` are required.\nArguments that are wrapped with `[]` like `[query]` are optional.\nAny argument enclosed in `{}` after an argument means you can include that variable in the argument to create dynamic stuff.\nA `|` after the argument means you can use either of the two arguments.')
+                helpEmbed.addField('Additional Note', 'Arguments that are wrapped with `<>` like `<query>` are required.\nArguments that are wrapped with `[]` like `[query]` are optional.\nA `|` after the argument means you can use either of the two arguments.\nArguments that end with a `?` have to be followed by the rule after it. Example - `<time?rule>`\nAny Argument enclosed in `()` need to be applied for the `?` rule. Example - `<time?endsWith(s|m|h)`\nAny argument enclosed in `{}` after an argument means you can include that variable in the argument to create dynamic stuff. Example - <welcomeMessage{user|server}>')
                 message.channel.send(helpEmbed)
             }
         }

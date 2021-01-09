@@ -10,7 +10,7 @@ module.exports = {
     category: "Moderation",
     cooldowns: 5,
     usage: "[user]",
-    requiredPermissions: ['MANAGE_MESSAGES'],
+    requiredPermissions: ['VIEW_AUDIT_LOG'],
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     guildOnly: true,
     async execute(client, message, args) {
