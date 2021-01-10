@@ -14,26 +14,17 @@ module.exports = {
         if (!limit) limit = 10
         if (isNaN(limit)) {
             return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> Please provide a valid number!')
-                .setColor('RED')
+              client.embedError(message, "Cannot parse a non-integer.")
             )
         }
         if (limit > 25) {
             return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> You cannot provide a number more than 25!')
-                .setColor('RED')
+              client.embedError(message, "Cannot parse an integer > 25.")
             )
         }
         if (limit <= 0) {
             return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> You cannot provide a number less or equal to 0!')
-                .setColor('RED')
+              client.embedError(message, "Cannot parse an integer < or = to 0.")
             )
         }
 
@@ -49,10 +40,7 @@ module.exports = {
           .limit(parseInt(limit))
 
           if (!results) return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription('<:redTick:792047662202617876> This server has no data.')
-            .setColor('RED')
+            client.embedError(message, "This server has no data.")
           )
       
         for (let counter = 0; counter < results.length; ++counter) {

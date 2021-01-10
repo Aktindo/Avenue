@@ -16,32 +16,20 @@ module.exports = {
         })
         const target = message.mentions.members.first() || message.guild.members.cache.get(args[0])
         if (!target) return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription('<:redTick:792047662202617876> Invalid Syntax! Please mention a user.')
-            .setColor('RED')
+            client.embedError(message, "Please mention a user. Use `[prefix]help warn` for more information on how to use this command.")
         )
 
         if (target.id === message.author.id) return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription('<:redTick:792047662202617876> You cannot warn yourself!')
-            .setColor('RED')
+            client.embedError(message, "You cannot warn yourself.")
         )
 
         if (target.user.bot) return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription('<:redTick:792047662202617876> You cannot warn bots!')
-            .setColor('RED')
+            client.embedError(message, "You cannot warn bots.")
         )
 
         if (target.hasPermission('MANAGE_MESSAGES')) {
             return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> That user is a mod/admin.')
-                .setColor('RED')
+                client.embedError(message, "You cannot warn a moderation/administrator.")
             )
         }
         
@@ -84,17 +72,14 @@ module.exports = {
             .setFooter(`Sent from ${message.guild.name}`, message.guild.iconURL())
         ).catch(e => message.channel.send(
             message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription(`<:greenTick:792047523803299850> Warning logged for ${target}... I could not DM them!`)
-                .setColor('GREEN')
+                client.embedSuccess(message, `Warning logged for ${target}... I could not message them.`)
             )
         ))
         loadingMessage.edit(
             new MessageEmbed()
             .setTitle(`Case Number #${cases.totalCases} | Warn`)
             .setDescription(`Successfully warned ${target}`)
-            .setColor('YELLOW')
+            .setColor('#F1C40F')
         )
     }
 }

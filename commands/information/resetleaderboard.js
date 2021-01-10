@@ -14,10 +14,7 @@ module.exports = {
             guildId: message.guild.id
         })
         if (!results) return message.channel.send( 
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription('<:redTick:792047662202617876> This server has no data!')
-            .setColor('RED')
+            client.embedError(message, "This server has no data.")
         )
         const msg = await message.channel.send(
             new MessageEmbed()

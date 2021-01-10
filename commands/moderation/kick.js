@@ -12,20 +12,14 @@ module.exports = {
     async execute(client, message, args) {
         const target = message.mentions.members.first() || message.guild.members.cache.get(args[0])
         if (!target) return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription('<:redTick:792047662202617876> Invalid Syntax! Please mention a user.')
-            .setColor('RED')
+            client.embedError(message, "Please mention a user.")
         )
         let reason = args.slice(1).join(' ')
         if (!reason) reason = "Not specified"
 
         if (target.hasPermission('KICK_MEMBERS')) {
             return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> That user is a mod/admin.')
-                .setColor('RED')
+                client.embedError(message, "That user is moderation/administrator.")
             )
         }
 
@@ -68,10 +62,7 @@ module.exports = {
             .setColor('RED')
         ).catch(e => 
         message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription(`<:greenTick:792047523803299850> The user has been kicked and the kick has been logged for ${target}... Unfortunately, I could not DM them!`)
-            .setColor('GREEN')
+            client.embedSuccess(message, `Kick logged for ${target}... I could not message them.`)
         ))
         await target.kick(reason)
         loadingMsg.edit(
