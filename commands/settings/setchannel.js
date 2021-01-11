@@ -6,25 +6,19 @@ module.exports = {
     category: "Settings",
     cooldowns: 5,
     aliases: ["set-channel"],
-    usage: "<Reports|Welcome|Verification> <#channel|ID>",
+    usage: "<Reports|Welcome|Starboard|Verification> <#channel|ID>",
     requiredPermissions: ['ADMINISTRATOR'],
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     async execute(client, message, args) {
         if (!args[0]) {
             return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> Incorrect Syntax! Please use `[prefix]setchannel <Reports> <#channel|ID>`')
-                .setColor('RED')
+                client.embedError(message, 'Please provide some arguments. See `[prefix]help setchannel` for more information on how to use this command.')
             )
         }
         if (args[0].toLowerCase() === 'reports') {
             let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[1])
             if (!channel) return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> No channel found with that ID.')
-                .setColor('RED')
+                client.embedError(message, "No channel found with that mention or ID.")
             )
             await guildChannelModel.findOneAndUpdate({
                 guildId: message.guild.id,
@@ -35,19 +29,13 @@ module.exports = {
                 upsert: true
             })
             message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription(`<:greenTick:792047523803299850> Successfully set ${channel} as the \`reports\` channel!`)
-                .setColor('GREEN')
+                client.embedSuccess(message, `Successfully set ${channel} as the \`report\` channel!`)
             )
         }
         else if (args[0].toLowerCase() === 'welcome') {
             let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[1])
             if (!channel) return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> No channel found with that ID.')
-                .setColor('RED')
+                client.embedError(message, "No channel found with that mention or ID.")
             )
             await guildChannelModel.findOneAndUpdate({
                 guildId: message.guild.id,
@@ -58,19 +46,30 @@ module.exports = {
                 upsert: true
             })
             message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription(`<:greenTick:792047523803299850> Successfully set ${channel} as the \`welcome\` channel!`)
-                .setColor('GREEN')
+                client.embedSuccess(message, `Successfully set ${channel} as the \`welcome\` channel!`)
+            )
+        }
+        else if (args[0].toLowerCase() === 'starboard') {
+            let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[1])
+            if (!channel) return message.channel.send(
+                client.embedError(message, "No channel found with that mention or ID.")
+            )
+            await guildChannelModel.findOneAndUpdate({
+                guildId: message.guild.id,
+            }, {
+                guildId: message.guild.id,
+                starboardChannel: channel.id
+            }, {
+                upsert: true
+            })
+            message.channel.send(
+                client.embedSuccess(message, `Successfully set ${channel} as the \`starboard\` channel!`)
             )
         }
         else if (args[0].toLowerCase() === 'verification') {
             let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[1])
             if (!channel) return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> No channel found with that ID.')
-                .setColor('RED')
+                client.embedError(message, "No channel found with that mention or ID.")
             )
             await guildChannelModel.findOneAndUpdate({
                 guildId: message.guild.id,
@@ -81,10 +80,7 @@ module.exports = {
                 upsert: true
             })
             message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription(`<:greenTick:792047523803299850> Successfully set ${channel} as the \`verification\` channel!`)
-                .setColor('GREEN')
+                client.embedSuccess(message, `Successfully set ${channel} as the \`verification\` channel!`)
             )
         }
         else {
