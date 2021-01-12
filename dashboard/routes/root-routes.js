@@ -26,4 +26,8 @@ router.get('/blogs', (req, res) => res.render('blogs', {
   subtitle: "Blogs"
 }))
 
+router.get('/support', (req, res) => res.render('support', {
+  subtitle: "Support"
+}))
+
 module.exports = router

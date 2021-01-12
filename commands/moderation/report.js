@@ -13,51 +13,33 @@ module.exports = {
     async execute(client, message, args) {
         const user = message.mentions.members.first() || message.guild.members.cache.get(args[0])
         if (!user) return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription('<:redTick:792047662202617876> Invalid Syntax! Please mention a user.')
-            .setColor('RED')
+            client.embedError(message, "Please mention a user.\nSee `[prefix]help report` for more information on how to use this command.")
         )
         const reason = args.slice(1).join(' ')
         if (!reason) return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription('<:redTick:792047662202617876> Invalid Syntax! Please provide a reason for the report.')
-            .setColor('RED')
+            client.embedError(message, "Please provide a reason.")
         )
         const channelData = await guildChannelModel.findOne({
             guildId: message.guild.id
         })
-        if (!channelData) {
+        if (!channelData || !channelData.reportChannel) {
             return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> This server has no `reports` channel setup. Please contact a server mod/admin.')
-                .setColor('RED')
+                client.embedError(message, "This server has no `reports` channel set.")
             )
         }
         const channel = message.guild.channels.cache.get(channelData.reportChannel)
         if (!channel) return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription('<:redTick:792047662202617876> There was an error sending your report - The channel that is setup for `reports` for this server does not exist anymore. Please contact a server mod/admin.')
-            .setColor('RED')
+            client.embedError(message, "The reports channel for this server does not exist anymore.")
         )
         const reportChannelPermissions = channel.permissionsFor(client.user)
         if (!reportChannelPermissions.has("SEND_MESSAGES")) {
-            return message.channel.send(            
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> I do not have the permission to send messages in the report channel. Please contact a server mod/admin.')
-                .setColor('RED')
+            return message.channel.send(
+                client.embedError(message, "I do not have permissions to send messages in the reports channel.")
             )
         }
         if (!reportChannelPermissions.has("ATTACH_FILES")) {
             return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> I do not have the permission to send embeds in the report channel. Please contact a server mod/admin.')
-                .setColor('RED')
+                client.embedError(message, "I do not have permissions to send embeds in the reports channel.")
             )
         }
         const loadingMsg = await message.channel.send(
@@ -95,13 +77,13 @@ module.exports = {
             .addField('In channel', message.channel, true)
             .addField('Reason', reason, false)
             .addField('Reported on', moment(new Date().getTime()).format('MMMM Do YYYY | h:mm:ss a'))
-            .setColor('ORANGE')
+            .setColor('#F39C12')
         )
         loadingMsg.edit(
             new MessageEmbed()
             .setTitle(`Case Number #${cases.totalCases} | Report`)
             .setDescription(`Reported ${user} to the authorities.`)
-            .setColor('ORANGE')
+            .setColor('#F39C12')
         )
     }
 }

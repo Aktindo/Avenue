@@ -23,6 +23,7 @@
     "nodemon": "^2.0.6",
     "pug": "^3.0.0",
     "reconlx": "^1.0.52",
-    "sentiment": "^5.0.2"
+    "sentiment": "^5.0.2",
+    "some-random-cat": "^2.2.1"
   }
 }

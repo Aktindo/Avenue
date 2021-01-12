@@ -15,6 +15,7 @@ module.exports = {
             let moderationCommands = client.commands.filter(cmd => cmd.category == "Moderation").map(c => `\`${c.name}\``).join(", ")
             let settingCommands = client.commands.filter(cmd => cmd.category == "Settings").map(c => `\`${c.name}\``).join(", ")
             let systemCommands = client.commands.filter(cmd => cmd.category == "System").map(c => `\`${c.name}\``).join(", ")
+            let miscCommands = client.commands.filter(cmd => cmd.category == "Miscellaneous").map(c => `\`${c.name}\``).join(", ")
             let utilCommands = client.commands.filter(cmd => cmd.category == "Utility").map(c => `\`${c.name}\``).join(", ")
 
             const embed = new MessageEmbed()
@@ -23,8 +24,9 @@ module.exports = {
             .setDescription(`These are all the commands I currently have. Use \`${process.env.prefix}help [command_name]\` to view more information on a specific command.`)
             .addField('Information', infoCommands, false)
             .addField('Moderation', moderationCommands, false)
-            .addField('Settings', settingCommands, false)
+            .addField('Miscellaneous', miscCommands, false)
             .addField('Utility', utilCommands, false)
+            .addField('Settings', settingCommands, false)
             .addField('System', systemCommands, false)
             .setColor('BLURPLE')
 

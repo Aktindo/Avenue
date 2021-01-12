@@ -1,0 +1,14 @@
+doctype html
+html(lang="english")
+  head
+    include ../includes/header.pug
+    link(rel='stylesheet', href='/css/401.css')
+    link(rel='preconnect', href='https://fonts.gstatic.com')
+    link(href='https://fonts.googleapis.com/css2?family=Poppins&display=swap', rel='stylesheet')
+  body
+    .jumbotron.text-center.bg-transparent
+      .content
+        h2.display-2.text(data-text='401')
+          | 401
+      p.lead You seems unauthorized... This system is heavily guarded(obviously)
+      a.btn.btn-lg(href='/', role='button') Go back!

@@ -12,10 +12,7 @@ module.exports = {
     async execute(client, message, args) {
         const target = message.mentions.members.first() || message.guild.members.cache.get(args[0])
         if (!target) return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription('<:redTick:792047662202617876> Invalid Syntax! Please mention a user.')
-            .setColor('RED')
+            client.embedError(message, "Please mention a user.")
         )
         let reason = args.slice(1).join(' ')
         if (!reason) reason = "Not specified"
@@ -23,19 +20,13 @@ module.exports = {
         const allBans = await message.guild.fetchBans()
         if (allBans.get(target.id)) {
             return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> That user is already banned!')
-                .setColor('RED')
+                client.embedError(message, "That user is already banned.")
             )
         }
 
         if (target.hasPermission('BAN_MEMBERS')) {
             return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> That user is a mod/admin.')
-                .setColor('RED')
+                client.embedError(message, "That user is a moderator/administrator.")
             )
         }
 
@@ -79,10 +70,7 @@ module.exports = {
             .setColor('RED')
         ).catch(e => 
         message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription(`<:greenTick:792047523803299850> The user has been banned and the ban has been logged for ${target}... Unfortunately, I could not DM them!`)
-            .setColor('GREEN')
+            client.embedSuccess(message, `Ban logged for ${target}... I could not message them.`)
         ))
         await message.guild.members.ban(target.id, {reason: reason})
         loadingMsg.edit(

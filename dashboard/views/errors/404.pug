@@ -1,0 +1,14 @@
+doctype html
+html(lang="english")
+  head
+    include ../includes/header.pug
+    link(rel='stylesheet', href='/css/404.css')
+    link(rel='preconnect', href='https://fonts.gstatic.com')
+    link(href='https://fonts.googleapis.com/css2?family=Poppins&display=swap', rel='stylesheet')
+  body
+    .jumbotron.text-center.bg-transparent
+      .content
+        h2.display-2.text(data-text='404')
+          | 404
+      p.lead Uh oh! You seem to have dig deep into our resources and are lost...
+      a.btn.btn-lg(href='/', role='button') Go back!

@@ -15,16 +15,10 @@ module.exports = {
     async execute(client, message, args) {
         let _caseNumber = args[0]
         if (isNaN(_caseNumber)) return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription('<:redTick:792047662202617876> Please provide a valid case number!')
-            .setColor('RED')
+            client.embedError(message, "Cannot parse a non-integer.")
         )
         if (_caseNumber < 0) return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription('<:redTick:792047662202617876> Please provide a valid case number!')
-            .setColor('RED')
+            client.embedError(message, "Cannot parse an integer < 0.")
         )
         let caseNumber = parseInt(_caseNumber)
         let newReason = args.slice(1).join(' ')
@@ -55,18 +49,12 @@ module.exports = {
         })
         if (!warningResult && !reportResult && !kickResult && !banResult) {
             message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> There is no case with that case number!')
-                .setColor('RED')
+                client.embedError(message, "That case could not be found!")
             )
         }
         else if (warningResult || reportResult || kickResult || banResult) {
             message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription(`<:greenTick:792047523803299850> Successfully edited case number - \`${_caseNumber}\``)
-                .setColor('GREEN')
+                client.embedSuccess(message, `Successfully edited the case number, \`${caseNumber}\` with the reason, ${newReason}!`)
             )
         }
     }

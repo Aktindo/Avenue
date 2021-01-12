@@ -16,10 +16,7 @@ module.exports = {
     async execute(client, message, args) {
         let user = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.member
         if (user.user.bot) return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription('<:redTick:792047662202617876> You cannot fetch logs for bots!')
-            .setColor('RED')
+            client.embedError(message, 'You cannot fetch logs for bots.')
         )
         const loading = new MessageEmbed()
         .setAuthor(message.author.username)

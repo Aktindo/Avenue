@@ -21,6 +21,20 @@ nav.navbar.navbar-expand-lg.navbar-light(style='background-color: #7289DA;')
         i.fab.fa-discord
         span.pl-1 Support
     .navbar-nav.ml-auto
-      a.nav-link(href='/login') 
-        i.fas.fa-sign-in-alt
-        span.pl-1 Login
+      if user
+        .dropdown.mr-2
+          .dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+            img.user-avatar.round(src=user.avatarUrl(32))
+            span.pl-2 #{user.username}
+          .dropdown-menu(style='background-color: #2C2F33;')
+            a.dropdown-item(href='/dashboard', style='background-color: #2C2F33') 
+              i.fas.fa-sliders-h
+              span.pl-1 Dashboard
+            hr
+            a.dropdown-item(href='/logout', style='background-color: #2C2F33')
+              i.fas.fa-sign-out-alt
+              span.pl-1 Logout
+      else
+        a.nav-link(href='/login') 
+          i.fas.fa-sign-in-alt
+          span.pl-1 Login

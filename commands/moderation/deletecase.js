@@ -16,16 +16,10 @@ module.exports = {
         const reportSystemModel = require('../../models/report-system-model')
         let _caseNumber = args[0]
         if (isNaN(_caseNumber)) return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription('<:redTick:792047662202617876> Please provide a valid case number!')
-            .setColor('RED')
+            client.embedError(message, "Cannot parse a non-integer.")
         )
         if (_caseNumber < 0) return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription('<:redTick:792047662202617876> Please provide a valid case number!')
-            .setColor('RED')
+            client.embedError(message, "Cannot parse an integer < 0.")
         )
         let caseNumber = parseInt(_caseNumber)
         const warningResult = await warningModel.findOneAndRemove({
@@ -45,17 +39,11 @@ module.exports = {
             caseNumber: caseNumber,
         })
         if (!warningResult && !reportResult && banResult && kickResult) return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription('<:redTick:792047662202617876> No case found with that case number!')
-            .setColor('RED')
+            client.embedError(message, "That case could not be found.")
         )
         else if (warningResult || reportResult || banResult || kickResult) {
             message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:greenTick:792047523803299850> Successfully deleted the case number - `' + _caseNumber + '`')
-                .setColor('GREEN')
+                client.embedSuccess(message, `Successfully deleted the case number, \`${caseNumber}\``)
             )
         }
         
