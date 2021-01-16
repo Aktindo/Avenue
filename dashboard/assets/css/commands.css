@@ -4,7 +4,7 @@
 }
 
 body {
-    background-color: #23272A;
+    background-color: #2C2F33;
 }
 
 #search {
@@ -19,11 +19,11 @@ li {
 }
 
 .commands li {
-    background-color: #2C2F33; 
+    background-color: #23272A !important; 
     color: white;   
     margin: 5px 0;
     border-radius: 5px;
-    border: 1px solid #2C2F33 !important;
+    border: 1px solid #23272A !important;
 }
 
 .list-group-item:hover {

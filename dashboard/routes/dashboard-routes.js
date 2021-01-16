@@ -1,7 +1,10 @@
+const { validateGuild } = require('../modules/middleware');
 const express = require('express');
 
 const router = express.Router();
 
-router.get('/', (req, res) => res.render('dashboard/index'));
+router.get('/dashboard', (req, res) => res.render('dashboard/index'));
+
+router.get('/servers/:id', validateGuild, (req, res) => res.render('dashboard/show'));
 
 module.exports = router;

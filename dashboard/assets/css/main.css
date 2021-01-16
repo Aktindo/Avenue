@@ -1,4 +1,10 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
 body {
+    background-color: #2C2F33;
     overflow-x: hidden;
 }
   
