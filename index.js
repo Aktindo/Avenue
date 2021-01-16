@@ -4,9 +4,7 @@ const fs = require('fs')
 const chalk = require('chalk')
 const moment = require('moment')
 
-const client = new DiscordJS.Client({
-    partials: ['MESSAGE', 'REACTION'],
-})
+const client = new DiscordJS.Client()
 
 fs.readdir("./events/", (err, files) => {
 	if (err) return console.error(err);
@@ -47,3 +45,4 @@ require('./dashboard/server')
 client.login(process.env.token)
 
 module.exports.commands =  commands
+module.exports.client = client
