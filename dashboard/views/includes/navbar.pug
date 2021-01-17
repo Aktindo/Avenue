@@ -1,6 +1,6 @@
 nav.navbar.navbar-expand-lg.navbar-light(style='background-color: #7289DA;')
   a.navbar-brand(href='/')
-    img.d-inline-block.align-top(src='/images/AvenueLogo-96-BLURPLE.png', alt='', width='40', height='40')
+    img.d-inline-block.align-top(src='/images/Avenue-Logo+White.png', alt='Avenue', width='40', height='40')
   button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar', aria-controls='navbar', aria-expanded='false', aria-label='Toggle navigation')
     span.navbar-toggler-icon
   #navbar.collapse.navbar-collapse
@@ -22,18 +22,17 @@ nav.navbar.navbar-expand-lg.navbar-light(style='background-color: #7289DA;')
         span.pl-1 Support
     .navbar-nav.ml-auto
       if user
-        .dropdown.mr-2
+        .dropdown.dropdown-menu-right
           .dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
             img.user-avatar.round(src=user.avatarUrl(32))
             span.pl-2 #{user.username}
-          .dropdown-menu(style='background-color: #2C2F33;')
-            a.dropdown-item(href='/dashboard', style='background-color: #2C2F33') 
-              i.fas.fa-sliders-h
-              span.pl-1 Dashboard
-            hr
-            a.dropdown-item(href='/logout', style='background-color: #2C2F33')
-              i.fas.fa-sign-out-alt
-              span.pl-1 Logout
+          .dropdown-menu
+            a.dropdown-item(href='/dashboard')
+              i.fas.fa-cogs 
+              |  Dashboard
+            a.dropdown-item(href='/logout', class='logoutBtn')
+              i.fas.fa-sign-out-alt(style='color: #e74c3c;')
+              |  Logout
       else
         a.nav-link(href='/login') 
           i.fas.fa-sign-in-alt

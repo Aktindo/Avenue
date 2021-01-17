@@ -26,8 +26,9 @@ router.get('/blogs', (req, res) => res.render('blogs', {
   subtitle: "Blogs"
 }))
 
-router.get('/support', (req, res) => res.render('support', {
-  subtitle: "Support"
-}))
+router.get('/support', (req, res) => {
+  res.redirect('https://discord.gg/6g297Usrsn')
+})
+
 
 module.exports = router

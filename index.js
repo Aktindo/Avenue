@@ -40,9 +40,9 @@ commandFoldersArr.forEach(c => {
 	
 })
 
-require('./dashboard/server')
-
 client.login(process.env.token)
 
-module.exports.commands =  commands
-module.exports.client = client
+module.exports = client
+module.exports.commands = commands
+
+require('./dashboard/server')

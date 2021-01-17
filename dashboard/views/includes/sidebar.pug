@@ -1,6 +1,6 @@
 #sidebar.float-left.bg-light
   a(href='/dashboard')
-    .icon.round
+    .icon.round(data-toggle='tooltip', data-placement='right', title='Home')
       img.round(alt=user.username, src=user.avatarUrl(64))
   hr
   each guild in guilds
@@ -14,5 +14,5 @@
     .icon.round.my-2(data-toggle='tooltip', data-placement='right', title='Add a server', class='sidebarInviteBtn')
       p.abbr.text-success.text-center
         i.fas.fa-plus(class='sidebarInviteBtnText')
-  .hamburger
+  .hamburger.px-1
     i.fas.fa-bars
