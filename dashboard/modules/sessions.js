@@ -1,10 +1,12 @@
 const authClient = require('./auth-client')
-const {client} = require('../../index')
+const client = require('../../index')
 
 const sessions = new Map();
 
 function get(key) {
-  return sessions.get(key) ?? create(key);
+  const sessionsKey = sessions.get(key)
+  if (!sessionsKey) return create(key)
+  else return sessions.get(key)
 }
 
 async function create(key) {
@@ -28,7 +30,7 @@ function getManageableGuilds(authGuilds) {
     const isManager = authGuilds
       .get(id).permissions
       .includes('MANAGE_GUILD');
-    const guild = client
+    const guild = client.guilds.cache.get(id)
     if (!guild || !isManager) continue;
 
     guilds.push(guild);

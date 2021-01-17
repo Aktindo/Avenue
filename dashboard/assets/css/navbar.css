@@ -1,0 +1,20 @@
+.navbar.navbar-expand-lg.navbar {
+    background-color: #7289DA;
+}
+
+.dropdown-menu {
+    background-color: #23272A;
+}
+a.dropdown-item {
+    color: white;
+}
+a.dropdown-item:hover {
+    background-color: #23272A;
+    color: white !important;
+}
+a.logoutBtn {
+    color: #e74c3c;
+}
+a.logoutBtn:hover {
+    color: #e74c3c !important;
+}
