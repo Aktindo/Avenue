@@ -1,5 +1,5 @@
 const express = require('express')
-const commands = require('../../index')
+const {commands} = require('../../index')
 
 const router = express.Router()
 
@@ -14,8 +14,8 @@ router.get('/commands', (req, res) => res.render('commands', {
     { name: 'Utility', icon: 'fas fa-bars'},
     { name: 'System', icon: 'fas fa-laptop' }
   ],
-  commands: Array.from(commands.commands.values()),
-  commandsString: JSON.stringify(Array.from(commands.commands.values()))
+  commands: Array.from(commands.values()),
+  commandsString: JSON.stringify(Array.from(commands.values()))
 }));
 
 router.get('/faq', (req, res) => res.render('faq', {

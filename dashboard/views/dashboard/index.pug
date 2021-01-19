@@ -18,28 +18,5 @@ html(lang='en')
     include ../includes/navbar.pug
 
     .container.jumbotron.text-center.bg-transparent
-      h1.display-4  Hey #{user.username}!
-      p.lead Here you can manage your servers, one place for everything!
-    .container.jumbotron.text-center.bg-transparent
-      h3 User Information
-      section#overviewModule.module.px-5
-        .form-group.mt-5
-          .row.text-center
-            .col-4
-              .border.rounded.m-3.p-3
-                p.uppercase
-                  i.fas.fa-user
-                  strong.ml-1 User
-                p.mb-0 #{user.username}
-            .col-4
-              .border.rounded.m-3.p-3
-                p.uppercase
-                  i.fas.fa-hashtag
-                  strong.ml-1 Tag
-                p.mb-0 #{user.discriminator}            
-            .col-4
-              .border.rounded.m-3.p-3
-                p.uppercase
-                  i.fas.fa-id-badge
-                  strong.ml-1 ID
-                p.mb-0 #{user.id} 
+      h3 Hey #{user.username}!
+      p.lead.text-muted Here you can manage your servers, one place for everything!

@@ -42,7 +42,7 @@ commandFoldersArr.forEach(c => {
 
 client.login(process.env.token)
 
-module.exports = client
+module.exports.client = client
 module.exports.commands = commands
 
 require('./dashboard/server')
