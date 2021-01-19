@@ -16,7 +16,7 @@
 
   border-radius: 50%;
   transition: .3s ease-in-out;
-}
+} 
 .icon:hover {
   border-radius: 25% !important;
 }
@@ -30,7 +30,7 @@ a {
 }
 
 .sidebarInviteBtnText {
-  color: #2ecc71 !important;
+  color: #43b581 !important;
 }
 
 .abbr {
@@ -60,6 +60,9 @@ a {
   width: 275px;
   transition: .3s;
   opacity: 1;
+}
+#sidebarExtension h4 {
+  cursor: pointer;
 }
 #sidebarExtension .large-icon {
   display: block;
@@ -114,4 +117,13 @@ a {
 }
 .tabs .category:hover {
   color: white;
+}
+
+hr {
+  color: gray;
+}
+
+.border.rounded.m-3.p-3 {
+  background-color: #23272A !important;
+  border: none !important;
 }

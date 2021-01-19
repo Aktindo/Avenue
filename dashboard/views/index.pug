@@ -8,9 +8,10 @@ html(lang="english")
     .jumbotron.text-center.bg-transparent(class='firstJumbo')
       h1.display-1 Avenue
       p.lead Yet another general purpose multi-feature bot!
-      button.btn.btn-lg(id='inviteBtn', type='button' href="/invite" style="background-color: #7289DA; color: #ffffff;")
-        i.fa.fa-plus
-        |  Invite
+      a(href='/invite')
+        button.btn.btn-lg(id='inviteBtn')
+          i.fa.fa-plus
+          |  Invite
     .container
       h1(style='text-align: center;') Why Avenue?
       .row.justify-content-start
@@ -40,4 +41,5 @@ html(lang="english")
       .jumbotron.text-center.bg-transparent
         h3 Still not ready?
         p.lead View all our commands!
-        a.btn.btn-primary.btn-lg(class='commandBtn', href='/commands', role='button') Go there!
+        a(href='/invite')
+          button.btn.btn-primary.btn-lg(class='commandBtn', href='/commands', role='button') Go there!

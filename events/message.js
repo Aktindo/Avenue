@@ -3,7 +3,8 @@ const DiscordJS = require('discord.js')
 const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const guildRoleModel = require('../models/guild-roles-model')
 const messageCountModel = require('../models/user-messagecount-model')
-const {MessageEmbed} = require('discord.js')
+const {MessageEmbed} = require('discord.js');
+const guildGeneralModel = require('../models/guild-general-model');
 module.exports = async (client, message) => {
     if (message.author.bot) return
     if (!message.guild) return
@@ -19,7 +20,13 @@ module.exports = async (client, message) => {
     }, {
         upsert: true
     })
-    const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(process.env.prefix)})\\s*`);
+    let prefix = ""
+    const savedGuild = await guildGeneralModel.findOne({
+        guildId: message.guild.id
+    })
+    if (!savedGuild || !savedGuild.prefix) prefix = "."
+    else prefix = savedGuild.prefix.toString()
+    const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`);
     if (!prefixRegex.test(message.content.toLowerCase())) return;
 
     const [, matchedPrefix] = message.content.toLowerCase().match(prefixRegex);
@@ -32,6 +39,9 @@ module.exports = async (client, message) => {
     if (!command) return
 
     let { botOwners } = require('../config/config.json')
+    let commandChannel
+    if (!savedGuild || !savedGuild.commandChannel || savedGuild.commandChannel == "No Channel") commandChannel = null
+    else commandChannel = client.channels.cache.get(savedGuild.commandChannel)
 
     if (command.botOwnerOnly && !botOwners.includes(message.author.id)) {
         return message.channel.send(
@@ -40,6 +50,12 @@ module.exports = async (client, message) => {
             .setDescription('<:redTick:792047662202617876> Only the bot owner can run this command!')
             .setColor('RED')
         )
+    if (commandChannel) {
+        if (message.channel.id != commandChannel.id && !message.member.hasPermission('MANAGE_MESSAGES')) {
+            return message.channel.send(
+                client.embedError(message, `You can use commands only in ${commandChannel}`)
+            )
+        }    
     }
 
     if (command.botPermissions) {

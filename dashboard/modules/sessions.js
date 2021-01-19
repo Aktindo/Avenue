@@ -1,5 +1,5 @@
 const authClient = require('./auth-client')
-const client = require('../../index')
+const { client } = require('../../index')
 
 const sessions = new Map();
 
