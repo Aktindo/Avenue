@@ -40,7 +40,7 @@ commandFoldersArr.forEach(c => {
 	
 })
 
-client.login(process.env.token)
+client.login(process.env.TOKEN)
 
 module.exports.client = client
 module.exports.commands = commands

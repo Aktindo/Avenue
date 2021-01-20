@@ -8,7 +8,7 @@ module.exports = (client) => {
     var metricId = process.env.SYSTEM_METRIC_METRICID;
     var apiBase = 'https://api.statuspage.io/v1';
      
-    var url = apiBase + '/pages/' + pageId + '/metrics/' + metricId + '/data.json';
+    var url = apiBase + '/podeages/' + pageId + '/metrics/' + metricId + '/data.json';
     var authHeader = { 'Authorization': 'OAuth ' + apiKey };
     var options = { method: 'POST', headers: authHeader };
      
