@@ -1,6 +1,8 @@
 const guildChannelsModel = require("../models/guild-channels-model")
 const guildWelcomeModel = require("../models/guild-welcome-model")
+const logs = require('../models/logs')
 module.exports = async (client, member) => {
+    await logs.add(member.guild.id, 'joins');
     const channelData = await guildChannelsModel.findOne({
         guildId: member.guild.id
     })

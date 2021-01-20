@@ -100,6 +100,7 @@ a {
   color: white;
   transition: 0.3s ease-in-out;
 }
+.tabs a.active,
 .tabs a:hover {
   background-color: #7289DA;
 }

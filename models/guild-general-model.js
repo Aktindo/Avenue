@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const guildGeneralModel = mongoose.Schema({
-    guildId: String,
+    _id: String,
     prefix: {
         type: String,
         default: "."

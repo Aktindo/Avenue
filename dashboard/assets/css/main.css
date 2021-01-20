@@ -11,3 +11,7 @@ body {
 .round {
     border-radius: 50%;
 }
+
+.user-avatar {
+    max-width: 36px;
+}

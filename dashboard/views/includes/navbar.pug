@@ -13,13 +13,19 @@ nav.navbar.navbar-expand-lg.navbar-light(style='background-color: #7289DA;')
         span.pl-1 Invite
       a.nav-link(href='/faq')
         i.fas.fa-question
-        span.pl-1 FAQ        
-      a.nav-link(href='/blogs')
-        i.fas.fa-edit
-        span.pl-1 Blog
-      a.nav-link(href='/support')
-        i.fab.fa-discord
-        span.pl-1 Support
+        span.pl-1 FAQ
+      li.nav-item.dropdown
+        a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') #[i.fas.fa-server] Server
+        .dropdown-menu(aria-labelledby='navbarDropdown')
+          a.dropdown-item(href='/blogs')
+            i.fas.fa-rss-square
+            span.pl-1 Latest Updates 
+          a.dropdown-item(href='/team')
+            i.fas.fa-users
+            span.pl-1 Staff
+          a.dropdown-item(href='/support') 
+            i.fab.fa-discord     
+            span.pl-1 Support    
     .navbar-nav.ml-auto
       if user
         .dropdown.dropdown-menu-right
