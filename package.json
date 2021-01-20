@@ -17,6 +17,7 @@
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-rate-limit": "^5.2.3",
     "method-override": "^3.0.0",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
@@ -25,6 +26,7 @@
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.6",
     "pug": "^3.0.0",
+    "rate-limit-mongo": "^2.3.0",
     "reconlx": "^1.0.52",
     "sentiment": "^5.0.2",
     "some-random-cat": "^2.2.1"

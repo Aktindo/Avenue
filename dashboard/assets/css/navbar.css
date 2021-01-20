@@ -18,3 +18,6 @@ a.logoutBtn {
 a.logoutBtn:hover {
     color: #e74c3c !important;
 }
+a#navbarDropdown {
+    color: white;
+}

@@ -1,4 +1,6 @@
 const guildGeneralModel = require('../../models/guild-general-model')
+const log = require('../modules/audit-logger');
+const logs = require('../../models/logs');
 const {client} = require('../../index')
 const { validateGuild } = require('../modules/middleware');
 const fetch = require('node-fetch')
@@ -11,9 +13,9 @@ router.get('/dashboard', (req, res) => res.render('dashboard/index'));
 
 router.get('/servers/:id', validateGuild, async (req, res) => res.render('dashboard/show', {
     subtitle: 'Editing Server',
-    guildData: await guildGeneralModel.findOne({
-        guildId: req.params.id
-    })
+    guildData: await guildGeneralModel.findOne({_id: req.params.id}),
+    savedLog: await logs.get(req.params.id),
+    users: client.users.cache
 }));
 
 router.put('/servers/:id/:module', validateGuild, async (req, res) => {
@@ -21,15 +23,23 @@ router.put('/servers/:id/:module', validateGuild, async (req, res) => {
         const {id, module} = req.params
 
         if (module.toString() == "general") {
-            await guildGeneralModel.findOneAndUpdate({
-                guildId: id,
+            const data = await guildGeneralModel.findOneAndUpdate({
+                _id: id,
             }, {
-                guildId: id,
+                _id: id,
                 prefix: req.body.prefixInput.toString(),
                 commandChannel: req.body.commandChannelInput.toString(),
             }, {
                 upsert: true
             })
+
+            await log.change(id, {
+                at: new Date(),
+                by: res.locals.user.id,
+                module,
+                new: data,
+                old: req.body
+              });
     
             res.redirect('/servers/' + id)
         }

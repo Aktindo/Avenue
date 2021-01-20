@@ -5,7 +5,9 @@ const guildRoleModel = require('../models/guild-roles-model')
 const messageCountModel = require('../models/user-messagecount-model')
 const {MessageEmbed} = require('discord.js');
 const guildGeneralModel = require('../models/guild-general-model');
+const logs = require('../models/logs');
 module.exports = async (client, message) => {
+    const {botOwners} = require('../config/config.json')
     if (message.author.bot) return
     if (!message.guild) return
     await messageCountModel.findOneAndUpdate({
@@ -20,11 +22,12 @@ module.exports = async (client, message) => {
     }, {
         upsert: true
     })
+    await logs.add(message.guild.id, 'messages')
     let prefix = ""
     const savedGuild = await guildGeneralModel.findOne({
         guildId: message.guild.id
     })
-    if (!savedGuild || !savedGuild.prefix) prefix = "."
+    if (!savedGuild || !savedGuild.prefix) prefix = "a!"
     else prefix = savedGuild.prefix.toString()
     const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`);
     if (!prefixRegex.test(message.content.toLowerCase())) return;
@@ -38,18 +41,10 @@ module.exports = async (client, message) => {
 
     if (!command) return
 
-    let { botOwners } = require('../config/config.json')
     let commandChannel
     if (!savedGuild || !savedGuild.commandChannel || savedGuild.commandChannel == "No Channel") commandChannel = null
     else commandChannel = client.channels.cache.get(savedGuild.commandChannel)
 
-    if (command.botOwnerOnly && !botOwners.includes(message.author.id)) {
-        return message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription('<:redTick:792047662202617876> Only the bot owner can run this command!')
-            .setColor('RED')
-        )
     if (commandChannel) {
         if (message.channel.id != commandChannel.id && !message.member.hasPermission('MANAGE_MESSAGES')) {
             return message.channel.send(
@@ -67,6 +62,12 @@ module.exports = async (client, message) => {
                 .setColor('RED')
             )
         }
+    }
+
+    if (command.botOwnerOnly && !botOwners.includes(message.author.id)) {
+        return message.channel.send(
+            client.embedError(message, "Only the bot owner can run that command!")
+        )
     }
 
     if (command.requiredPermissions) {

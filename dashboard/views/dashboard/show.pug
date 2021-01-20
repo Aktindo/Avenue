@@ -2,10 +2,23 @@ doctype
 html(lang='en')
   head
     include ../includes/header.pug
+    include ../includes/mixins.pug
 
+    script(defer).
+      const messagesLog = [!{savedLog.messages}];
+      const joinsLog = [!{savedLog.joins}];
+      const leavesLog = [!{savedLog.leaves}];
+
+    script(src='https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js', defer)
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.2/highlight.min.js', defer)
+    script(src='/js/charts.js', defer)
     script(src='/js/sidebar.js', defer)
     script(src='/js/guild.js', defer)
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.2/highlight.min.js', defer)
+    link(rel='stylesheet', href='https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css')
     link(rel='stylesheet', href='/css/sidebar.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.2/styles/ascetic.min.css')
+    link(rel='stylesheet', href='/css/charts.css')
   body
     include ../includes/sidebar.pug
 
@@ -22,6 +35,8 @@ html(lang='en')
         a#general.cursor-pointer #[i.fas.fa-sliders-h.pr-1] General
         a#moderation.cursor-pointer #[i.fas.fa-gavel.pr-1] Moderation
         a#feedback.cursor-pointer #[i.fas.fa-comments.pr-1] Feedback
+        .category Other
+        a#auditLog.cursor-pointer #[i.fas.fa-book.pr-1] Audit Log
 
     include ../includes/navbar.pug
     
@@ -29,3 +44,5 @@ html(lang='en')
     include modules/general
     include modules/moderation
     include modules/feedback
+
+    include extensions/audit-log
