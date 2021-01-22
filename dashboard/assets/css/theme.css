@@ -1,0 +1,78 @@
+:root,
+:root[theme='DARK'] {
+  --primary: #7289DA;
+
+  --heading: white;
+  --font: #99AAB5;
+
+  --background-primary: #36393F;
+  --background-secondary: #2F3136;
+  --background-tertiary: #202225;
+  --button-text: white;
+  --button-hover: #7289DA;
+}
+
+:root[theme='LIGHT'] {
+  --primary: black;
+
+  --heading: black;
+  --font: black;
+
+  --background-primary: white;
+  --background-secondary: #ecf0f1;
+  --background-tertiary: #95a5a6;
+  --button-text: white;
+  --button-hover: #000000;
+}
+
+:root[theme='OCEAN'] {
+  --primary: #46828D;
+
+  --heading: #FFFFFF;
+  --font: #F4F2F3;
+
+  --background-primary: #15244B;
+  --background-secondary: #0a193a;
+  --background-tertiary: #081536;
+  --button-text: white;
+  --button-hover: #15244B;
+}
+
+:root[theme='COSMIC'] {
+  --primary: #6E80AD;
+
+  --heading: #ffffff;
+  --font: #ACB9D5;
+
+  --background-primary: #0F1A31;
+  --background-secondary: #070d1a;
+  --background-tertiary: #060b18;
+  --button-text: white;
+  --button-hover: #0F1A31;
+}
+
+:root[theme='TWILIGHT'] {
+  --primary: #757A89;
+
+  --heading: #ffffff;
+  --font: #E3E7EA;
+
+  --background-primary: #171F2C;
+  --background-secondary: #111720;
+  --background-tertiary: #10151d;
+  --button-text: white;
+  --button-hover: #171F2C;
+}
+
+:root[theme='CHOCOLATE'] {
+  --primary: #482F5D;
+
+  --heading: #ffffff;
+  --font: #ffffff;
+
+  --background-primary: #372224;
+  --background-secondary: #2c1518;
+  --background-tertiary: #251113;
+  --button-text: white;
+  --button-hover: #372224;
+}
