@@ -1,30 +1,21 @@
-* {
-    font-family: 'Poppins', sans-serif;
-    color: white;
-    scroll-behavior: smooth;
-}
-
-body {
-    background-color: #2C2F33;
-}
-
 .jumbotron {
-    margin-top: 25vh;
+    margin-top: 35vh;
     margin-bottom: 35vh;
 }
 
 .mainBtn {
-    background-color: #7289DA !important;
+    color: var(--button-text) !important;
+    background-color: var(--button-hover) !important;
     border: none !important;
     transition: ease 0.6s;
 }
 
 .mainBtn:hover {
-    box-shadow: 0 2px 25px 0 #7289DA;
+    box-shadow: 0 2px 25px 0 var(--button-hover);
 }
 
 .card, .card-header {
-    background-color: #7289DA !important;
+    background-color: var(--primary) !important;
     border: none !important;
     padding: 0 !important;
     margin-bottom: 20px;
@@ -37,14 +28,14 @@ body {
 .btn-link {
     width: 100%;
     height: 60px;
-    color: white !important;
+    color: var(--button-text) !important;
     font-weight: bold;
     text-align: left;
     text-decoration: none !important;
 }
 
 .card-body {
-    background: #23272A;
+    background: var(--background-secondary);
 }
 
 .btn-link:after {
@@ -69,7 +60,7 @@ body {
     height: 25px;
     width: 25px;
     position: absolute;
-    background: #7289DA;
+    background: var(--primary);
     z-index: 1;
     transform: rotate(45deg);
     left: 30px;

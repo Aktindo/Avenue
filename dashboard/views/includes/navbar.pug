@@ -1,8 +1,8 @@
-nav.navbar.navbar-expand-lg.navbar-light(style='background-color: #7289DA;')
+nav.navbar.navbar-expand-lg
   a.navbar-brand(href='/')
-    img.d-inline-block.align-top(src='/images/Avenue-Logo+White.png', alt='Avenue', width='40', height='40')
+    img.d-inline-block.align-top(src='/images/Avenue-Logo+Blurple.svg', alt='Avenue', width='40', height='40')
   button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbar', aria-controls='navbar', aria-expanded='false', aria-label='Toggle navigation')
-    span.navbar-toggler-icon
+    span #[i.fas.fa-bars]
   #navbar.collapse.navbar-collapse
     .navbar-nav
       a.nav-link(href='/commands')
@@ -14,8 +14,11 @@ nav.navbar.navbar-expand-lg.navbar-light(style='background-color: #7289DA;')
       a.nav-link(href='/faq')
         i.fas.fa-question
         span.pl-1 FAQ
+      a.nav-link(href='/github')
+        i.fab.fa-github
+        span.pl-1 GitHub
       li.nav-item.dropdown
-        a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') #[i.fas.fa-server] Server
+        a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Resources
         .dropdown-menu(aria-labelledby='navbarDropdown')
           a.dropdown-item(href='/blogs')
             i.fas.fa-rss-square

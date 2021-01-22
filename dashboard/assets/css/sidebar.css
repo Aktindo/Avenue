@@ -1,7 +1,7 @@
 .icon {
   font-size: x-large;
 
-  background-color: #36383b;
+  background-color: var(--background-secondary);
   height: 52px;
   width: 52px;
 
@@ -33,8 +33,13 @@ a {
   color: #43b581 !important;
 }
 
-.abbr {
+.abbr { 
   padding-top: 7.5px;
+}
+#themeSelect {
+  color: var(--heading);
+  border: none;
+  background-color: var(--background-secondary) !important;
 }
 
 .hamburger {
@@ -50,7 +55,7 @@ a {
 }
 #sidebar,
 #sidebarExtension {
-  background-color: #23272A !important;
+  background-color: var(--background-tertiary) !important;
   height: 100vh;
   float: left;
 }
@@ -95,14 +100,13 @@ a {
   padding: 5px;
   padding-left: 10px !important;
   border-radius: 5px;
-
+  color: var(--heading);
   text-decoration: none;
-  color: white;
   transition: 0.3s ease-in-out;
 }
 .tabs a.active,
 .tabs a:hover {
-  background-color: #7289DA;
+  background-color: var(--primary);
 }
 
 .tabs .category {
@@ -125,6 +129,6 @@ hr {
 }
 
 .border.rounded.m-3.p-3 {
-  background-color: #23272A !important;
+  background-color: var(--background-secondary) !important;
   border: none !important;
 }

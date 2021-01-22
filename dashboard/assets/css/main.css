@@ -1,11 +1,22 @@
 * {
     font-family: 'Poppins', sans-serif;
-    color: white;
+    color: var(--heading);
+    scroll-behavior: smooth;
 }
 
 body {
-    background-color: #2C2F33;
+    background-color: var(--background-primary);
     overflow-x: hidden;
+    color: var(--font);
+    margin: 0px !important;
+}
+
+h1, h2, h3, h4, h5 {
+  color: var(--heading);
+}
+
+code.hljs {
+  background-color: var(--background-secondary);
 }
   
 .round {
@@ -15,3 +26,15 @@ body {
 .user-avatar {
     max-width: 36px;
 }
+
+.navbar a {
+  color: var(--heading);
+}
+
+.table {
+  color: var(--heading);
+}
+
+.dropdown-menu {
+  background-color: inherit;
+} 

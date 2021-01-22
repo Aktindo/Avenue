@@ -1,0 +1,27 @@
+.bg {
+    background-color: var(--primary) !important;
+}
+hr.bg.mb-4.mt-0.d-inline-block.mx-auto {
+    width: 125px;
+    height: 2px;
+}
+footer.page-footer {
+    background: var(--background-secondary) !important;
+}
+.col-md-12.text-center a {
+    font-size: 30px;
+}
+li.my-2 a {
+    color: var(--heading) !important;
+    text-decoration: none !important;
+}
+li.my-2 a:hover {
+    text-decoration: underline !important;
+}
+.footer-copyright.text-center.py-3 {
+    background-color: var(--background-tertiary);
+}
+p.coded-by:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
