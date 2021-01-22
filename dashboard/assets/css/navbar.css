@@ -1,16 +1,16 @@
 .navbar.navbar-expand-lg.navbar {
-    background-color: #7289DA;
+    background-color: var(--background-secondary) !important;
 }
 
 .dropdown-menu {
-    background-color: #23272A;
+    background-color: var(--background-secondary);
 }
 a.dropdown-item {
-    color: white;
+    color: var(--heading);
 }
 a.dropdown-item:hover {
-    background-color: #23272A;
-    color: white !important;
+    background-color: var(--background-secondary);
+    color: var(--heading) !important;
 }
 a.logoutBtn {
     color: #e74c3c;
@@ -19,5 +19,5 @@ a.logoutBtn:hover {
     color: #e74c3c !important;
 }
 a#navbarDropdown {
-    color: white;
+    color: var(--heading);
 }

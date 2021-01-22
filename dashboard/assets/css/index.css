@@ -1,24 +1,35 @@
 * {
-    font-family: 'Poppins', sans-serif;
-    color: white;
+    margin: 0;
+    padding: 0;
 }
-
 body {
-    background-color: #2C2F33;
+    margin-bottom: 35px;
 }
-
 .firstJumbo {
     margin-top: 25vh; 
 }
 
-#inviteBtn {
-    background-color: #7289DA;
-    border: none;
-    transition: ease 0.6s;
+.firstJumbo img {
+    animation-name: floating; 
+    animation-duration: 3s; 
+    animation-iteration-count: infinite; 
+    animation-timing-function: ease-in-out; 
+}
+@keyframes floating { 
+    0% { transform: translate(0,  0px); } 
+    50%  { transform: translate(0, 15px); } 
+    100%   { transform: translate(0, -0px); }     
+} 
+
+button.btn {
+    background-color: var(--primary) !important;
+    border: none !important;
+    color: var(--button-text) !important;
 }
 
-#inviteBtn:hover {
-    box-shadow: 0 2px 25px 0 #7289DA;
+button.btn:hover {
+    transition: ease 0.3s;
+    box-shadow: 0 2px 25px 0 var(--button-hover) !important;
 }
 
 .container h1 {
@@ -27,48 +38,34 @@ body {
     text-align: center;
 }
 
-.container .moderation {
-    background-color: #F39C12;
-    max-width: 45rem;
-    position: relative;
-    top: 0;
-    transition: top ease 0.5s;
+.container img {
+    border-radius: 2%;
+    box-shadow: 0 2px 25px 0 var(--background-secondary);
 }
 
-.container .moderation:hover {
-    top: -10px;
+.container .row .col-lg-6.col-md-6 {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
 }
 
-.container .information {
-    background-color: #2ECC71;
-    max-width: 45rem;
-    position: relative;
-    top: 0;
-    transition: top ease 0.5s;
+.container .row .col-lg-6.col-md-6.text {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
 }
 
-.container .information:hover {
-    top: -10px;
+h3 {
+    color: var(--primary) !important;
+    font-size: 30px;
 }
 
-.container .utility {
-    background-color: #3498DB;
-    max-width: 45rem;
-    position: relative;
-    top: 0;
-    transition: top ease 0.5s;
+.command-text {
+    margin-top: 30px;
 }
 
-.container .utility:hover {
-    top: -10px;
+.command-link {
+    color: var(--primary);
 }
 
-.commandBtn {
-    background-color: #7289DA !important;
-    border: none !important;
-    transition: ease 0.6s;
-}
-
-.commandBtn:hover {
-    box-shadow: 0 2px 25px 0 #7289DA;
+.command-link:hover {
+    color: var(--primary);
 }

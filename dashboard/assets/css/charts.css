@@ -23,7 +23,7 @@
 .ct-grids line,
 .ct-labels span,
 .ct-grid.ct-horizontal {
-  color: white;
+  color: var(--heading);
 }
 .ct-grid {
   stroke: transparent;

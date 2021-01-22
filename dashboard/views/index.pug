@@ -6,38 +6,49 @@ html(lang="english")
   body
     include includes/navbar.pug
     .jumbotron.text-center.bg-transparent(class='firstJumbo')
-      h1.display-1 Avenue
+      img(src="/images/Avenue-Logo+Blurple.svg", alt="Home Avenue Img", width="192px", height="189.2px")
+      h1.display-4 Avenue
       p.lead Yet another general purpose multi-feature bot!
       a(href='/invite')
-        .btn.btn-lg(id='inviteBtn') #[i.fas.fa-plus] Invite
-    .container
-      h1(style='text-align: center;') Why Avenue?
-      .row.justify-content-start
-          .card.border-secondary.mb-3(class='moderation')
-            .card-body.text-secondary
-              h5.card-title
-                i.fas.fa-gavel
-                |  Moderation
-              p.card-text
-                | Whether you run a server with 10 members or 5000 members, there will always be some pesky guys. To keep them out, use our extensive moderation system!
-      .row.justify-content-end
-          .card.border-secondary.mb-3(class='information')
-            .card-body.text-secondary
-              h5.card-title
-                i.fas.fa-book
-                |  Information
-              p.card-text
-                | Ever wondered when your server was created? How many members you see each day, activity? Do not worry anymore as our information module keeps track of everything!
-      .row.justify-content-start
-          .card.border-secondary.mb-3(class='utility')
-            .card-body.text-secondary
-              h5.card-title
-                i.fas.fa-cogs
-                |  Utility
-              p.card-text
-                | Set channels, roles, a fully fledged verification system! Set a welcome system, greet your new members and a lot more! Works well in regard to moderation.
-      .jumbotron.text-center.bg-transparent
-        h3 Still not ready?
-        p.lead View all our commands!
-        a(href='/invite')
-          button.btn.btn-primary.btn-lg(class='commandBtn', href='/commands', role='button') Go there!
+          button.btn.btn-lg(href='/invite', role='button') Add now
+    .container 
+      h1 Why Avenue?
+      .row
+        .col-lg-6.col-md-6
+          img.img-fluid(src="/images/Avenue-Demo+Moderation.png")
+        .col-lg-6.col-md-6.text
+          h3 Extensive Moderation
+          ul
+            li Suitable for a fully fledged infraction system.
+            li Sticky muted role to prevent people from leaving to get rid of their mute.
+            li Moderators can quickly look up for any case and edit or modify it.
+            li Every rule when broken is logged into a channel.
+            li Manage all users' roles in bulk.
+        .col-lg-6.col-md-6
+          img.img-fluid(src="/images/Avenue-Demo+Information.png")
+        .col-lg-6.col-md-6.text
+          h3 Easy Information
+          ul
+            li Information about every user, server!
+            li Message leaderboards.       
+        .col-lg-6.col-md-6
+          img.img-fluid(src="/images/Avenue-Demo+Fun.png")
+        .col-lg-6.col-md-6.text
+          h3 Fun Commands
+          ul
+            li 8ball, games.
+            li Facts, jokes, memes!
+            li Keeps your users entertained.
+        .col-lg-6.col-md-6
+          img.img-fluid(src="/images/Avenue-Demo+Welcome.png")
+        .col-lg-6.col-md-6.text
+          h3 Welcome messages
+          ul
+            li Greet your new members!
+            li Supports variables.
+    .jumbotron.text-center.bg-transparent
+      h2 Ready to start your journey?
+      a(href='/invite')
+        button.btn.btn-lg(href='/invite', role='button') Invite
+      p.lead.command-text Still not ready? View all our #[a(href='/commands').command-link commands]
+    include includes/footer

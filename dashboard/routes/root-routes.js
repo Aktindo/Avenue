@@ -1,4 +1,5 @@
 const express = require('express')
+const {client} = require('../../index')
 const {commands} = require('../../index')
 
 const router = express.Router()
@@ -22,12 +23,20 @@ router.get('/faq', (req, res) => res.render('faq', {
     subtitle: "FAQ"
 }))
 
-router.get('/blogs', (req, res) => res.render('blogs', {
-  subtitle: "Blogs"
+router.get('/blogs', async (req, res) => res.render('blogs', {
+  subtitle: "Blogs",
 }))
 
 router.get('/support', (req, res) => {
   res.redirect('https://discord.gg/6g297Usrsn')
+})
+
+router.get('/status', (req, res) => {
+  res.redirect('https://avenuebot.statuspage.io')
+})
+
+router.get('/twitter', (req, res) => {
+  res.redirect('https://twitter.com/aktindo')
 })
 
 
