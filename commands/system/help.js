@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js")
-require('dotenv').config()
+const guildGeneralModel = require("../../models/guild-general-model")
 module.exports = {
     name: "help",
     description: "A command which displays all the commands of the bot.",
@@ -8,7 +8,14 @@ module.exports = {
     cooldowns: 5,
     usage: "[command_name]",
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
-    execute(client, message, args) {
+    async execute(client, message, args) {
+        const data = await guildGeneralModel.findOne({
+            guildId: message.guild.id
+        })
+        let prefix 
+        if (!data || !data.prefix) {
+            prefix = 'a!'
+        } else prefix = data.prefix
         let commandName = args.join("-")
         if (!commandName) {
             let infoCommands = client.commands.filter(cmd => cmd.category == "Information").map(c => `\`${c.name}\``).join(", ")
@@ -21,7 +28,7 @@ module.exports = {
             const embed = new MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL())
             .setTitle('Help Menu')
-            .setDescription(`These are all the commands I currently have. Use \`${process.env.prefix}help [command_name]\` to view more information on a specific command.`)
+            .setDescription(`These are all the commands I currently have. Use \`${prefix}help [command_name]\` to view more information on a specific command.`)
             .addField('Information', infoCommands, false)
             .addField('Moderation', moderationCommands, false)
             .addField('Miscellaneous', miscCommands, false)
