@@ -1,0 +1,40 @@
+section#welcomeModule.module.container.px-5
+  form(action="/servers/" + guild.id + "/welcome?_method=PUT", method="POST")
+    .jumbotron.bg-transparent.pb-0
+      h1.display-4.text-center Welcome Messages
+    .row
+      .col-sm-12.col-md-6
+        .card
+          .card-header #[i.fas.fa-list-ul] Channel Selection
+          .card-body
+            .form-group.my-5
+              .row
+                .col.col-12
+                  p #[i.fas.fa-code] Useful Variables
+                  p #[code {user}] - Mentions the user joining and leaving.
+                  p #[code {server}] - Name of the server.
+                  p #[code {membercount}] - Total member count of the server.
+                  br
+                .col.col-12
+                    .form-group
+                        label(for='welcomeChannelInput') Welcome Channel
+                        input(name='welcomeChannel', type='hidden', value='')
+                        select.form-control(name='welcomeChannelInput')
+                            option(value=null) No channel
+                            each channel of Array.from(guild.channels.cache.filter(c => c.type === 'text').sort().values())
+                                option(value=channel.id) ##{channel.name}
+          .card-footer
+            button.btn.btn-success Save Changes
+            button(type='reset').btn.btn-outline-danger Reset
+      .col-sm-12.col-md-6
+        .card
+            .card-header #[i.fas.fa-sign-in-alt] Welcome Message
+            .card-body
+              .form-group.my-5
+                .row
+                  .col.col-12
+                    h5 Welcome Message
+                    textarea(name='welcomeMessage', rows=6, placeholder='Hello {user} and welcome to {server}!', maxlength='1024').form-control
+            .card-footer 
+              button.btn.btn-success Save Changes
+              button(type='reset').btn.btn-outline-danger Reset

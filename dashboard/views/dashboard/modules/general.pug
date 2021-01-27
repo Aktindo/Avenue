@@ -2,18 +2,23 @@ section#generalModule.module.container.px-5
   form(action="/servers/" + guild.id + "/general?_method=PUT", method="POST")
     .jumbotron.bg-transparent.pb-0
       h1.display-4.text-center General
-    .form-group.my-5
-      .row
-        .col-4
-          label Bot Prefix #[i.fas.fa-question-circle(data-toggle='tooltip', data-placement='top', title='The symbol that comes before any command.')]
-          input.form-control(type='text', name='prefixInput', value=guildData ? guildData.prefix : ".", placeholder='Enter your new prefix...', maxlength=3, required)
-        .col-4
-          label Bot Commands Channel
-          input(name='commandChannel', type='hidden', value='')
-          select.form-control(name='commandChannelInput')
-            option(value="No Channel", style='color: black;') No channel
-            each channel of Array.from(guild.channels.cache.filter(c => c.type === 'text').values())
-                option(value=channel.id, style='color: black;') ##{channel.name}
-        .col-4
-    .d-flex.justify-content-center
-      button.btn.btn-success #[i.fas.fa-rocket] Save
+    .card
+      .card-header #[i.fas.fa-cogs] Bot Settings
+      .card-body
+        .form-group.my-5
+          .row
+            .col.col-6
+              label Bot Nickname #[i.fas.fa-question-circle(data-toggle='tooltip', data-placement='top', title='The nickname to be displayed on the server.')]
+              input.form-control(type='text', name='nickInput', placeholder='Avenue', maxlength = 20)
+            .col.col-6
+              label Bot Prefix #[i.fas.fa-question-circle(data-toggle='tooltip', data-placement='top', title='The symbol that comes before any command.')]
+              input.form-control(type='text', name='prefixInput', value=guildData ? guildData.prefix : ".", placeholder='Enter your new prefix...', maxlength=3, required)
+            .col.col-12
+              label Bot Commands Channel
+              input(name='commandChannel', type='hidden', value='')
+              select.form-control(name='commandChannelInput')
+                option(value="No Channel", style='color: black;') No channel
+                each channel of Array.from(guild.channels.cache.filter(c => c.type === 'text').values())
+                    option(value=channel.id, style='color: black;') ##{channel.name}
+        button.btn.btn-success Apply Changes
+        button(type='reset').btn.btn-danger Reset

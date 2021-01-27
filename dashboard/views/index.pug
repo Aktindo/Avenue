@@ -4,6 +4,7 @@ html(lang="english")
     include includes/header.pug
     link(rel='stylesheet', href='/css/index.css')
   body
+    include includes/loader.pug
     include includes/navbar.pug
     .jumbotron.text-center.bg-transparent(class='firstJumbo')
       img(src="/images/Avenue-Logo+Blurple.svg", alt="Home Avenue Img", width="192px", height="189.2px")
@@ -45,7 +46,7 @@ html(lang="english")
           h3 Welcome messages
           ul
             li Greet your new members!
-            li Supports variables.
+            li Supports variables.     
     .jumbotron.text-center.bg-transparent
       h2 Ready to start your journey?
       a(href='/invite')
