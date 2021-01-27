@@ -3,6 +3,7 @@ const axios = require('axios').default
 module.exports = {
     name: "8ball",
     description: "Ask the magic 8ball!",
+    usage: "<question>",
     category: "Miscellaneous",
     cooldowns: 5,
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
