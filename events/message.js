@@ -25,10 +25,10 @@ module.exports = async (client, message) => {
     await logs.add(message.guild.id, 'messages')
     let prefix = ""
     const savedGuild = await guildGeneralModel.findOne({
-        guildId: message.guild.id
+        _id: message.guild.id
     })
-    if (!savedGuild || !savedGuild.prefix) prefix = "a!"
-    else prefix = savedGuild.prefix.toString()
+    if (!savedGuild || !savedGuild.prefix) prefix = "."
+    else prefix = savedGuild.prefix
     const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`);
     if (!prefixRegex.test(message.content.toLowerCase())) return;
 
@@ -85,22 +85,19 @@ module.exports = async (client, message) => {
     if (!cooldowns.has(command.name)) {
         cooldowns.set(command.name, new DiscordJS.Collection());
     }
-    
+
     const now = Date.now();
     const timestamps = cooldowns.get(command.name);
-    const cooldownAmount = (command.cooldowns || 3) * 1000;
-    
-    if (timestamps.has(message.author.id)) {
-        const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+    const cooldownAmount = (command.cooldown || 1) * 1000;
 
-        if (now < expirationTime) {
+    if (timestamps.has(message.author.id)) {
+            const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+            if (now < expirationTime) {
             const timeLeft = (expirationTime - now) / 1000;
             return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription(`<:redTick:792047662202617876> The command \`${command.name}\` is on cooldown.\nYou can use it again in \`${timeLeft.toFixed()}s\`!`)
-                .setColor('RED')
-            );
+                client.embedError(message, `That command is on cooldown.\nPlease wait ${timeLeft.toFixed(1)}s before using that command again.`)
+            )
         }
     }
 
@@ -108,7 +105,8 @@ module.exports = async (client, message) => {
     setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
 	try {
-		command.execute(client, message, args)
+        command.execute(client, message, args)
+        await logs.add(message.guild.id, 'commands')
 	} catch (error) {
 		console.error(error);
 		message.reply('There was an error trying to execute that command!\nYou should not receive an error like this.\nPlease join the support server!');

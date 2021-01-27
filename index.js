@@ -4,7 +4,11 @@ const fs = require('fs')
 const chalk = require('chalk')
 const moment = require('moment')
 
-const client = new DiscordJS.Client()
+const client = new DiscordJS.Client(
+	{
+		disableMentions: 'all'
+	}
+)
 
 fs.readdir("./events/", (err, files) => {
 	if (err) return console.error(err);
@@ -12,7 +16,7 @@ fs.readdir("./events/", (err, files) => {
 	  if (!file.endsWith(".js")) return;
 	  const event = require(`./events/${file}`);
 	  let eventName = file.split(".")[0];
-	  console.log(`${chalk.green(`[${moment(Date.now()).format()}]`)} Registering event - ${eventName}`)
+	  console.log(`${chalk.cyan(`[${moment(Date.now()).format()}]`)} Registering event - ${eventName}`)
 	  client.on(eventName, event.bind(null, client));
 	  delete require.cache[require.resolve(`./events/${file}`)];
 	});
