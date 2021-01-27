@@ -5,7 +5,7 @@ module.exports = {
     name: "ping",
     description: "A command to test the latency of the bot.",
     category: "System",
-    cooldowns: 5,
+    cooldown: 5,
     aliases: ["p"],
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     async execute(client, message, args) {
