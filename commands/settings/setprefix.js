@@ -12,7 +12,7 @@ module.exports = {
     async execute(client, message, args) {
         let prefix = ""
         const guildData = await guildGeneralModel.findOne({
-            guildId: message.guild.id
+            _id: message.guild.id
         })
         if (!guildData || !guildData.prefix) prefix = "."
         else prefix = guildData.prefix.toString()
@@ -27,10 +27,10 @@ module.exports = {
                     client.embedError(message, "You cannot have a prefix of more than 3 characters.")
                 )
             }
-            const res = await guildGeneralModel.findOneAndUpdate({
-                guildId: message.guild.id
+            await guildGeneralModel.findOneAndUpdate({
+                _id: message.guild.id
             }, {
-                guildId: message.guild.id,
+                _id: message.guild.id,
                 prefix: newPrefix
             }, {
                 upsert: true
