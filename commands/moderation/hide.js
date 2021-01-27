@@ -4,6 +4,7 @@ module.exports = {
     description: "Hides a channel from a user.",
     category: "Moderation",
     cooldowns: 5,
+    usage: "<user> [reason]",
     requiredPermissions: ['MANAGE_CHANNELS'],
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS", "MANAGE_CHANNELS"],
     async execute(client, message, args) {

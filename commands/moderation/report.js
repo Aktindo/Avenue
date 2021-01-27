@@ -9,6 +9,7 @@ module.exports = {
     category: "Moderation",
     cooldowns: 5,
     aliases: ["reportuser"],
+    usage: "<user>",
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     async execute(client, message, args) {
         const user = message.mentions.members.first() || message.guild.members.cache.get(args[0])

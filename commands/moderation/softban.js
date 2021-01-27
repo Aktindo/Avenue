@@ -6,6 +6,7 @@ module.exports = {
     cooldowns: 5,
     requiredPermissions: ['MANAGE_CHANNELS'],
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS", "MANAGE_CHANNELS"],
+    usage: "[user]",
     async execute(client, message, args) {
         const user = message.mentions.members.first() || message.guild.members.cache.get(args[0])
         if (!user) {
