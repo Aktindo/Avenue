@@ -24,6 +24,12 @@ module.exports = {
             )
         }
 
+        if (target.user.bot) {
+            return message.channel.send(
+                client.embedError(message, 'That user is a bot.')
+            )
+        }
+
         if (target.hasPermission('BAN_MEMBERS')) {
             return message.channel.send(
                 client.embedError(message, "That user is a moderator/administrator.")
@@ -75,7 +81,7 @@ module.exports = {
         await message.guild.members.ban(target.id, {reason: reason})
         loadingMsg.edit(
             new MessageEmbed()
-            .setTitle(`Case Number #${cases.totalCases} | Ban`)
+            .setTitle(`Case Number #${cases.totalCases} | Permanent Ban`)
             .setDescription(`Successfully banned ${target}`)
             .setColor('RED')
         )

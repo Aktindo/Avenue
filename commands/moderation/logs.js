@@ -26,6 +26,9 @@ module.exports = {
             guildId: message.guild.id,
             userId: user.id
         })
+        .sort({
+            caseNumber: -1
+        })
         .limit(3)
         let warnData = ''
         warningLogs.map(async i => {
@@ -35,7 +38,11 @@ module.exports = {
         const banLogs = await banSystemModel.find({
             guildId: message.guild.id,
             userId: user.id
-        }).limit(3)
+        })
+        .sort({
+            caseNumber: -1
+        })
+        .limit(3)
         let banData = ''
         banLogs.map(async i => {
             banData += `**Case Number - ${i.caseNumber}**\nModerator - <@${i.moderatorId}>\nReason - ${i.reason}\nTime - ${moment(i.timestamp).calendar()}\n\n`
@@ -44,15 +51,22 @@ module.exports = {
         const kickLogs = await kickSystemModel.find({
             guildId: message.guild.id,
             userId: user.id
-        }).limit(3)
+        })
+        .sort({
+            caseNumber: -1
+        })
+        .limit(3)
         let kickData = ''
         kickLogs.map(async i => {
             kickData += `**Case Number - ${i.caseNumber}**\nModerator - <@${i.moderatorId}>\nReason - ${i.reason}\nTime - ${moment(i.timestamp).calendar()}\n\n`
         })
-        if (!kickData) kickData += 'No previous bans for the user!'
+        if (!kickData) kickData += 'No previous kicks for the user!'
         const reportLogs = await reportSystemModel.find({
             guildId: message.guild.id,
             userId: user.id
+        })
+        .sort({
+            caseNumber: -1
         })
         .limit(3)
         let reportData = ''
