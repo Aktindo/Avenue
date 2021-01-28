@@ -45,7 +45,7 @@ module.exports = async (client, message) => {
     if (!savedGuild || !savedGuild.commandChannel || savedGuild.commandChannel == "No Channel") commandChannel = null
     else commandChannel = client.channels.cache.get(savedGuild.commandChannel)
 
-    if (commandChannel) {
+    if (commandChannel && command.commandChannelOnly !== false) {
         if (message.channel.id != commandChannel.id && !message.member.hasPermission('MANAGE_MESSAGES')) {
             return message.channel.send(
                 client.embedError(message, `You can use commands only in ${commandChannel}`)
