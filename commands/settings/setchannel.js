@@ -6,7 +6,7 @@ module.exports = {
     category: "Settings",
     cooldowns: 5,
     aliases: ["set-channel"],
-    usage: "<Reports|Welcome|Starboard|Verification> <#channel|ID>",
+    usage: "<Reports|Welcome|Verification|ModLogs> <Channel?(ID|Mention)>",
     requiredPermissions: ['ADMINISTRATOR'],
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     async execute(client, message, args) {
@@ -83,11 +83,28 @@ module.exports = {
                 client.embedSuccess(message, `Successfully set ${channel} as the \`verification\` channel!`)
             )
         }
+        else if (args[0].toLowerCase() === 'modlogs') {
+            let channel = message.mentions.channels.first() || message.guild.channels.cache.get(args[1])
+            if (!channel) return message.channel.send(
+                client.embedError(message, "No channel found with that mention or ID.")
+            )
+            await guildChannelModel.findOneAndUpdate({
+                guildId: message.guild.id,
+            }, {
+                guildId: message.guild.id,
+                modlogsChannel: channel.id
+            }, {
+                upsert: true
+            })
+            message.channel.send(
+                client.embedSuccess(message, `Successfully set ${channel} as the \`modlogs\` channel!`)
+            )
+        }
         else {
             return message.channel.send(
                 new MessageEmbed()
                 .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> Incorrect Syntax! Please use `[prefix]setchannel <Reports|Welcome|Verification> <#channel|ID>`')
+                .setDescription(`<:redTick:792047662202617876> Incorrect Syntax! Please use \`[prefix]setchannel ${this.usage}\``)
                 .setColor('RED')
             )
         }

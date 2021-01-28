@@ -1,5 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 const guildCasesModel = require('../../models/guild-cases-model')
+const guildChannelsModel = require('../../models/guild-channels-model')
 const guildRoleModel = require('../../models/guild-roles-model')
 const warningModel = require('../../models/warning-system-model')
 module.exports = {
@@ -11,9 +12,6 @@ module.exports = {
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     usage: "<user> [reason]",
     async execute(client, message, args) {
-        const roleData = await guildRoleModel.findOne({
-            guildId: message.guild.id
-        })
         const target = message.mentions.members.first() || message.guild.members.cache.get(args[0])
         if (!target) return message.channel.send(
             client.embedError(message, "Please mention a user. Use `[prefix]help warn` for more information on how to use this command.")
@@ -80,6 +78,19 @@ module.exports = {
             .setTitle(`Case Number #${cases.totalCases} | Warn`)
             .setDescription(`Successfully warned ${target}`)
             .setColor('#F1C40F')
+        )
+        const savedChannel = await guildChannelsModel.findOne({
+            guildId: message.guild.id,
+        })
+        const modLogChannel = savedChannel ? savedChannel.modlogsChannel : null
+        if (!modLogChannel) return
+        else message.guild.channels.cache.get(modLogChannel).send(
+            new MessageEmbed()
+            .setTitle(`Case Number #${cases.totalCases} | Warn`)
+            .setDescription(`**Offender:** ${target.user.tag}\n**Responsible Moderator:** ${message.author.tag}\n**Reason:** ${reason}`)
+            .setColor('#F1C40F')
+            .setFooter(`ID: ${target.id}`)
+            .setTimestamp()
         )
     }
 }

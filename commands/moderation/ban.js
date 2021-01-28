@@ -1,6 +1,7 @@
 const { MessageEmbed } = require('discord.js')
 const guildCasesModel = require('../../models/guild-cases-model')
 const banSystemModel = require('../../models/ban-system-model')
+const guildChannelsModel = require('../../models/guild-channels-model')
 module.exports = {
     name: "ban",
     description: "Bans a user(does not delete their messages)",
@@ -85,6 +86,18 @@ module.exports = {
             .setDescription(`Successfully banned ${target}`)
             .setColor('RED')
         )
-
+        const savedChannel = await guildChannelsModel.findOne({
+            guildId: message.guild.id,
+        })
+        const modLogChannel = savedChannel ? savedChannel.modlogsChannel : null
+        if (!modLogChannel) return
+        else message.guild.channels.cache.get(modLogChannel).send(
+            new MessageEmbed()
+            .setTitle(`Case Number #${cases.totalCases} | Ban`)
+            .setDescription(`**Offender:** ${target.user.tag}\n**Responsible Moderator:** ${message.author.tag}\n**Reason:** ${reason}`)
+            .setColor('RED')
+            .setFooter(`ID: ${target.id}`)
+            .setTimestamp()
+        )
     }
 }

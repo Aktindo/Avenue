@@ -7,6 +7,7 @@ const guildChannelModel = mongoose.Schema({
     welcomeChannel: String,
     acceptChannel: String,
     starboardChannel: String,
+    modlogsChannel: String,
 })
 
 module.exports = mongoose.model('guild-channels-data', guildChannelModel)
