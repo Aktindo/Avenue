@@ -20,7 +20,18 @@ module.exports = {
                 client.embedError(message, "Cannot parse a non-integer!")
             )
         }
-        message.channel.setRateLimitPerUser(parseInt(args[0]))
+        const slowmode = parseInt(args[0])
+        if (slowmode <= 0) {
+            return message.channel.send(
+                client.embedError(message, 'Cannot parse an integer < or = 0.')
+            )
+        }
+        if (slowmode > 21600) {
+            return message.channel.send(
+                client.embedError(message, 'Cannot parse an integer > 21600.')
+            )
+        }
+        message.channel.setRateLimitPerUser(slowmode)
         message.channel.send(
             client.embedSuccess(message, `Successfully set the slowmode of ${message.channel} to \`${args[0]}\` seconds!`)
         )
