@@ -4,6 +4,8 @@ const cookies = require('cookies');
 const express = require('express');
 const middleware = require('./modules/middleware');
 const rateLimit = require('./modules/rate-limiter');
+const chalk = require('chalk')
+const moment = require('moment')
 
 const authRoutes = require('./routes/auth-routes');
 const dashboardRoutes = require('./routes/dashboard-routes');
@@ -31,4 +33,4 @@ app.use('/',
 app.all('*', (req, res) => res.render('errors/404'));
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server is live on port ${port}`));
+app.listen(port, () => console.log(`${chalk.yellow(`[${moment(Date.now()).format()}]`)} Dashboard - Server is live on port ${port}`));

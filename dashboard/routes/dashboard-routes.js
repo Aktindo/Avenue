@@ -1,4 +1,6 @@
 const guildGeneralModel = require('../../models/guild-general-model')
+const guildWelcomeModel = require('../../models/guild-welcome-model')
+const guildChannelsModel = require('../../models/guild-channels-model')
 const log = require('../modules/audit-logger');
 const logs = require('../../models/logs');
 const {client} = require('../../index')
@@ -42,29 +44,34 @@ router.put('/servers/:id/:module', validateGuild, async (req, res) => {
               });
     
             res.redirect('/servers/' + id)
+            if (req.body.nickInput) {
+                await client.guilds.cache.get(req.params.id).me.setNickname(req.body.nickInput)
+            }
         }
-        if (module.toString() == "reports") {
-            const url = "https://discord.com/api/webhooks/800960292439326720/-KLL-4Uzp1HUbn5EnLX-ElCOvHgGmOKijEKKhwU9_bxaw-j4nis3u7u-LJGBhilYp1g6"
-            const guild = client.guilds.cache.get(id)
-            fetch(url, {
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                method: "POST",
-                body: JSON.stringify({
-                    content: req.body.mainReportType,
-                    embeds: [
-                        {
-                            author: {
-                                name: `New ${req.body.mainReportType} from ${req.body.mainReportAuthor}(${guild.name})`
-                            },
-                            title: req.body.mainReportSubject,
-                            description: `**${req.body.mainReportTitle}**\n\n${req.body.mainReportDescription}`,
-                            color: '3447003'
-                        }
-                    ]
-                })
+        if (module.toString() == "welcome") {
+            const welcomeData = await guildWelcomeModel.findOneAndUpdate({
+                guildId: id,
+            }, {
+                guildId: id,
+                text: req.body.welcomeMessage
+            }, {
+                upsert: true
             })
+            const channelData = await guildChannelsModel.findOneAndUpdate({
+                guildId: id,
+            }, {
+                guildId: id,
+                welcomeChannel: req.body.welcomeChannel
+            }, {
+                upsert: true
+            })
+            await log.change(id, {
+                at: new Date(),
+                by: res.locals.user.id,
+                module,
+                new: [welcomeData, channelData],
+                old: req.body
+              });
             res.redirect('/servers/' + id)
         }
     } catch(e) {

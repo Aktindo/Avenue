@@ -2,7 +2,16 @@ mixin category(category)
   li.list-group-item(id=category.name, style="background-color: #2C2F33;") #[i(class=category.icon)] #{category.name}
 
 mixin command(command)
-  li.list-group-item(id=command.name + 'Command', class=command.category) #{command.name}
+  li.list-group-item(id=command.name + 'Command', class=command.category)
+    span.pl-1(id='commandTitle') Name:
+    |  #{command.name}
+    br
+    span.pl-1(id='commandTitle') Description:
+    |  #{command.description}
+    if command.usage
+      br
+      span.pl-1(id='commandTitle') Usage:
+      |  #{command.usage}
 
 mixin user(user)
   span(title=user.id)

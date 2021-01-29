@@ -8,6 +8,7 @@ module.exports = {
     cooldowns: 5,
     aliases: ["accept"],
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
+    commandChannelOnly: false,
     async execute(client, message, args) {
         const verificationData = await guildVerificationSystemModel.findOne({
             guildId: message.guild.id
@@ -37,12 +38,9 @@ module.exports = {
             }
             await message.member.roles.add(role)
             const msg = await message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription(`<:greenTick:792047523803299850> You have verified yourself!`)
-                .setColor('GREEN')
+                client.embedSuccess(message, 'You have verified yourself!')
             )
-            await message.delete()
+            await message.delete({timeout: 1000 * 5})
             var variables = {
                 "{user}": message.author,
                 "{server}": message.guild.name,

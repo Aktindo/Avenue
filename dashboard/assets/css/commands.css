@@ -13,8 +13,10 @@ body {
 #search + button {
     height: 64px;
 }
-
-li {
+span.pl-1#commandTitle {
+    color: var(--primary) !important;
+}
+.categories li {
     cursor: pointer;
 }
 
@@ -26,7 +28,7 @@ li {
     border: 1px solid var(--background-secondary) !important;
 }
 
-.list-group-item:hover, .fa:hover {
+.categories li:hover, .fa:hover {
     background-color: var(--primary) !important;
     border: none;
     transition: ease-in-out 0.3s;

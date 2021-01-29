@@ -3,7 +3,7 @@ module.exports = {
     name: "poll",
     description: "Makes a quick yes/no poll!",
     aliases: ["instantpoll"],
-    category: "Utility",
+    category: "Miscellaneous",
     cooldowns: 5,
     usage: "<description>",
     requiredPermissions: ["MANAGE_MESSAGES"],
@@ -15,10 +15,12 @@ module.exports = {
                 client.embedError(message, "Please provide some description for the poll.")
             )
         }
+        await message.delete()
         message.channel.send(
             new MessageEmbed()
             .setAuthor(`${message.author.username} asks`, message.author.displayAvatarURL())
             .setTitle(pollDesc)
+            .setFooter(client.user.username, client.user.displayAvatarURL({format:"png"}))
             .setColor('BLURPLE')
         ).then(async m => {
             await m.react('👍')

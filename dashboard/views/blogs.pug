@@ -4,6 +4,7 @@ html(lang="english")
     include includes/header.pug
     link(rel='stylesheet', href='/css/blogs.css')
   body
+    include includes/loader.pug
     include includes/navbar.pug
     .jumbotron.text-center.bg-transparent
         h1.display-4 Latest Updates
@@ -17,14 +18,5 @@ html(lang="english")
             |  Latest Announcements
         .row
             .col-sm-9    
-                blockquote.twitter-tweet(data-theme='light')
-                    p(lang='in', dir='ltr') Hallo wumpus
-                    | &mdash; Aktindo (@aktindo) 
-                    a(href='https://twitter.com/aktindo/status/1345622897839144961?ref_src=twsrc%5Etfw') January 3, 2021
-                    script(async='', src='https://platform.twitter.com/widgets.js', charset='utf-8')    
-                blockquote.twitter-tweet
-                    p(lang='en', dir='ltr') Hah, nothing lol
-                    | &mdash; Aktindo (@aktindo) 
-                    a(href='https://twitter.com/aktindo/status/1344958127318286337?ref_src=twsrc%5Etfw') January 1, 2021
-                    script(async='', src='https://platform.twitter.com/widgets.js', charset='utf-8')    
+                h5 This will be updated soon....
     include includes/footer

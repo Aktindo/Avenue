@@ -5,8 +5,19 @@ const fs = require('fs')
 const config = require('../config/config.json')
 const { MessageEmbed } = require('discord.js')
 module.exports = async client => {
+    fs.readdir("./features/", (err, files) => {
+        if (err) return console.error(err);
+        files.forEach(file => {
+          if (!file.endsWith(".js")) return;
+          const feature = require(`../features/${file}`);
+          const featureName = file.split('.')[0]
+          console.log(`${chalk.cyan(`[${moment(Date.now()).format()}]`)} Registering feature - ${featureName}`)
+          feature(client)
+          delete require.cache[require.resolve(`../features/${file}`)];
+        });
+    });
     client.config = config
-    console.log(`${chalk.green(`[${moment(Date.now()).format()}]`)} Logged in as - ${client.user.username}!`)
+    console.log(`${chalk.magentaBright(`[${moment(Date.now()).format()}]`)} Logged in as ${client.user.username}!`)
     client.user.setPresence({
         status: "online",
         activity: {
@@ -34,24 +45,5 @@ module.exports = async client => {
             });
         }
     });
-    fs.readdir("./features/", (err, files) => {
-        if (err) return console.error(err);
-        files.forEach(file => {
-          if (!file.endsWith(".js")) return;
-          const feature = require(`../features/${file}`);
-          let featureName = file.split(".")[0];
-          console.log(`${chalk.green(`[${moment(Date.now()).format()}]`)} Enabling feature - ${featureName}`)
-          feature(client)
-          delete require.cache[require.resolve(`../features/${file}`)];
-        });
-      });
-    await mongo().then(console.log(`${chalk.green(`[${moment(Date.now()).format()}]`)} Connected to database!`)).catch(e => console.error(`${chalk.red(`[${moment(Date.now()).format()}]`)} Error while connecting to database - ${e}`))
-    const restartChannel = client.channels.cache.get("794088607575965708")
-    await restartChannel.send(
-        new MessageEmbed()
-        .setTitle('Restart Notification')
-        .setDescription(`There was a restart on **${moment(Date.now()).format('MMMM Do YYYY, h:mm:ss a')}**.\nIt can be due to an error or ${client.users.cache.get("683879319558291539")} restarted me.`)
-        .setColor('BLURPLE')
-        .setTimestamp()
-    )
+    await mongo().then(console.log(`${chalk.magentaBright(`[${moment(Date.now()).format()}]`)} Connected to database!`)).catch(e => console.error(`${chalk.red(`[${moment(Date.now()).format()}]`)} Error while connecting to database - ${e}`))
 }

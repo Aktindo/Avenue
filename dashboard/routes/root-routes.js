@@ -4,7 +4,9 @@ const {commands} = require('../../index')
 
 const router = express.Router()
 
-router.get('/', (req, res) => res.render('index'));
+router.get('/', (req, res) => res.render('index', {
+  client: client,
+}));
 
 router.get('/commands', (req, res) => res.render('commands', {
   subtitle: 'Commands',
@@ -39,5 +41,8 @@ router.get('/twitter', (req, res) => {
   res.redirect('https://twitter.com/aktindo')
 })
 
+router.get('/github', (req, res) => {
+  res.redirect('https://github.com/Aktindo/Avenue')
+})
 
 module.exports = router

@@ -10,7 +10,7 @@ module.exports = {
     botOwnerOnly: true,
     guildOnly: true,
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
-    execute(client, message, args) {
+    async execute(client, message, args) {
         try {
             const code = args.join(" ");
             if (!code) return message.channel.send(

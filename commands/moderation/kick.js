@@ -1,5 +1,6 @@
 const { MessageEmbed } = require('discord.js')
 const guildCasesModel = require('../../models/guild-cases-model')
+const guildChannelsModel = require('../../models/guild-channels-model')
 const kickSystemModel = require('../../models/kick-system-model')
 module.exports = {
     name: "kick",
@@ -71,6 +72,18 @@ module.exports = {
             .setDescription(`Successfully kicked ${target}`)
             .setColor('RED')
         )
-
+        const savedChannel = await guildChannelsModel.findOne({
+            guildId: message.guild.id,
+        })
+        const modLogChannel = savedChannel ? savedChannel.modlogsChannel : null
+        if (!modLogChannel) return
+        else message.guild.channels.cache.get(modLogChannel).send(
+            new MessageEmbed()
+            .setTitle(`Case Number #${cases.totalCases} | Kick`)
+            .setDescription(`**Offender:** ${target.user.tag}\n**Responsible Moderator:** ${message.author.tag}\n**Reason:** ${reason}`)
+            .setColor('RED')
+            .setFooter(`ID: ${target.id}`)
+            .setTimestamp()
+        )
     }
 }

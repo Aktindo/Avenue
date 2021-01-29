@@ -1,11 +1,13 @@
 const { MessageEmbed } = require('discord.js')
 const guildCasesModel = require('../../models/guild-cases-model')
 const banSystemModel = require('../../models/ban-system-model')
+const guildChannelsModel = require('../../models/guild-channels-model')
 module.exports = {
     name: "ban",
     description: "Bans a user(does not delete their messages)",
     category: "Moderation",
     cooldowns: 5,
+    aliases: ['yeet', 'banuser'],
     requiredPermissions: ['BAN_MEMBERS'],
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS", "BAN_MEMBERS"],
     usage: "<user> [reason]",
@@ -21,6 +23,12 @@ module.exports = {
         if (allBans.get(target.id)) {
             return message.channel.send(
                 client.embedError(message, "That user is already banned.")
+            )
+        }
+
+        if (target.user.bot) {
+            return message.channel.send(
+                client.embedError(message, 'That user is a bot.')
             )
         }
 
@@ -75,10 +83,22 @@ module.exports = {
         await message.guild.members.ban(target.id, {reason: reason})
         loadingMsg.edit(
             new MessageEmbed()
-            .setTitle(`Case Number #${cases.totalCases} | Ban`)
+            .setTitle(`Case Number #${cases.totalCases} | Permanent Ban`)
             .setDescription(`Successfully banned ${target}`)
             .setColor('RED')
         )
-
+        const savedChannel = await guildChannelsModel.findOne({
+            guildId: message.guild.id,
+        })
+        const modLogChannel = savedChannel ? savedChannel.modlogsChannel : null
+        if (!modLogChannel) return
+        else message.guild.channels.cache.get(modLogChannel).send(
+            new MessageEmbed()
+            .setTitle(`Case Number #${cases.totalCases} | Ban`)
+            .setDescription(`**Offender:** ${target.user.tag}\n**Responsible Moderator:** ${message.author.tag}\n**Reason:** ${reason}`)
+            .setColor('RED')
+            .setFooter(`ID: ${target.id}`)
+            .setTimestamp()
+        )
     }
 }

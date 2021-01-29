@@ -7,3 +7,4 @@ function initChart(selector, ...log) {
 
 initChart('.joins-chart', joinsLog, leavesLog);
 initChart('.messages-chart', messagesLog);
+initChart('.commands-chart', commandsLog);
