@@ -8,6 +8,6 @@ module.exports = {
     guildOnly: true,
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     async execute(client, message, args) {
-        const messages = await message.channel.messages.fetch({limit: 2})
+        message.channel.send('Hi')
     }
 }
