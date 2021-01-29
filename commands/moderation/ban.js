@@ -7,6 +7,7 @@ module.exports = {
     description: "Bans a user(does not delete their messages)",
     category: "Moderation",
     cooldowns: 5,
+    aliases: ['yeet', 'banuser'],
     requiredPermissions: ['BAN_MEMBERS'],
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS", "BAN_MEMBERS"],
     usage: "<user> [reason]",

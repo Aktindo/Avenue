@@ -6,7 +6,7 @@ const moment = require('moment')
 
 const client = new DiscordJS.Client(
 	{
-		disableMentions: 'all'
+		disableMentions: 'everyone'
 	}
 )
 

@@ -27,7 +27,7 @@ module.exports = {
 
             const embed = new MessageEmbed()
             .setAuthor(message.author.username, message.author.displayAvatarURL())
-            .setThumbnail(client.user.displayAvatarURL({format:"png"}))
+            .setThumbnail(client.user.displayAvatarURL({format:"png", size: 4096}))
             .setTitle('Help Menu')
             .addField('Here are the commands!', `If you want to view more information on a command, use \`${prefix}help [command_name]\``, false)
             .addField('Information', infoCommands, false)
