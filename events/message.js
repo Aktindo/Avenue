@@ -27,7 +27,7 @@ module.exports = async (client, message) => {
     const savedGuild = await guildGeneralModel.findOne({
         _id: message.guild.id
     })
-    if (!savedGuild || !savedGuild.prefix) prefix = "."
+    if (!savedGuild || !savedGuild.prefix) prefix = process.env.PREFIX
     else prefix = savedGuild.prefix
     const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`);
     if (!prefixRegex.test(message.content.toLowerCase())) return;
