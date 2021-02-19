@@ -3,12 +3,15 @@ const DiscordJS = require('discord.js')
 const fs = require('fs')
 const chalk = require('chalk')
 const moment = require('moment')
+const config = require('./config/config.json')
 
 const client = new DiscordJS.Client(
 	{
 		disableMentions: 'everyone'
 	}
 )
+
+client.config = config
 
 fs.readdir("./events/", (err, files) => {
 	if (err) return console.error(err);
@@ -23,8 +26,10 @@ fs.readdir("./events/", (err, files) => {
   });
 
 const commands = new DiscordJS.Collection();
+const cooldowns = new DiscordJS.Collection();
 
 client.commands = commands
+client.cooldowns = cooldowns
 
 const commandFolders = fs.readdirSync('./commands/')
 let commandFoldersArr = []
