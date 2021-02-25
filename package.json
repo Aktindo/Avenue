@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "start": "node index.js"
   },
   "author": "aktindo",
   "license": "ISC",
   "dependencies": {
+    "@top-gg/sdk": "^3.0.7",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "chalk": "^4.1.0",
@@ -19,6 +20,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-rate-limit": "^5.2.3",
+    "html2pug": "^4.0.0",
     "method-override": "^3.0.0",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
@@ -30,6 +32,10 @@
     "rate-limit-mongo": "^2.3.0",
     "reconlx": "^1.0.52",
     "sentiment": "^5.0.2",
-    "some-random-cat": "^2.2.1"
+    "some-random-cat": "^2.2.1",
+    "topgg-autoposter": "^1.1.6"
+  },
+  "devDependencies": {
+    "marked": "^1.2.9"
   }
 }

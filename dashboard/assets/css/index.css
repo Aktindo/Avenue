@@ -21,17 +21,6 @@ body {
     100%   { transform: translate(0, -0px); }     
 } 
 
-button.btn {
-    background-color: var(--primary) !important;
-    border: none !important;
-    color: var(--button-text) !important;
-}
-
-button.btn:hover {
-    transition: ease 0.3s;
-    box-shadow: 0 2px 25px 0 var(--button-hover) !important;
-}
-
 .container h1 {
     margin-top: 35vh;
     margin-bottom: 10vh;

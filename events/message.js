@@ -1,15 +1,19 @@
 require('dotenv').config()
 const DiscordJS = require('discord.js')
-const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const guildRoleModel = require('../models/guild-roles-model')
-const messageCountModel = require('../models/user-messagecount-model')
 const {MessageEmbed} = require('discord.js');
+
+const messageCountModel = require('../models/user-messagecount-model')
 const guildGeneralModel = require('../models/guild-general-model');
 const logs = require('../models/logs');
+
+const { botOwners } = require('../config/config.json')
+
+const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 module.exports = async (client, message) => {
-    const {botOwners} = require('../config/config.json')
     if (message.author.bot) return
     if (!message.guild) return
+
     await messageCountModel.findOneAndUpdate({
         guildId: message.guild.id,
         userId: message.author.id,
@@ -23,6 +27,7 @@ module.exports = async (client, message) => {
         upsert: true
     })
     await logs.add(message.guild.id, 'messages')
+
     let prefix = ""
     const savedGuild = await guildGeneralModel.findOne({
         _id: message.guild.id
@@ -56,10 +61,7 @@ module.exports = async (client, message) => {
     if (command.botPermissions) {
         if (!message.guild.me.hasPermission(command.botPermissions)) {
             return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription(`<:redTick:792047662202617876> I do not have the required permissions - \`${command.botPermissions.join(', ')}\` to run that command in this server!`)
-                .setColor('RED')
+                client.embedError(message, `I do not have the required permissions - \`${command.botPermissions.join(', ')}\` to run that command in this server!`)
             )
         }
     }
@@ -73,21 +75,17 @@ module.exports = async (client, message) => {
     if (command.requiredPermissions) {
         if (!message.member.hasPermission(command.requiredPermissions)) {
             return message.channel.send(
-                new MessageEmbed()
-                .setAuthor(message.author.username)
-                .setDescription('<:redTick:792047662202617876> You do not have the required roles/permissions to run that command.')
-                .setColor('RED')
+                client.embedError(message, 'You do not have the required permissions to run that command.')
             )
         }
     }
-    const cooldowns = new DiscordJS.Collection();
 
-    if (!cooldowns.has(command.name)) {
-        cooldowns.set(command.name, new DiscordJS.Collection());
+    if (!client.cooldowns.has(command.name)) {
+        client.cooldowns.set(command.name, new DiscordJS.Collection());
     }
 
     const now = Date.now();
-    const timestamps = cooldowns.get(command.name);
+    const timestamps = client.cooldowns.get(command.name);
     const cooldownAmount = (command.cooldown || 1) * 1000;
 
     if (timestamps.has(message.author.id)) {
@@ -109,6 +107,8 @@ module.exports = async (client, message) => {
         await logs.add(message.guild.id, 'commands')
 	} catch (error) {
 		console.error(error);
-		message.reply('There was an error trying to execute that command!\nYou should not receive an error like this.\nPlease join the support server!');
+		message.channel.send(
+            client.embedError(message, 'There was an unexpected error trying to run that command.')
+        )
     }
 }

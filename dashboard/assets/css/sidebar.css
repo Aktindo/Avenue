@@ -4,9 +4,10 @@
   background-color: var(--background-primary) !important;
   height: 52px;
   width: 52px;
+  margin: 10px;
 
   border-radius: 50%;
-  transition: .3s ease-in-out;
+  transition: all .35s;
 }
 .icon img {
   font-size: x-large;
@@ -15,14 +16,10 @@
   width: 52px;
 
   border-radius: 50%;
-  transition: .3s ease-in-out;
+  transition: 2.5s ease;
 } 
-.icon:hover {
-  border-radius: 25% !important;
-}
-
-.icon img:hover {
-  border-radius: 25% !important;
+.icon:hover, .icon img:hover {
+  border-radius: 35% !important;
 }
 
 .large-icon {
@@ -33,17 +30,9 @@ a {
   text-decoration: none !important;
 }
 
-.sidebarInviteBtnText {
-  color: #43b581 !important;
-}
-
 .abbr { 
   padding-top: 7.5px;
-}
-#themeSelect {
-  color: var(--heading);
-  border: none;
-  background-color: var(--background-secondary) !important;
+  color: var(--heading) !important;
 }
 
 .hamburger {
@@ -54,14 +43,24 @@ a {
   position: absolute;
 }
 
+.add-guild {
+  font-size: 37px !important;
+  color: #43b581 !important;
+}
+
+.add-guild:hover {
+  color: var(--heading) !important;
+  background-color: #43b581 !important;
+}
+
 #sidebar {
   padding: 10px;
-}
-#sidebar,
-#sidebarExtension {
   background-color: var(--background-tertiary) !important;
-  height: 100vh;
+}
+#sidebar, #sidebarExtension {
   float: left;
+  height: 100vh;
+  padding-top: 12px;
 }
 
 /* extension */
@@ -69,7 +68,9 @@ a {
   width: 275px;
   transition: .3s;
   opacity: 1;
+  background-color: var(--background-secondary) !important;
 }
+
 #sidebarExtension h4 {
   cursor: pointer;
 }
@@ -79,6 +80,7 @@ a {
   margin-right: auto;
   width: 50%;
 }
+
 #sidebarExtension .large-icon,
 #sidebarExtension img {
   font-size: xx-large;
@@ -98,18 +100,32 @@ a {
   opacity: 0;
 }
 
+@media screen and (max-width: 1050px) {
+  #sidebar {
+    width: 20vw !important;
+  }
+  #sidebarExtension {
+    float: right !important;
+    width: 80vw !important;
+  }
+  .hamburger {
+    display: none !important;
+  }
+}
+
 /* tabs */
 .tabs a {
   margin: 2px 10px;
   padding: 5px;
   padding-left: 10px !important;
   border-radius: 5px;
-  color: var(--heading);
+  color: var(--font);
   text-decoration: none;
   transition: 0.3s ease-in-out;
 }
 .tabs a.active,
 .tabs a:hover {
+  color: var(--heading) !important;
   background-color: var(--primary);
 }
 
@@ -128,8 +144,9 @@ a {
   color: white;
 }
 
-hr {
+hr.sidebarHr {
   height: 3px !important;
+  width: 45px;
   background-color: var(--background-primary) !important;
   border-radius: 10px;
 }

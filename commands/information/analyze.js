@@ -23,7 +23,7 @@ module.exports = {
         const embed = new DiscordJS.MessageEmbed()
         .setTitle(`Overall Result: ${analyze.score}`)
         .setDescription(`**Detailed Information:**\n\`\`\`js\n${util.inspect(analyze)}\`\`\``)
-        .setFooter(`Requested by ${message.author}`, message.author.displayAvatarURL())
+        .setFooter(`Requested by ${message.author.username}`, message.author.displayAvatarURL())
         
         if (analyze.score == 0) embed.setColor('YELLOW')
         else if (analyze.score > 0) embed.setColor('GREEN')

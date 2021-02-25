@@ -10,8 +10,8 @@ body {
 #search {
     max-width: 300px;
 }
-#search + button {
-    height: 64px;
+button {
+    height: 32px;
 }
 span.pl-1#commandTitle {
     color: var(--primary) !important;

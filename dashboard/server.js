@@ -27,7 +27,7 @@ app.locals.basedir = `${__dirname}/assets`;
 app.use('/',
   middleware.updateUser, rootRoutes,
   authRoutes,
-  middleware.validateUser, middleware.updateGuilds, dashboardRoutes
+  middleware.validateUser, middleware.updateGuilds, dashboardRoutes,
 );
 
 app.all('*', (req, res) => res.render('errors/404'));

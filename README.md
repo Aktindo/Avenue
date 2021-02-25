@@ -1,19 +1,48 @@
 # Avenue
-Hey there! Wanna make a bot that has all the features you need, well then you are in the right place. Avenue is a project that I will work on over the months in my spare time. So, if you need any help, you can take a look at the source code and understand where and what you are missing in your code.
+Avenue is a discord bot that features a lot of features... especially moderation. It helps you to keep the pesky guys and spammers out of servers as well as manages your server with reaction roles, stats and more.
 
-# Installation
-To successfully clone this repo, you can do `git clone <repo_url>`.
-After that, you can run `npm i` in your console or terminal which should install all the required dependecies. Once you have done that too, make a file called `.env` in the root directory of the project and set the content to 
-```env
-TOKEN=your token here
-MONGO_URI=your mongodb url
-CLIENT_ID=your bot id
-SECRET=your bot's secret
-DASHBOARD_URL=your dashboard url
-SYSTEM_METRIC_APIKEY=your system metric api key
-SYSTEM_METRIC_PAGEID=your system metric page id
-SYSTEM_METRIC_METRICID=your system metric id
-```
-And then you can simply run `node index.js` in the terminal and the bot should be online!
-Incase of any errors, please join the support server. This will be improved over time!
+# Documentation
+The documentation for this project is a work in progress at https://aktindo.thedev.id/docs 
 
+# Contributing
+If you have any ideas or changes you want to make, you can always open a pull request.
+
+# Setup
+If you need to make a clone of this project, you can do it under 5 minutes.
+
+- Install Git on your machine.
+- Run `git clone https://github.com/Aktindo/Avenue.git` in the terminal of your desired folder.
+- Make a new file with the name `.env` and
+  paste the following contents.  
+  **NOTE:** Do not literally type `<>` = required and `[]` = optional.
+  Replace it and the content inside them with their respective rules. 
+
+    ```
+    TOKEN=<Your bot's token>
+    CLIENT_ID=<Your bot ID>
+    PREFIX=<Prefix>
+    MONGO_URI=<Your Mongodb cluster connection URI>
+    SECRET=<Your bot's secret>
+    DASHBOARD_URL=<Your base dashboard URL>
+    ACTIVITY_STATUS=<Your bot's status>
+    ACTIVITY_TYPE=<Bot's activity type>
+    ACTIVITY_NAME=<Bot's activity>
+    TOPGG_TOKEN=[Your bot's Top.gg token]
+    ```
+- Make a new folder called `config`
+    - Inside the folder make a new file called `config.json`
+    - Paste the following contents:
+        ```json
+        {
+            "botOwners": [""],
+            "everyoneMention": false,
+            "hostedBy": true
+        }
+        ```
+    - You can put your own bot owners in the array.
+- Run `node .` in your terminal and voila! It
+  should run smoothly!
+    - Test it using `[prefix]ping`
+
+## Using this code in your own projects
+You are free to use any of this project's code in your projects under the MIT License.

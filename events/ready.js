@@ -2,8 +2,8 @@ const mongo = require('../util/mongo')
 const chalk = require('chalk')
 const moment = require('moment')
 const fs = require('fs')
-const config = require('../config/config.json')
-const { MessageEmbed } = require('discord.js')
+require('dotenv').config()
+
 module.exports = async client => {
     fs.readdir("./features/", (err, files) => {
         if (err) return console.error(err);
@@ -16,33 +16,13 @@ module.exports = async client => {
           delete require.cache[require.resolve(`../features/${file}`)];
         });
     });
-    client.config = config
     console.log(`${chalk.magentaBright(`[${moment(Date.now()).format()}]`)} Logged in as ${client.user.username}!`)
+    
     client.user.setPresence({
-        status: "online",
+        status: process.env.ACTIVITY_STATUS ? process.env.ACTIVITY_STATUS : 'online',
         activity: {
-            name: "with commands! | @Avenue help",
-            type: "PLAYING"
-        }
-    });
-    client.api.applications(client.user.id).guilds('772129415005470740').commands.post({
-        data: {
-            name: "hello",
-            description: "Replies with Hello World!"
-        }
-    });
-
-    client.ws.on('INTERACTION_CREATE', async interaction => {
-        const command = interaction.data.name.toLowerCase();
-        if(command == 'hello') {
-            client.api.interactions(interaction.id, interaction.token).callback.post({
-                data: {
-                    type: 4,
-                    data: {
-                        content: "Hello World! Coming soon :)"
-                    }
-                }
-            });
+            name: process.env.ACTIVITY_NAME ? process.env.ACTIVITY_NAME : 'with commands!',
+            type: process.env.ACTIVITY_TYPE ? process.env.ACTIVITY_TYPE : 'PLAYING'
         }
     });
     await mongo().then(console.log(`${chalk.magentaBright(`[${moment(Date.now()).format()}]`)} Connected to database!`)).catch(e => console.error(`${chalk.red(`[${moment(Date.now()).format()}]`)} Error while connecting to database - ${e}`))

@@ -14,7 +14,7 @@ $('input').on('input', function() {
         ? $(this).removeClass('border border-danger')
         : $(this).addClass('border border-danger');
 
-    $('button.btn.btn-success')
+    $('.btn.btn-success')
         .attr('disabled', !$('form')[0].checkValidity());
 });
 
