@@ -22,10 +22,11 @@ html(lang='en')
 
       section#commands
         .d-flex.justify-content-center
-          #search.form-group.p-3
-            input.form-control(type='search', placeholder='Type here to search...')
-          button.btn
-            i.fas.fa-search
+          .form-inline
+            #search.form-group.mx-sm-3.mb-2
+              input.form-control(type='search', placeholder='Type here to search...')
+            button.btn.btn-blurple.mb-2 
+              i.fas.fa-search
         .row
           .col-sm-3.categories
             ul.list-group.mb-2

@@ -41,7 +41,7 @@ module.exports = {
                 embed.setDescription(`[PNG](${imageUrl})`);
             }
         } catch {
-            message.channel.send(
+            return message.channel.send(
                 client.embedError(message, 'There was an error trying to fetch that emoji.')
             );
         }
