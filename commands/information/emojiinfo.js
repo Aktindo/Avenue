@@ -42,7 +42,7 @@ module.exports = {
             }
         } catch {
             message.channel.send(
-                client.embedError(message, 'Fatal error while fetching emoji.')
+                client.embedError(message, 'There was an error trying to fetch that emoji.')
             );
         }
         message.channel.send(embed)

@@ -17,7 +17,7 @@ html(lang='en')
           span.text-muted #{'#' + user.discriminator.toString().padStart(4, '0')}
 
       .p-4
-        label Theme
+        label #[i.fas.fa-paint-brush] Theme
         select#themeSelect.form-control
           option(value='DARK', selected) Dark (Default)
           option(value='OCEAN') Ocean
@@ -26,8 +26,23 @@ html(lang='en')
           option(value='CHOCOLATE') Chocolate 
           option(value='LIGHT') Light(Very Bright)
 
+
     include ../includes/navbar.pug
 
     .container.jumbotron.text-center.bg-transparent
-      h3 Hey #{user.username}!
-      p.lead.text-muted Here you can manage your servers, one place for everything!
+      .alert.alert-info.alert-dismissible.fade.show.text-left(role='alert')  
+        h4.alert-heading Hello there #{user.username}
+        p Welcome to the Avenue dashboard. #[br] We are trying to continuously improve Avenue, and remove any obstacles that stop it from giving you a better experience than other bots.
+
+        p.mb-0 If you'd like to help Avenue be accessible for everyone, voting on top.gg would really help out!
+        button.close(type='button', data-dismiss='alert', aria-label='Close')
+          span(aria-hidden='true') 
+            i.fas.fa-tim
+      .row
+        .col-lg-3.col-md-6.dashboard-index(data-aos="zoom-in")
+          script(src="https://discordbotlist.com/widget/index.js" async)
+          <dbl-widget bot-id="bot-avenue"></dbl-widget>
+        .col-lg-6.col-md-6.dashboard-index.text
+          h1.display-4 
+            span 👋 Hey #{user.username}!
+          p.lead.text-muted Here you can manage your servers, edit them and more!

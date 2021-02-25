@@ -1,8 +1,8 @@
-#sidebar.float-left.bg-light
+#sidebar
   a(href='/dashboard')
-    .icon.round(data-toggle='tooltip', data-placement='right', title='Home')
+    .icon.round(data-toggle='tooltip', data-placement='right', title=user.username)
       img.round(alt=user.username, src=user.avatarUrl(64))
-  hr
+  hr.sidebarHr
   each guild in guilds
     a(href='/servers/' + guild.id)
       .icon.round(data-toggle='tooltip', data-placement='right', title=guild.name)
@@ -11,12 +11,7 @@
         else
           p.text-center.abbr #{guild.nameAcronym}
   a(href='/invite')
-    .icon.round.my-2(data-toggle='tooltip', data-placement='right', title='Add a server', class='sidebarInviteBtn')
-      p.abbr.text-success.text-center
-        i.fas.fa-plus(class='sidebarInviteBtnText')
-  a(href='/support')
-    .icon.round.my-2(data-toggle='tooltip', data-placement='right', title='Explore the Support Server', class='sidebarInviteBtnText')
-      p.abbr.text-success.text-center
-        i.fas.fa-compass(class='sidebarInviteBtnText')
+    .icon.round.add-guild(data-toggle='tooltip', data-placement='right', title="Add a server")
+      p.text-center.invite.pt-0.d-flex.justify-content-center.flex-column +
   .hamburger.px-1
     i.fas.fa-bars

@@ -14,7 +14,7 @@ const router = express.Router();
 router.get('/dashboard', (req, res) => res.render('dashboard/index'));
 
 router.get('/servers/:id', validateGuild, async (req, res) => res.render('dashboard/show', {
-    subtitle: 'Editing Server',
+    subtitle: `Editing ${client.guilds.cache.get(req.params.id).name}`,
     guildData: await guildGeneralModel.findOne({_id: req.params.id}),
     savedLog: await logs.get(req.params.id),
     users: client.users.cache

@@ -6,12 +6,12 @@ html(lang="english")
   body
     include includes/loader.pug
     include includes/navbar.pug
-    .jumbotron.text-center.bg-transparent(class='firstJumbo')
+    .jumbotron.text-center.bg-transparent.custom-align-center(class='firstJumbo')
       img(src="/images/Avenue-Logo+Blurple.svg", alt="Home Avenue Img", width="192px", height="189.2px")
       h1.display-4 Avenue
       p.lead Yet another general purpose multi-feature bot!
       a(href='/invite')
-          button.btn.btn-lg(href='/invite', role='button') Add now
+          button.btn.btn-lg.btn-blurple(href='/invite', role='button') Add now
     .container 
       h1 Why Avenue?
       .row
@@ -50,6 +50,6 @@ html(lang="english")
     .jumbotron.text-center.bg-transparent
       h2 Ready to start your journey?
       a(href='/invite')
-        button.btn.btn-lg(href='/invite', role='button') Invite
+        button.btn.btn-lg.btn-blurple(href='/invite', role='button') Invite
       p.lead.command-text Still not ready? View all our #[a(href='/commands').command-link commands]
     include includes/footer

@@ -1,17 +1,20 @@
 * {
-    font-family: 'Poppins', sans-serif;
-    color: var(--heading);
     scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background-color: var(--background-primary);
+    background: radial-gradient(circle, var(--background-primary) 0%, var(--background-secondary) 100%) !important;
     overflow-x: hidden;
     color: var(--font);
     margin: 0px !important;
 }
 
-h1, h2, h3, h4, h5 {
+label {
+  color: var(--heading) !important;
+}
+
+h1, h2, h3, h4, h5, h6, label {
   color: var(--heading);
 }
 
@@ -25,10 +28,6 @@ code.hljs {
 
 .user-avatar {
     max-width: 36px;
-}
-
-.navbar a {
-  color: var(--heading);
 }
 
 .table {
@@ -52,12 +51,16 @@ button.btn {
 .col {
   margin: 5px;
 }
-.form-control {
+
+.form-control, option, select {
   background-color: var(--background-primary) !important;
-  border-color: var(--background-tertiary) !important;
+  color: var(--heading) !important;
+  border: none !important;
 }
+
 .form-control:focus {
-  color: var(--font) !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 0.2rem var(--primary-rgb);
 }
 
 .loader {
@@ -91,4 +94,46 @@ button.btn {
 
 .circle {
   stroke: var(--heading) !important;
+}
+
+.btn.btn-blurple, .badge-blurple {
+  background-color: var(--primary) !important;
+  border: none !important;
+  color: var(--button-text) !important;
+  transition: .3s ease-in-out;
+}
+
+.alert-blurple {
+  background-color: var(--primary);
+}
+
+.btn.btn-blurple:hover {
+  background-color: var(--button-hover) !important;
+}
+
+.btn.btn-blurple:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 0.2rem var(--primary-rgb);
+}
+
+.no-border {
+  border: 0 !important;
+  box-shadow: none !important;
+  background: none !important;
+}
+
+#embedBuilder .col {
+  margin: 5px;
+}
+.embed-description {
+  resize: none !important;
+}
+.image-upload > input
+{
+    display: none;
+}
+
+.image-upload i
+{
+    cursor: pointer;
 }
