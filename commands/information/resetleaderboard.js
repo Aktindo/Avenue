@@ -1,38 +1,40 @@
-const { MessageEmbed } = require('discord.js')
-const messageCountModel = require('../../models/user-messagecount-model')
+const { MessageEmbed } = require('discord.js');
+const messageCountModel = require('../../models/user-messagecount-model');
 module.exports = {
-    name: "resetleaderboard",
-    description: "Resets a server leadrboard!",
-    aliases: ["rlb"],
-    category: "Information",
-    cooldowns: 5,
-    guildOnly: true,
-    requiredPermissions: ['ADMINISTRATOR'],
-    botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
-    async execute(client, message, args) {
-        const results  = await messageCountModel.find({
-            guildId: message.guild.id
-        })
-        if (!results) return message.channel.send( 
-            client.embedError(message, "This server has no data.")
-        )
-        const msg = await message.channel.send(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setTitle('Resetting...')
-            .setDescription('Please wait while we reset this server\'s leaderboard.\nIt can take time depending upon the number of members the server has.')
-        )
-        results.forEach(async result => {
-            await messageCountModel.findOneAndRemove({
-                guildId: message.guild.id,
-                userId: result.userId,
-            })
-        })
-        msg.edit(
-            new MessageEmbed()
-            .setAuthor(message.author.username)
-            .setDescription(`<:greenTick:792047523803299850> Successfully reset the server leaderboard!`)
-            .setColor('GREEN')
-        )
-    }
-}
+	name: 'resetleaderboard',
+	description: 'Resets a server leadrboard!',
+	aliases: ['rlb'],
+	category: 'Information',
+	cooldown: 5,
+	guildOnly: true,
+	requiredPermissions: ['ADMINISTRATOR'],
+	botPermissions: ['SEND_MESSAGES', 'ATTACH_FILES', 'USE_EXTERNAL_EMOJIS'],
+	async execute(client, message) {
+		const results = await messageCountModel.find({
+			guildId: message.guild.id,
+		});
+		if (!results) {
+			return message.channel.send(
+				client.embedError(message, 'This server has no data.'),
+			);
+		}
+		const msg = await message.channel.send(
+			new MessageEmbed()
+				.setAuthor(message.author.username)
+				.setTitle('Resetting...')
+				.setDescription('Please wait while we reset this server\'s leaderboard.\nIt can take time depending upon the number of members the server has.'),
+		);
+		results.forEach(async result => {
+			await messageCountModel.findOneAndRemove({
+				guildId: message.guild.id,
+				userId: result.userId,
+			});
+		});
+		msg.edit(
+			new MessageEmbed()
+				.setAuthor(message.author.username)
+				.setDescription('<:greenTick:792047523803299850> Successfully reset the server leaderboard!')
+				.setColor('GREEN'),
+		);
+	},
+};

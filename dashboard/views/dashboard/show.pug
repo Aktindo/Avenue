@@ -15,6 +15,7 @@ html(lang='en')
     script(src='/js/charts.js', defer)
     script(src='/js/sidebar.js', defer)
     script(src='/js/guild.js', defer)
+    script(src="/js/embeds.js", defer)
     script(src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.2/highlight.min.js', defer)
     link(rel='stylesheet', href='https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css')
     link(rel='stylesheet', href='/css/sidebar.css')
@@ -36,13 +37,15 @@ html(lang='en')
         .category Modules
         a#general.cursor-pointer #[i.fas.fa-sliders-h.pr-1] General
         a#welcome.cursor-pointer #[i.fas.fa-sign-in-alt.pr-1] Welcome
+        a#embeds.cursor-pointer #[i.fas.fa-image.pr-1] Embeds
         .category Other
         a#auditLog.cursor-pointer #[i.fas.fa-clipboard-list.pr-1] Audit Log
+    .content
+      include ../includes/navbar.pug
+      
+      include modules/overview
+      include modules/general
+      include modules/welcome
+      include modules/embeds
 
-    include ../includes/navbar.pug
-    
-    include modules/overview
-    include modules/general
-    include modules/welcome
-
-    include extensions/audit-log
+      include extensions/audit-log

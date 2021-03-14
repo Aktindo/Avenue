@@ -5,7 +5,7 @@ module.exports = {
     description: "Lists all the active giveaways in the server.",
     category: "Utility",
     aliases: ['giveawaylist'],
-    cooldowns: 5,
+    cooldown: 5,
     requiredPermissions: ['MANAGE_MESSAGES'],
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     async execute(client, message, args) {

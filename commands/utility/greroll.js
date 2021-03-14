@@ -5,7 +5,7 @@ module.exports = {
     description: "Rerolls a giveaway in a channel.",
     category: "Utility",
     aliases: ['grr', 'giveawayreroll'],
-    cooldowns: 5,
+    cooldown: 5,
     requiredPermissions: ['MANAGE_MESSAGES'],
     botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
     usage: "<MessageID|Prize>",

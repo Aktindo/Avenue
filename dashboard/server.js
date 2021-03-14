@@ -10,6 +10,7 @@ const moment = require('moment')
 const authRoutes = require('./routes/auth-routes');
 const dashboardRoutes = require('./routes/dashboard-routes');
 const rootRoutes = require('./routes/root-routes');
+const Log = require('../util/Log');
 
 const app = express();
 
@@ -33,4 +34,6 @@ app.use('/',
 app.all('*', (req, res) => res.render('errors/404'));
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`${chalk.yellow(`[${moment(Date.now()).format()}]`)} Dashboard - Server is live on port ${port}`));
+app.listen(port, () => {
+  Log.info(`Dashboard is live on port ${port}!`, "server")
+});
