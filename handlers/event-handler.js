@@ -2,7 +2,7 @@ const Log = require("../util/Log");
 const fs = require("fs");
 const { client } = require("../index");
 
-Log.info("Loading events...", "event_handler");
+client.logger.trace("Loading events...", "event_handler");
 
 const eventFiles = fs
   .readdirSync("./events")
@@ -17,4 +17,7 @@ for (const file of eventFiles) {
   }
 }
 
-Log.info(`Loaded a total of ${eventFiles.length} events!`, "event_handler");
+client.logger.trace(
+  `Loaded a total of ${eventFiles.length} events!`,
+  "event_handler"
+);

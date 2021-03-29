@@ -35,7 +35,7 @@ module.exports = {
       default: {
         botsCanWin: false,
         exemptPermissions: [],
-        embedColor: "BLURPLE",
+        embedColor: client.env.EMBED_NEUTRAL_COLOR,
         reaction: "🎉",
       },
     });

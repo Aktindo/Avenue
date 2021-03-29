@@ -36,7 +36,7 @@ module.exports = {
             client.user.username,
             client.user.displayAvatarURL({ format: "png" })
           )
-          .setColor("BLURPLE")
+          .setColor(client.env.EMBED_NEUTRAL_COLOR)
       )
       .then(async (m) => {
         await m.react("👍");

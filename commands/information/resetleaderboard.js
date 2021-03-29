@@ -33,12 +33,7 @@ module.exports = {
       });
     });
     msg.edit(
-      new MessageEmbed()
-        .setAuthor(message.author.username)
-        .setDescription(
-          "<:greenTick:792047523803299850> Successfully reset the server leaderboard!"
-        )
-        .setColor("GREEN")
+      client.embedSuccess(message, "Successfully reset the server leaderboard!")
     );
   },
 };

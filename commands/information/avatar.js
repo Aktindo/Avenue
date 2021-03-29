@@ -15,7 +15,7 @@ module.exports = {
     const embed = new MessageEmbed()
       .setAuthor(`${member.user.username}'s Avatar`)
       .setImage(member.user.displayAvatarURL({ dynamic: true, size: 4096 }))
-      .setColor("BLURPLE");
+      .setColor(client.env.EMBED_NEUTRAL_COLOR);
     message.channel.send(embed);
   },
 };

@@ -45,13 +45,13 @@ module.exports = {
       time: ms(giveawayDuration),
       prize: giveawayPrize,
       winnerCount: parseInt(giveawayNumberWinners),
-      hostedBy: process.env.GIVEAWAY_EVERYONE_MENTION ? message.author : null,
+      hostedBy: client.env.GIVEAWAY_EVERYONE_MENTION ? message.author : null,
       messages: {
         giveaway:
-          (process.env.GIVEAWAY_EVERYONE_MENTION ? "@everyone\n\n" : "") +
+          (client.env.GIVEAWAY_EVERYONE_MENTION ? "@everyone\n\n" : "") +
           "🎉 **GIVEAWAY** 🎉",
         giveawayEnded:
-          (process.env.GIVEAWAY_EVERYONE_MENTION ? "@everyone\n\n" : "") +
+          (client.env.GIVEAWAY_EVERYONE_MENTION ? "@everyone\n\n" : "") +
           "🎉 **GIVEAWAY ENDED** 🎉",
         timeRemaining: "Time remaining: **{duration}**!",
         inviteToParticipate: "React with 🎉 to participate!",

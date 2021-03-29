@@ -9,7 +9,7 @@ module.exports = {
     return message.channel.send(
       client.embedSuccess(
         message,
-        "If you want to use me in your server(s), click [here](https://discord.com/oauth2/authorize?client_id=790198442668064789&scope=bot&permissions=8)"
+        `If you want to use me in your server(s), click [here](https://discord.com/oauth2/authorize?client_id=${client.env.CLIENT_ID}&permissions=2146959351&redirect_uri=${client.env.DASHBOARD_URL}/auth&response_type=code&scope=bot%20identify%20guilds)`
       )
     );
   },

@@ -122,7 +122,7 @@ module.exports = {
           : "None",
         false
       )
-      .setColor("BLURPLE");
+      .setColor(client.env.EMBED_NEUTRAL_COLOR);
     message.channel.send(userinfo);
   },
 };

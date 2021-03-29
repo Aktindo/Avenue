@@ -2,7 +2,7 @@ const Log = require("../util/Log");
 const fs = require("fs");
 const { client } = require("../index");
 
-Log.info("Loading commands...", "command_handler");
+client.logger.trace("Loading commands...", "command_handler");
 
 const commandFolders = fs.readdirSync("./commands/");
 let commandFiles;
@@ -18,7 +18,7 @@ for (const folder of commandFolders) {
   }
 }
 
-Log.info(
+client.logger.trace(
   `Loaded a total of ${commandFilesLength} commands!`,
   "command_handler"
 );

@@ -51,12 +51,30 @@ module.exports = {
       2: "Level 2",
       3: "Level 3",
     };
+    const guildFeatures = {
+      INVITE_SPLASH: "Invite Splash Screen",
+      VIP_REGIONS: "VIP Regions",
+      VANITY_URL: "Vanity URL",
+      VERIFIED: "Verified",
+      PARTNERED: "Partnered",
+      COMMUNITY: "Community",
+      COMMERCE: "Commerce (has access to store channels)",
+      NEWS: "News",
+      DISCOVERABLE: "Discoverable",
+      FEATURABLE: "Featurable",
+      ANIMATED_ICON: "Animated Icon",
+      BANNER: "Banner",
+      WELCOME_SCREEN_ENABLED: "Welcome Screen",
+      MEMBER_VERIFICATION_GATE_ENABLED: "Verification Gate",
+      PREVIEW_ENABLED: "Preview Enabled",
+    };
+
     let factorModeration;
     if (message.guild.mfaLevel == 0)
       factorModeration = "<:redTick:792047662202617876> Disabled";
     else factorModeration = "<:greenTick:792047523803299850> Enabled";
     const embed = new MessageEmbed()
-      .setColor("BLURPLE")
+      .setColor(client.env.EMBED_NEUTRAL_COLOR)
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setTitle(`Information on ${message.guild.name}`)
       .addField(
@@ -99,6 +117,17 @@ module.exports = {
         `<:boosts:794441859321167872> ${
           message.guild.premiumSubscriptionCount
         } (${boostTier[message.guild.premiumTier]})`
+      )
+      .addField(
+        "Features",
+        `${
+          message.guild.features
+            ? message.guild.features
+                .map((feature) => guildFeatures[feature])
+                .join(", ")
+            : "None"
+        }`,
+        false
       )
       .addField("Roles", message.guild.roles.cache.size, true)
       .addField("Channels", message.guild.channels.cache.size, true)

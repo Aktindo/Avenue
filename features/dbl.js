@@ -11,10 +11,10 @@ module.exports = {
   execute(client) {
     const AutoPoster = require("topgg-autoposter");
 
-    const ap = AutoPoster(process.env.TOPGG_TOKEN, client);
+    const ap = AutoPoster(client.env.TOPGG_TOKEN, client);
 
     ap.on("posted", () => {
-      Log.info("Posted stats to top.gg", "dbl_autoposter");
+      client.logger.info("Posted stats to top.gg", "dbl_autoposter");
     });
   },
 };

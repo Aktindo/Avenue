@@ -16,9 +16,11 @@
     "chalk": "^4.1.0",
     "cookies": "^0.8.0",
     "disco-oauth": "^4.2.7",
+    "discord-emoji-convert": "^1.6.0",
     "discord-giveaways": "github:Androz2091/discord-giveaways#develop",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
+    "el4js": "0.0.2",
     "express": "^4.17.1",
     "express-rate-limit": "^5.2.3",
     "method-override": "^3.0.0",
@@ -35,5 +37,7 @@
     "some-random-cat": "^2.2.1",
     "topgg-autoposter": "^1.1.6"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "ejs": "^3.1.6"
+  }
 }

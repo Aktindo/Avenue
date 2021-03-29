@@ -2,7 +2,7 @@ const Log = require("../util/Log");
 const fs = require("fs");
 const { client } = require("../index");
 
-Log.info("Loading features...", "feature_handler");
+client.logger.trace("Loading features...", "feature_handler");
 
 const featureFiles = fs
   .readdirSync("./features")
@@ -11,7 +11,7 @@ const featureFiles = fs
 for (const file of featureFiles) {
   const feature = require(`../features/${file}`);
   if (!feature.enabled) {
-    Log.warning(
+    client.logger.warning(
       `The feature (${feature.name}) is not enabled.`,
       "feature_handler"
     );
@@ -20,7 +20,7 @@ for (const file of featureFiles) {
   feature.execute(client);
 }
 
-Log.info(
+client.logger.trace(
   `Loaded a total of ${featureFiles.length} features!`,
   "feature_handler"
 );

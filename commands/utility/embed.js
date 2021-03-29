@@ -50,7 +50,7 @@ module.exports = {
       );
     }
     let color = splittedContent[2];
-    if (!color) color = "BLURPLE";
+    if (!color) color = client.env.EMBED_NEUTRAL_COLOR;
 
     const embed = new MessageEmbed()
       .setColor(color)

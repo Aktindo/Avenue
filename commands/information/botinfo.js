@@ -1,3 +1,4 @@
+const Discord = require("discord.js");
 const { MessageEmbed } = require("discord.js");
 module.exports = {
   name: "botinfo",
@@ -38,8 +39,12 @@ module.exports = {
         )
         .addField(
           "Invite",
-          "If you want to use me in your server(s), click [**here**](https://discord.com/oauth2/authorize?client_id=790198442668064789&scope=bot&permissions=2113273591)",
+          `If you want to use me in your server(s), click [**here**](https://discord.com/oauth2/authorize?client_id=${client.env.CLIENT_ID}&permissions=2146959351&redirect_uri=${client.env.DASHBOARD_URL}/auth&response_type=code&scope=bot%20identify%20guilds)`,
           false
+        )
+        .addField(
+          "Libraries",
+          `**Node.js:** ${process.version}\n**Discord.js:** v${Discord.version}`
         )
         .addField(
           "Current ping",
@@ -51,7 +56,7 @@ module.exports = {
           false
         )
         .addField("Uptime", duration, false)
-        .setColor("BLURPLE");
+        .setColor(client.env.EMBED_NEUTRAL_COLOR);
       await m.edit(embed);
       m.edit("\u200b");
     });

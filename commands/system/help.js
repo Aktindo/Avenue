@@ -15,7 +15,7 @@ module.exports = {
     });
     let prefix;
     if (!data || !data.prefix) {
-      prefix = process.env.PREFIX || "a!";
+      prefix = client.env.PREFIX || "a!";
     } else {
       prefix = data.prefix;
     }
@@ -94,7 +94,7 @@ module.exports = {
           helpEmbed.addField("Cooldowns", `User - ${command.cooldown}s`);
         helpEmbed.addField(
           "Usage",
-          `\`${process.env.prefix}${command.name}${commandUsage}\``
+          `\`${client.env.prefix}${command.name}${commandUsage}\``
         );
         if (command.requiredPermissions) {
           const requiredPermissions = command.requiredPermissions

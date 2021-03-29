@@ -1,29 +1,35 @@
 const mongo = require("../util/Mongo");
-const Log = require("../util/Log");
 require("dotenv").config();
 
 module.exports = {
   name: "ready",
   once: true,
   async execute(client) {
-    Log.info(`Successfully logged in as ${client.user.username}!`, "client");
+    client.logger.info(
+      `Successfully logged in as ${client.user.username}!`,
+      "client"
+    );
 
     client.user.setPresence({
-      status: process.env.ACTIVITY_STATUS
-        ? process.env.ACTIVITY_STATUS
+      status: client.env.ACTIVITY_STATUS
+        ? client.env.ACTIVITY_STATUS
         : "online",
       activity: {
-        name: process.env.ACTIVITY_NAME
-          ? process.env.ACTIVITY_NAME
+        name: client.env.ACTIVITY_NAME
+          ? client.env.ACTIVITY_NAME
           : "with commands!",
-        type: process.env.ACTIVITY_TYPE ? process.env.ACTIVITY_TYPE : "PLAYING",
+        type: client.env.ACTIVITY_TYPE ? client.env.ACTIVITY_TYPE : "PLAYING",
       },
     });
 
     await mongo()
-      .then(Log.info("Connected to database!", "database"))
+      .then(client.logger.info("Connected to database!", "database"))
       .catch((error) => {
-        Log.error("Could not connect to database.", "database", error);
+        client.logger.error(
+          "Could not connect to database.",
+          "database",
+          error
+        );
       });
   },
 };

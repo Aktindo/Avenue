@@ -7,8 +7,8 @@ module.exports = {
   aliases: ["rl"],
   usage: "<command>",
   category: "System",
-  permissionsByUser: ["SEND_MESSAGES"],
-  permissionsByBot: [
+  requiredPermissions: ["SEND_MESSAGES"],
+  botPermissions: [
     "SEND_MESSAGES",
     "EMBED_LINKS",
     "ATTACH_FILES",
@@ -60,10 +60,9 @@ module.exports = {
         )
       );
     } catch (error) {
-      Log.error(
-        `Error while reloading command ${command.name}.`,
-        "command_handler_reload",
-        error.message
+      client.logger.error(
+        `Error while reloading command ${command.name}.\n${error.message}`,
+        "command_handler_reload"
       );
       message.channel.send(
         client.embedError(

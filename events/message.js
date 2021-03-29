@@ -3,7 +3,6 @@ const DiscordJS = require("discord.js");
 
 const messageCountModel = require("../models/user-messagecount-model");
 const guildGeneralModel = require("../models/guild-general-model");
-const logs = require("../models/logs");
 const Log = require("../util/Log");
 require("dotenv").config();
 
@@ -32,13 +31,12 @@ module.exports = {
         upsert: true,
       }
     );
-    await logs.add(message.guild.id, "messages");
 
     let prefix = "";
     const savedGuild = await guildGeneralModel.findOne({
       _id: message.guild.id,
     });
-    if (!savedGuild || !savedGuild.prefix) prefix = process.env.PREFIX;
+    if (!savedGuild || !savedGuild.prefix) prefix = client.env.PREFIX;
     else prefix = savedGuild.prefix;
     const prefixRegex = new RegExp(
       `^(<@!?${client.user.id}>|${escapeRegex(prefix)})\\s*`
@@ -96,7 +94,7 @@ module.exports = {
 
     if (
       command.botOwnerOnly &&
-      !process.env.BOT_OWNERS.split(",").includes(message.author.id)
+      !client.env.BOT_OWNERS.split(",").includes(message.author.id)
     ) {
       return message.channel.send(
         client.embedError(message, "Only the bot owner can run that command!")
@@ -145,16 +143,14 @@ module.exports = {
 
     try {
       command.execute(client, message, args);
-      Log.info(
+      client.logger.info(
         `Ran the command (${command.name}) in ${message.guild.name} (${message.guild.id}) used by ${message.author.tag} (${message.author.id}).`,
         "command_handler"
       );
-      await logs.add(message.guild.id, "commands");
     } catch (error) {
-      Log.error(
-        `Could not run command (${command.name}) in ${message.guild.name} (${message.guild.id}).`,
-        "command_handler",
-        error.message
+      client.logger.error(
+        `Could not run command (${command.name}) in ${message.guild.name} (${message.guild.id}).\n${error.message}`,
+        "command_handler"
       );
       message.channel.send(
         client.embedError(

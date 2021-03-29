@@ -36,7 +36,7 @@ module.exports = {
     try {
       const [animated, imageUrl] = getEmoji(emoji);
       embed.setImage(imageUrl);
-      embed.setColor("BLURPLE");
+      embed.setColor(client.env.EMBED_NEUTRAL_COLOR);
       if (animated) {
         embed.setDescription(`[GIF](${imageUrl})`);
       } else {

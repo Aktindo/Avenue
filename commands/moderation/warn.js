@@ -1,13 +1,13 @@
 const { MessageEmbed } = require("discord.js");
 const guildCasesModel = require("../../models/guild-cases-model");
 const guildChannelsModel = require("../../models/guild-channels-model");
-const warningModel = require("../../models/warning-system-model");
+const userLogsModel = require("../../models/user-logs-model");
 module.exports = {
   name: "warn",
-  description: "Warns a user.",
+  description: "Warns a user with a reason (if any)",
   category: "Moderation",
   cooldown: 5,
-  requiredPermissions: ["MANAGE_MESSAGES"],
+  requiredPermissions: ["MANAGE_ROLES"],
   botPermissions: ["SEND_MESSAGES", "ATTACH_FILES", "USE_EXTERNAL_EMOJIS"],
   usage: "<user> [reason]",
   async execute(client, message, args) {
@@ -16,10 +16,7 @@ module.exports = {
       message.guild.members.cache.get(args[0]);
     if (!target) {
       return message.channel.send(
-        client.embedError(
-          message,
-          "Please mention a user. Use `[prefix]help warn` for more information on how to use this command."
-        )
+        client.embedError(message, "Please mention a valid user to warn.")
       );
     }
 
@@ -37,21 +34,28 @@ module.exports = {
 
     if (target.hasPermission("MANAGE_MESSAGES")) {
       return message.channel.send(
-        client.embedError(
-          message,
-          "You cannot warn a moderation/administrator."
-        )
+        client.embedError(message, "You cannot warn a moderator/administrator.")
       );
     }
 
     let reason = args.slice(1).join(" ");
+    if (reason.length > 1024) {
+      return message.channel.send(
+        client.embedError(
+          message,
+          "Please provide a reason less than 1024 characters."
+        )
+      );
+    }
     if (!reason) reason = "Not specified";
 
     const loadingMessage = await message.channel.send(
       new MessageEmbed()
         .setAuthor(message.author.username, message.author.displayAvatarURL())
         .setDescription(`Warning ${target}... Please wait!`)
+        .setColor(client.env.EMBED_NEUTRAL_COLOR)
     );
+
     const cases = await guildCasesModel.findOneAndUpdate(
       {
         guildId: message.guild.id,
@@ -67,19 +71,37 @@ module.exports = {
         new: true,
       }
     );
-    await new warningModel({
-      guildId: message.guild.id,
-      userId: target.id,
+
+    const warning = {
       caseNumber: cases.totalCases,
       warnCaseNumber: cases.warnCases,
+      type: "Warn",
       moderatorId: message.author.id,
-      timestamp: new Date().getTime(),
       reason,
-    }).save();
+      timeStamp: new Date(),
+    };
+    await userLogsModel.findOneAndUpdate(
+      {
+        _id: message.guild.id,
+        userId: target.id,
+      },
+      {
+        _id: message.guild.id,
+        userId: target.id,
+        $push: {
+          cases: warning,
+        },
+      },
+      {
+        upsert: true,
+      }
+    );
+
     target
       .send(
         new MessageEmbed()
           .setAuthor(target.user.username, target.user.displayAvatarURL())
+          .setTimestamp()
           .setTitle(`You have been warned in ${message.guild.name}`)
           .addField("Case Number", cases.totalCases, false)
           .addField("Moderator", message.author.tag, false)
@@ -92,7 +114,7 @@ module.exports = {
           message.channel.send(
             client.embedSuccess(
               message,
-              `Warning logged for ${target}... I could not message them.`
+              `Warning logged for ${target}... An error occured.`
             )
           )
         )
@@ -101,7 +123,7 @@ module.exports = {
       new MessageEmbed()
         .setTitle(`Case Number #${cases.totalCases} | Warn`)
         .setDescription(`Successfully warned ${target}`)
-        .setColor("#F1C40F")
+        .setColor("YELLOW")
     );
     const savedChannel = await guildChannelsModel.findOne({
       guildId: message.guild.id,
@@ -110,18 +132,18 @@ module.exports = {
     if (!modLogChannel) {
       return;
     } else {
-      message.guild.channels.cache
-        .get(modLogChannel)
-        .send(
-          new MessageEmbed()
-            .setTitle(`Case Number #${cases.totalCases} | Warn`)
-            .setDescription(
-              `**Offender:** ${target.user.tag}\n**Responsible Moderator:** ${message.author.tag}\n**Reason:** ${reason}`
-            )
-            .setColor("#F1C40F")
-            .setFooter(`ID: ${target.id}`)
-            .setTimestamp()
-        );
+      message.guild.channels.cache.get(modLogChannel).send(
+        new MessageEmbed()
+          .setTitle(`Case Number #${cases.totalCases} | Warn`)
+          .setDescription(
+            `**Offender:** ${target.user.tag}\n
+             **Responsible Moderator:** ${message.author.tag}\n
+             **Reason:** ${reason}`
+          )
+          .setColor("#F1C40F")
+          .setFooter(`ID: ${target.id}`)
+          .setTimestamp()
+      );
     }
   },
 };

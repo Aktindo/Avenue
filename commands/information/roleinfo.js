@@ -20,8 +20,15 @@ module.exports = {
       true: "<:greenTick:792047523803299850> Yes",
       false: "<:redTick:792047662202617876> No",
     };
+
     const embed = new MessageEmbed()
-      .setColor(`${role.hexColor}`)
+      .setColor(
+        `${
+          role.hexColor === "#000000"
+            ? client.env.EMBED_NEUTRAL_COLOR
+            : role.hexColor
+        }`
+      )
       .setTitle(`Information on ${role.name}`)
       .setDescription(`${role} (\`${role}\`)`)
       .addFields(
