@@ -21,8 +21,7 @@ If you need to make a clone of this project, you can do it under 5 minutes.
    **NOTE:** Do not literally type `<>` = required and `[]` = optional.
   Replace it and the content inside them with their respective rules.
 
-      ```env
-
+  ```env
   TOKEN=<Your bot's token>
   CLIENT_ID=<Your bot's id>
   PREFIX=<Your bot's default prefix>
@@ -37,6 +36,7 @@ If you need to make a clone of this project, you can do it under 5 minutes.
   EMBED_NEUTRAL_COLOR=<Default embed neutral color>
   EMBED_ERROR_COLOR=<Default embed error color>
   EMBED_SUCCESS_COLOR=<Default embed success color>
+  ```
 
 - Run `npm start` for production or `npm run dev` for development.
   - Test it using `[prefix]ping`
