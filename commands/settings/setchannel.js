@@ -78,36 +78,6 @@ module.exports = {
           `Successfully set ${channel} as the \`welcome\` channel!`
         )
       );
-    } else if (args[0].toLowerCase() === "starboard") {
-      const channel =
-        message.mentions.channels.first() ||
-        message.guild.channels.cache.get(args[1]);
-      if (!channel) {
-        return message.channel.send(
-          client.embedError(
-            message,
-            "No channel found with that mention or ID."
-          )
-        );
-      }
-      await guildChannelModel.findOneAndUpdate(
-        {
-          guildId: message.guild.id,
-        },
-        {
-          guildId: message.guild.id,
-          starboardChannel: channel.id,
-        },
-        {
-          upsert: true,
-        }
-      );
-      message.channel.send(
-        client.embedSuccess(
-          message,
-          `Successfully set ${channel} as the \`starboard\` channel!`
-        )
-      );
     } else if (args[0].toLowerCase() === "verification") {
       const channel =
         message.mentions.channels.first() ||

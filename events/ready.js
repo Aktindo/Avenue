@@ -1,4 +1,4 @@
-const mongo = require("../util/Mongo");
+const mongo = require("../util/mongo");
 require("dotenv").config();
 
 module.exports = {

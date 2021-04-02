@@ -1,6 +1,4 @@
 const fs = require("fs");
-const Log = require("../../util/Log");
-
 module.exports = {
   name: "reload",
   description: "Reloads a command if given.",

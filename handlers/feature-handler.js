@@ -1,4 +1,3 @@
-const Log = require("../util/Log");
 const fs = require("fs");
 const { client } = require("../index");
 

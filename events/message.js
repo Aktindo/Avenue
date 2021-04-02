@@ -3,7 +3,6 @@ const DiscordJS = require("discord.js");
 
 const messageCountModel = require("../models/user-messagecount-model");
 const guildGeneralModel = require("../models/guild-general-model");
-const Log = require("../util/Log");
 require("dotenv").config();
 
 const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
