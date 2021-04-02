@@ -43,4 +43,4 @@ If you need to make a clone of this project, you can do it under 5 minutes.
 
 ## Using this code in your own projects
 
-You are free to use any of this project's code in your projects under the MIT License.
+You are free to use any of this project's code in your projects under the Apache License.
